@@ -1,0 +1,1203 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:quiz_app/pages/options.dart';
+
+class SpecificCategoryQuestions extends StatefulWidget {
+  SpecificCategoryQuestions({
+    super.key,
+    this.SelectedCategoryId,
+  });
+
+  String? SelectedCategoryId;
+
+  @override
+  _SpecificCategoryQuestionsState createState() =>
+      _SpecificCategoryQuestionsState();
+}
+
+class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions> {
+  String question = '';
+  bool isLoading = true;
+  bool showStats = false;
+  Map<String, dynamic> stats = {};
+  String currentCategoryId = '';
+  String currentQuestionId = '';
+
+  @override
+  void initState() {
+    super.initState();
+    updateProgressValues();
+    fetchQuestion();
+    print("================================================================");
+    print("widget.SelectedCategoryId");
+    print(widget.SelectedCategoryId);
+  }
+
+  void updateProgressValues() {
+    // Random number generator
+    final random = Random();
+
+    // Generate a random value between 0.3 and 0.8
+    double generateRandomProgress() {
+      return 0.3 + (random.nextDouble() * (0.8 - 0.3));
+    }
+
+    // Update each variable with a random value
+    m1Progress = generateRandomProgress();
+    m2Progress = generateRandomProgress();
+
+    mProgress = generateRandomProgress();
+    fProgress = generateRandomProgress();
+    nProgress = generateRandomProgress();
+
+    a1Progress = generateRandomProgress();
+    a2Progress = generateRandomProgress();
+    a3Progress = generateRandomProgress();
+    a4Progress = generateRandomProgress();
+    a5Progress = generateRandomProgress();
+    a6Progress = generateRandomProgress();
+
+    c1Progress = generateRandomProgress();
+    c2Progress = generateRandomProgress();
+    c3Progress = generateRandomProgress();
+    c4Progress = generateRandomProgress();
+    c5Progress = generateRandomProgress();
+    c6Progress = generateRandomProgress();
+  }
+
+// Variables
+  double m1Progress = 0.5;
+  double m2Progress = 0.5;
+
+  double mProgress = 0.5;
+  double fProgress = 0.6;
+  double nProgress = 0.7;
+
+  double a1Progress = 0.2;
+  double a2Progress = 0.3;
+  double a3Progress = 0.4;
+  double a4Progress = 0.5;
+  double a5Progress = 0.6;
+  double a6Progress = 0.7;
+
+  double c1Progress = 0.3;
+  double c2Progress = 0.4;
+  double c3Progress = 0.5;
+  double c4Progress = 0.6;
+  double c5Progress = 0.7;
+  double c6Progress = 0.8;
+
+  Future<void> fetchQuestion() async {
+    setState(() {
+      isLoading = true;
+      showStats = false;
+    });
+
+    try {
+      // Step 1: Fetch questions filtered by categoryId
+      QuerySnapshot questionsSnapshot = await FirebaseFirestore.instance
+          .collection('questions')
+          .where("subcategoryId", isEqualTo: widget.SelectedCategoryId)
+          .get();
+
+      print(
+          "Questions snapshot: ${questionsSnapshot.docs.length} documents found");
+
+      // Step 2: Check if any questions exist for the subcategory
+      List<DocumentSnapshot> questionDocs = questionsSnapshot.docs;
+
+      if (questionDocs.isEmpty) {
+        setState(() {
+          question = 'No questions found for this subcategory';
+          isLoading = false;
+        });
+        return;
+      }
+
+      // Step 3: Shuffle the questions and pick a random question
+      questionDocs.shuffle();
+      DocumentSnapshot randomQuestion = questionDocs.first;
+
+      // Step 4: Log all the fields for the fetched question
+      print("Fetched Question Data:");
+      print("Question: ${randomQuestion['question']}");
+      print("Category ID: ${randomQuestion['categoryId']}");
+      print("Question ID: ${randomQuestion.id}");
+      print(
+          "Other fields: ${randomQuestion.data()}"); // Log all other fields in the document
+
+      // Step 5: Update the state with the fetched question
+      setState(() {
+        question = randomQuestion['question'];
+        currentCategoryId = randomQuestion[
+            'categoryId']; // Store the associated categoryId if needed
+        currentQuestionId = randomQuestion.id;
+        isLoading = false;
+      });
+    } catch (e) {
+      print('Error fetching question: $e');
+      setState(() {
+        question = 'Error fetching question';
+        isLoading = false;
+      });
+    }
+
+    print("Fetched Question: $question");
+  }
+
+  Future<void> fetchAndShowStats() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      DocumentSnapshot statsDoc = await FirebaseFirestore.instance
+          .collection('stats')
+          .doc(currentCategoryId)
+          .collection('questions')
+          .doc(currentQuestionId)
+          .get();
+
+      if (statsDoc.exists) {
+        setState(() {
+          stats = statsDoc.data() as Map<String, dynamic>;
+          showStats = true;
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          stats = {'yesCount': 0, 'noCount': 0};
+          showStats = true;
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      print('Error fetching stats: $e');
+      setState(() {
+        stats = {'error': 'Error fetching stats'};
+        showStats = true;
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> updateStats(bool answer) async {
+    String field = answer ? 'yesCount' : 'noCount';
+    try {
+      await FirebaseFirestore.instance
+          .collection('stats')
+          .doc(currentCategoryId)
+          .collection('questions')
+          .doc(currentQuestionId)
+          .set({field: FieldValue.increment(1)}, SetOptions(merge: true));
+    } catch (e) {
+      print('Error updating stats: $e');
+    }
+  }
+
+  Future<void> addCommentToFirebase(
+    String username,
+    String comment,
+    String currentCategoryId,
+    String currentQuestionId,
+  ) async {
+    try {
+      // Reference to the Firestore collection "Comment"
+      CollectionReference comments =
+          FirebaseFirestore.instance.collection('Comment');
+
+      // Add the comment data to Firestore
+      await comments.add({
+        'username': username,
+        'comment': comment,
+        'categoryId': currentCategoryId,
+        'questionId': currentQuestionId,
+        'timestamp': FieldValue
+            .serverTimestamp(), // optional, adds timestamp to the comment
+      });
+
+      print("Comment added successfully!");
+    } catch (e) {
+      print("Error adding comment: $e");
+    }
+  }
+
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController commentController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                showStats
+                    ? const SizedBox(height: 8)
+                    : const SizedBox(height: 40),
+                showStats
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Image.asset(
+                            "assets/images/twitter.png",
+                            height: 20,
+                          ),
+                          const SizedBox(width: 10),
+                          Image.asset(
+                            "assets/images/facebook.png",
+                            height: 20,
+                          ),
+                          const SizedBox(width: 10),
+                          Image.asset(
+                            "assets/images/instagram.png",
+                            height: 20,
+                          ),
+                          const SizedBox(width: 10),
+                        ],
+                      )
+                    : const SizedBox(
+                        height: 0,
+                        width: 0,
+                      ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 36),
+                  child: Image.asset(
+                    width: 100,
+                    height: 100,
+                    'assets/images/preloader.png', // Replace with your image asset path
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Column(
+                      children: [
+                        Text("Category Name"),
+                        Text("Module Name"),
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 50,
+                    ),
+                    Column(
+                      children: [
+                        const Text(
+                          "1",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Transform.rotate(
+                          angle: 2.6,
+                          child: Container(
+                            width: 35,
+                            height: 3,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const Text(
+                          "10",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Container(
+                    width: 100,
+                    height: showStats == true ? 100 : 160,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color.fromARGB(255, 13, 211, 19),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
+                    child: Center(
+                      child: isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : showStats
+                              ? const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Most questions are answered in a simple yes or no format. Please select Yes or No.",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                )
+                              : Text(
+                                  question,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                if (showStats)
+                  Column(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 35),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("YES or option 1"),
+                            Text("NO or option 2"),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      CustomLoadingBar(progress: m1Progress),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 50),
+                        child: Column(
+                          children: [
+                            const Text("Did you like this question?"),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 40, vertical: 2),
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                    border: Border.all(
+                                      width: 5,
+                                      color: const Color.fromARGB(
+                                          255, 13, 211, 19),
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.thumb_up,
+                                    color: Color.fromARGB(255, 13, 211, 19),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 40, vertical: 2),
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(10),
+                                    ),
+                                    border: Border.all(
+                                      color: Colors.grey,
+                                      width: 5,
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.thumb_down,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          CustomLoadingBar(progress: m2Progress),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      MiniLoadingBar(progress: mProgress),
+                                      const SizedBox(width: 10),
+                                      const Text(
+                                        "M",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      MiniLoadingBar(progress: fProgress),
+                                      const SizedBox(width: 10),
+                                      const Text(
+                                        "F ",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      MiniLoadingBar(progress: nProgress),
+                                      const SizedBox(width: 10),
+                                      const Text(
+                                        "N",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 15),
+                                ],
+                              ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      MiniLoadingBar(progress: a1Progress),
+                                      const SizedBox(width: 10),
+                                      const Text(
+                                        "0 - 14   ",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      MiniLoadingBar(progress: a2Progress),
+                                      const SizedBox(width: 10),
+                                      const Text(
+                                        "15 - 24 ",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      MiniLoadingBar(progress: a3Progress),
+                                      const SizedBox(width: 10),
+                                      const Text(
+                                        "25 - 34",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      MiniLoadingBar(progress: a4Progress),
+                                      const SizedBox(width: 10),
+                                      const Text(
+                                        "35 - 44",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      MiniLoadingBar(progress: a5Progress),
+                                      const SizedBox(width: 10),
+                                      const Text(
+                                        "45 - 64",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      MiniLoadingBar(progress: a6Progress),
+                                      const SizedBox(width: 10),
+                                      const Text(
+                                        "65 +     ",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 15),
+                                ],
+                              )
+                            ],
+                          ),
+                          // ====================================================================== Country
+                          // ======================================================================
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      MiniLoadingBar(progress: c1Progress),
+                                      const SizedBox(width: 10),
+                                      SizedBox(
+                                        width: 35,
+                                        height: 20,
+                                        child: Image.asset(
+                                          "assets/images/USA.png",
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      MiniLoadingBar(progress: c2Progress),
+                                      const SizedBox(width: 10),
+                                      SizedBox(
+                                        width: 35,
+                                        height: 20,
+                                        child: Image.asset(
+                                          "assets/images/UK.png",
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      MiniLoadingBar(progress: c3Progress),
+                                      const SizedBox(width: 10),
+                                      SizedBox(
+                                        width: 35,
+                                        height: 20,
+                                        child: Image.asset(
+                                          "assets/images/FRANCE.png",
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 15),
+                                ],
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      MiniLoadingBar(progress: c4Progress),
+                                      const SizedBox(width: 10),
+                                      SizedBox(
+                                        width: 35,
+                                        height: 20,
+                                        child: Image.asset(
+                                          "assets/images/BOLIVIA.png",
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      MiniLoadingBar(progress: c5Progress),
+                                      const SizedBox(width: 10),
+                                      SizedBox(
+                                        width: 35,
+                                        height: 20,
+                                        child: Image.asset(
+                                          "assets/images/BELGIUM.png",
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      MiniLoadingBar(progress: c6Progress),
+                                      const SizedBox(width: 10),
+                                      SizedBox(
+                                        width: 35,
+                                        height: 20,
+                                        child: Image.asset(
+                                          "assets/images/PORTUGAL.png",
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Container(
+                                width: 130,
+                                height: 35,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors
+                                      .grey.shade500, // Grey background color
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: DropdownButton<String>(
+                                  value: "USA", // Default selected value
+                                  items: <String>[
+                                    "USA",
+                                    "UK",
+                                    "FRANCE",
+                                    "BELGIUM"
+                                  ].map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    // Handle selection change
+                                  },
+                                  underline:
+                                      const SizedBox(), // Removes the default underline
+                                  dropdownColor: Colors.grey
+                                      .shade400, // Grey background for the dropdown
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      // const SizedBox(
+                      //   height: 60,
+                      // ),
+                    ],
+                  ),
+                showStats
+                    ? const SizedBox(width: 0, height: 0)
+                    : const Spacer(),
+                if (!showStats)
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await updateStats(true);
+                              fetchAndShowStats();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.all(20),
+                              backgroundColor: Colors.white, // White background
+                              side: const BorderSide(
+                                  color: Color.fromARGB(255, 13, 211, 19),
+                                  width: 6), // Green border
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                    20,
+                                  ), // Border radius on top-left
+                                ),
+                              ),
+                            ),
+                            child: const Column(
+                              mainAxisSize: MainAxisSize
+                                  .min, // Makes the column size fit content
+                              children: [
+                                Text(
+                                  'Yes',
+                                  style: TextStyle(
+                                      color:
+                                          Colors.grey, // Black color for "Yes"
+                                      fontSize: 40, // Large size for "Yes"
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "palatino"),
+                                ),
+                                Text(
+                                  'Option 1',
+                                  style: TextStyle(
+                                    color: Colors
+                                        .grey, // Black color for "Option 1"
+                                    fontSize: 20, // Smaller size for "Option 1"
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await updateStats(false);
+                              fetchAndShowStats();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.all(20),
+                              backgroundColor: Colors.white, // White background
+                              side: const BorderSide(
+                                  color: Colors.grey, width: 6), // Green border
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(
+                                      20), // Border radius on top-left
+                                ),
+                              ),
+                            ),
+                            child: const Column(
+                              mainAxisSize: MainAxisSize
+                                  .min, // Makes the column size fit content
+                              children: [
+                                Text(
+                                  'No',
+                                  style: TextStyle(
+                                      color:
+                                          Colors.grey, // Black color for "No"
+                                      fontSize: 40, // Large size for "No"
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "palatino"),
+                                ),
+                                Text(
+                                  'Option 2',
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: Colors.grey,
+                                    color: Colors
+                                        .grey, // Black color for "Option 2"
+                                    fontSize: 20, // Smaller size for "Option 2"
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+            // ==================================
+            !showStats
+                ? const Text("")
+                : Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 50,
+                      color: Colors.grey,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment
+                            .spaceEvenly, // Distribute buttons evenly
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              _showCommentDialog(
+                                context,
+                                usernameController,
+                                commentController,
+                                question,
+                                currentCategoryId,
+                                currentQuestionId,
+                              );
+                            },
+                            child: const Text(
+                              'Comment',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: const Text(
+                              'Back',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomLoadingBar extends StatefulWidget {
+  final double progress;
+
+  const CustomLoadingBar({
+    super.key,
+    required this.progress,
+  });
+
+  @override
+  State<CustomLoadingBar> createState() => _CustomLoadingBarState();
+}
+
+class _CustomLoadingBarState extends State<CustomLoadingBar> {
+  double animatedProgress = 0.0;
+
+  @override
+  void didUpdateWidget(covariant CustomLoadingBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Update the animated progress when the widget's progress changes
+    if (widget.progress != oldWidget.progress) {
+      setState(() {
+        animatedProgress = widget.progress;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the animation
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        animatedProgress = widget.progress;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    int progressPercentage = (animatedProgress * 100).toInt();
+    int remainingPercentage = 100 - progressPercentage;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Stack(
+          children: [
+            // Background bar (inactive portion)
+            Container(
+              width: 350, // Width of the loading bar
+              height: 20, // Height of the loading bar
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300, // Grey background color
+              ),
+            ),
+            // Progress bar (active portion)
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 700), // Animation duration
+              curve: Curves.easeInOut, // Smooth easing curve
+              width: 350 * animatedProgress,
+              height: 20,
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 13, 211, 19), // Green progress color
+              ),
+              child: Center(
+                child: Text(
+                  '$progressPercentage%',
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+            // Remaining percentage text inside the grey bar
+            Positioned(
+              left: 350 * animatedProgress,
+              top: 0,
+              child: Container(
+                width: 350 * (1 - animatedProgress),
+                height: 20,
+                alignment: Alignment.center,
+                child: Text(
+                  '$remainingPercentage%',
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class MiniLoadingBar extends StatefulWidget {
+  final double progress;
+
+  const MiniLoadingBar({
+    super.key,
+    required this.progress,
+  });
+
+  @override
+  State<MiniLoadingBar> createState() => _MiniLoadingBarState();
+}
+
+class _MiniLoadingBarState extends State<MiniLoadingBar> {
+  double animatedProgress = 0.0;
+
+  @override
+  void didUpdateWidget(covariant MiniLoadingBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Update the animated progress when the widget's progress changes
+    if (widget.progress != oldWidget.progress) {
+      setState(() {
+        animatedProgress = widget.progress;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the animation
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        animatedProgress = widget.progress;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    int progressPercentage = (animatedProgress * 100).toInt();
+    int remainingPercentage = 100 - progressPercentage;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Stack(
+          children: [
+            // Background bar (inactive portion)
+            Container(
+              width: 125, // Width of the loading bar
+              height: 20, // Height of the loading bar
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300, // Grey background color
+              ),
+            ),
+            // Progress bar (active portion)
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 700), // Animation duration
+              curve: Curves.easeInOut, // Smooth easing curve
+              width: 125 * animatedProgress,
+              height: 20,
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 13, 211, 19), // Green progress color
+              ),
+              child: Center(
+                child: Text(
+                  '$progressPercentage%',
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+            // Remaining percentage text inside the grey bar
+            Positioned(
+              left: 125 * animatedProgress,
+              top: 0,
+              child: Container(
+                width: 125 * (1 - animatedProgress),
+                height: 20,
+                alignment: Alignment.center,
+                child: Text(
+                  '$remainingPercentage%',
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+void _showCommentDialog(
+  BuildContext context,
+  usernameController,
+  commentController,
+  question,
+  currentCategoryId,
+  currentQuestionId,
+) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(15), // Rounded corners for the dialog
+        ),
+        title: const Text(
+          'Leave a Comment',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: SizedBox(
+          height: 200,
+          child: Column(
+            children: [
+              // Username TextField
+              TextFormField(
+                controller: usernameController,
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                ),
+              ),
+              const SizedBox(height: 15),
+              // Comment TextField
+              TextField(
+                controller: commentController,
+                maxLines: 4,
+                decoration: InputDecoration(
+                  labelText: 'Comment',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          // Cancel Button
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancel'),
+          ),
+          // Submit Button
+          ElevatedButton(
+            onPressed: () async {
+              try {
+                // Reference to the Firestore collection "Comment"
+                CollectionReference comments =
+                    FirebaseFirestore.instance.collection('Comments');
+
+                // Add the comment data to Firestore
+                await comments.add({
+                  'username': usernameController.text,
+                  'comment': commentController.text,
+                  'categoryId': currentCategoryId,
+                  'questionId': currentQuestionId,
+                  'timestamp': FieldValue
+                      .serverTimestamp(), // optional, adds timestamp to the comment
+                });
+
+                print("Comment added successfully!");
+              } catch (e) {
+                print("Error adding comment: $e");
+              }
+
+              usernameController.text = "";
+              commentController.text = "";
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: const Text(
+              'Submit',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+      );
+    },
+  );
+}

@@ -1,0 +1,38 @@
+Questions Data :
+
+categoryId : "6LQxrGbjSHvvnCEXOiLK"
+createdAt : June 2, 2024 at 8:16:54 PM UTC+5
+question : "history questionss"
+sortOrder : 1
+subcategoryId : "fPUHz9D8eWGj0cYN7XrJ"
+updatedAt : July 7, 2024 at 1:17:22 PM UTC+5
+
+Category Data : 
+
+createdAt : May 19, 2024 at 10:55:32 PM UTC+5
+description : "History is an academic discipline which uses a narrative to describe, examine, question, and analyze past events, and investigate their patterns of cause"
+name : "History "
+updatedAt : May 19, 2024 at 10:55:32 PM UTC+5
+
+SubCategory Data :
+
+categoryId : "N2x9mJqdGTShua64osLf"
+createdAt : June 2, 2024 at 8:42:25 PM UTC+5
+subcategory : "pop"
+updatedAt : June 2, 2024 at 8:42:25 PM UTC+5
+
+this is my three collection in firebase i want to fetch those question which subcategory is equal to the selected category which i get
+from previous page where user click on any sub category i fetch those categoryId 
+like that :
+
+Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SpecificCategoryQuestions(
+                                                  SelectedCategoryId: subcategory["categoryId"],
+                                                ),
+                                          ),
+                                        );
+ so i am 
+confuse how i create this logic kindly create this logic which could be very helpful for me

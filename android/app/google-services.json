@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "816012022940",
+    "project_id": "onetwoq-27deb",
+    "storage_bucket": "onetwoq-27deb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:816012022940:android:9b4377707aebf91ac70959",
+        "android_client_info": {
+          "package_name": "com.example.quiz_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3U7Jv4ZvDp9ZXqh7MHFd8X8E47Hqy0WM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

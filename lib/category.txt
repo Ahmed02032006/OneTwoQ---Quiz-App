@@ -1,0 +1,18 @@
+01 - History
+02 - Hypothetical
+03 - Travel
+04 - Space
+05 - Music
+06 - Entertainment
+07 - Technology
+08 - Nature
+09 - Work
+10 - Life
+11 - Health
+12 - In the moment
+13 - Animal
+14 - Automotive
+15 - Science
+16 - Sports
+17 - Food
+18 - Random

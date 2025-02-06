@@ -1,0 +1,302 @@
+Widget _buildDataTable() {
+    final hardcodedSortOrders = {
+      'question1Id': 1,
+      'question2Id': 2,
+      'question3Id': 3,
+      // Add more hardcoded IDs and sortOrder values as needed
+    };
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('questions').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final questions = snapshot.data!.docs.where((doc) {
+          final question = doc['question'] as String;
+          return question.toLowerCase().contains(_searchQuery);
+        }).toList();
+
+        // Sort questions
+        questions.sort((a, b) {
+          final aSortOrder = hardcodedSortOrders[a.id] ?? 0;
+          final bSortOrder = hardcodedSortOrders[b.id] ?? 0;
+          return aSortOrder.compareTo(bSortOrder);
+        });
+
+        // Pagination variables
+        const int rowsPerPage = 10;
+        final int pageCount = (questions.length / rowsPerPage).ceil();
+        int currentPage = 0;
+
+        // Paginated rows
+        final paginatedQuestions = questions
+            .skip(currentPage * rowsPerPage)
+            .take(rowsPerPage)
+            .toList();
+
+        return Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                  columns: const [
+                    DataColumn(label: Text('Sort Order')),
+                    DataColumn(label: Text('Question')),
+                    DataColumn(label: Text('Category')),
+                    DataColumn(label: Text('Subcategory')),
+                    DataColumn(label: Text('Actions')),
+                    // Add more columns if necessary
+                  ],
+                  rows: paginatedQuestions.map((doc) {
+                    final questionId = doc.id;
+                    final question = doc['question'] as String;
+                    final categoryId = doc['categoryId'] as String;
+                    final subcategoryId = doc['subcategoryId'] as String;
+
+                    return DataRow(
+                      cells: [
+                        // ===============================================================
+                        DataCell(
+                          FutureBuilder<DocumentSnapshot>(
+                            future: FirebaseFirestore.instance
+                                .collection('questions')
+                                .doc(questionId)
+                                .get(),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return const Text('Loading...');
+                              }
+
+                              var data = snapshot.data!.data()
+                                  as Map<String, dynamic>?;
+                              if (data == null ||
+                                  !data.containsKey('sortOrder')) {
+                                return const Text('No sortOrder found');
+                              }
+
+                              var sortOrder = data['sortOrder'];
+                              if (sortOrder == null) {
+                                return const Text('No sortOrder found');
+                              }
+
+                              return Row(
+                                children: [
+                                  // Minus button
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 5),
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.green,
+                                      ),
+                                      child: IconButton(
+                                        icon: const Icon(
+                                          Icons.remove,
+                                          color: Colors.white,
+                                        ),
+                                        onPressed: () async {
+                                          int newSortOrder = sortOrder - 1;
+                              
+                                          // Fetch all documents to ensure the new sortOrder doesn't duplicate any existing one
+                                          var querySnapshot =
+                                              await FirebaseFirestore.instance
+                                                  .collection('questions')
+                                                  .where('sortOrder',
+                                                      isEqualTo: newSortOrder)
+                                                  .get();
+                              
+                                          if (querySnapshot.docs.isEmpty) {
+                                            // Update only if no document has the same sortOrder
+                                            await FirebaseFirestore.instance
+                                                .collection('questions')
+                                                .doc(questionId)
+                                                .update({
+                                              'sortOrder': newSortOrder
+                                            });
+                                          } else {
+                                            // If the number already exists, increment other sortOrder values
+                                            await FirebaseFirestore.instance
+                                                .collection('questions')
+                                                .where('sortOrder',
+                                                    isGreaterThanOrEqualTo:
+                                                        newSortOrder)
+                                                .get()
+                                                .then((querySnapshot) {
+                                              for (var doc
+                                                  in querySnapshot.docs) {
+                                                // Increment all sortOrder values greater than or equal to the new value
+                                                int currentSortOrder =
+                                                    doc['sortOrder'];
+                                                FirebaseFirestore.instance
+                                                    .collection('questions')
+                                                    .doc(doc.id)
+                                                    .update({
+                                                  'sortOrder':
+                                                      currentSortOrder + 1
+                                                });
+                                              }
+                                            });
+                                            // Finally, update the current document's sortOrder
+                                            await FirebaseFirestore.instance
+                                                .collection('questions')
+                                                .doc(questionId)
+                                                .update({
+                                              'sortOrder': newSortOrder
+                                            });
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 2),
+                                  // Display the sortOrder number
+                                  Text(
+                                    sortOrder.toString(),
+                                    style: const TextStyle(fontSize: 18),
+                                  ),
+                                  const SizedBox(width: 2),
+                                  // Plus button
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 5),
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.green,
+                                      ),
+                                      child: IconButton(
+                                        icon: const Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                        ),
+                                        onPressed: () async {
+                                          int newSortOrder = sortOrder + 1;
+                              
+                                          // Fetch all documents to ensure the new sortOrder doesn't duplicate any existing one
+                                          var querySnapshot =
+                                              await FirebaseFirestore.instance
+                                                  .collection('questions')
+                                                  .where('sortOrder',
+                                                      isEqualTo: newSortOrder)
+                                                  .get();
+                              
+                                          if (querySnapshot.docs.isEmpty) {
+                                            // Update only if no document has the same sortOrder
+                                            await FirebaseFirestore.instance
+                                                .collection('questions')
+                                                .doc(questionId)
+                                                .update({
+                                              'sortOrder': newSortOrder
+                                            });
+                                          } else {
+                                            // If the number already exists, increment other sortOrder values
+                                            await FirebaseFirestore.instance
+                                                .collection('questions')
+                                                .where('sortOrder',
+                                                    isGreaterThanOrEqualTo:
+                                                        newSortOrder)
+                                                .get()
+                                                .then((querySnapshot) {
+                                              for (var doc
+                                                  in querySnapshot.docs) {
+                                                // Increment all sortOrder values greater than or equal to the new value
+                                                int currentSortOrder =
+                                                    doc['sortOrder'];
+                                                FirebaseFirestore.instance
+                                                    .collection('questions')
+                                                    .doc(doc.id)
+                                                    .update({
+                                                  'sortOrder':
+                                                      currentSortOrder + 1
+                                                });
+                                              }
+                                            });
+                                            // Finally, update the current document's sortOrder
+                                            await FirebaseFirestore.instance
+                                                .collection('questions')
+                                                .doc(questionId)
+                                                .update({
+                                              'sortOrder': newSortOrder
+                                            });
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                        // ===============================================================
+                        DataCell(Text(question)),
+                        DataCell(FutureBuilder<DocumentSnapshot>(
+                          future: FirebaseFirestore.instance
+                              .collection('categories')
+                              .doc(categoryId)
+                              .get(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return const Text('Loading...');
+                            }
+                            return Text(snapshot.data!['name']);
+                          },
+                        )),
+                        DataCell(FutureBuilder<DocumentSnapshot>(
+                          future: FirebaseFirestore.instance
+                              .collection('subcategories')
+                              .doc(subcategoryId)
+                              .get(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return const Text('Loading...');
+                            }
+                            return Text(snapshot.data!['subcategory']);
+                          },
+                        )),
+                        DataCell(
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: () {
+                                  _showEditQuestionModal(
+                                      context, questionId, question);
+                                },
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () {
+                                  _deleteQuestion(questionId);
+                                },
+                              ),
+                              const SizedBox(width: 8),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => const Questions(),
+                                    ),
+                                  );
+                                },
+                                child: const Text('View Comments'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        );
+      },
+    );
+  }

@@ -1,0 +1,101 @@
+class MiniLoadingBar extends StatefulWidget {
+  final double progress;
+  final int delay;
+
+  const MiniLoadingBar({
+    super.key,
+    required this.progress,
+    required this.delay,
+  });
+
+  @override
+  State<MiniLoadingBar> createState() => _MiniLoadingBarState();
+}
+
+class _MiniLoadingBarState extends State<MiniLoadingBar> {
+  double animatedProgress = 0.0;
+
+  @override
+  void didUpdateWidget(covariant MiniLoadingBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Update the animated progress when the widget's progress changes
+    if (widget.progress != oldWidget.progress) {
+      setState(() {
+        animatedProgress = widget.progress;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the animation
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        animatedProgress = widget.progress;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    int progressPercentage = (animatedProgress * 100).toInt();
+    int remainingPercentage = 100 - progressPercentage;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Stack(
+          children: [
+            // Background bar (inactive portion)
+            Container(
+              width: 125, // Width of the loading bar
+              height: 20, // Height of the loading bar
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300, // Grey background color
+              ),
+            ),
+            // Progress bar (active portion)
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 700), // Animation duration
+              curve: Curves.easeInOut, // Smooth easing curve
+              width: 125 * animatedProgress,
+              height: 20,
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 13, 211, 19), // Green progress color
+              ),
+              child: Center(
+                child: Text(
+                  '$progressPercentage%',
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+            // Remaining percentage text inside the grey bar
+            Positioned(
+              left: 125 * animatedProgress,
+              top: 0,
+              child: Container(
+                width: 125 * (1 - animatedProgress),
+                height: 20,
+                alignment: Alignment.center,
+                child: Text(
+                  '$remainingPercentage%',
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
