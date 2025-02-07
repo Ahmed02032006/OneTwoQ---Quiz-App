@@ -1,8 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:quiz_app/helpers/ad_helper.dart';
 import 'package:quiz_app/pages/disclaimer.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  BannerAd? _bannerAd;
+  bool _isAdLoaded = false; // Track ad loading status
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBannerAd();
+  }
+
+  void _loadBannerAd() {
+    _bannerAd = BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId,
+      request: AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _isAdLoaded = true; // Mark ad as loaded
+          });
+          print("Banner Ad loaded successfully");
+        },
+        onAdFailedToLoad: (ad, err) {
+          print('Failed to load banner ad: ${err.message}');
+          ad.dispose();
+        },
+      ),
+    )..load();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +111,30 @@ class Home extends StatelessWidget {
           ],
         ),
       ),
-      
+      bottomNavigationBar: _isAdLoaded
+          ? SizedBox(
+              height: _bannerAd!.size.height.toDouble(),
+              width: _bannerAd!.size.width.toDouble(),
+              child: AdWidget(ad: _bannerAd!),
+            )
+          : SizedBox(), // Hide if ad is not loaded
+
+      // bottomNavigationBar:
+      //     //  isAdLoaded
+      //     // ? SizedBox(
+      //     //     height: bannerAd.size.height.toDouble(),
+      //     //     width: bannerAd.size.width.toDouble(),
+      //     //     child: AdWidget(ad: bannerAd),
+      //     //   )
+      //     // :
+      //     SizedBox(
+      //   height: 60,
+      //   width: double.infinity,
+      //   child: Container(
+      //     color: Colors.blueAccent,
+      //   ),
+      // )
+      // );
     );
   }
 }
