@@ -23,6 +23,8 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
   String currentCategoryId = '';
   String currentQuestionId = '';
 
+  bool isStatsDisplayed = false;
+
   // Animation
 
   bool isAnimationLoading = false; // Set this to control loading state
@@ -51,6 +53,7 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
       _controller.reset();
       _controller.forward(); // Trigger the fade-in animation
     });
+    fetchSettings();
     updateProgressValues();
     fetchQuestion();
   }
@@ -60,6 +63,23 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
     _controller.dispose(); // Dispose of the animation controller
     super.dispose();
   }
+
+  Future<void> fetchSettings() async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
+          .instance
+          .collection('Settings')
+          .doc('2fbG1GP9nX7XJrgGaA6H')
+          .get();
+      if (doc.exists) {
+        var isStatsDisplay = doc.data()?['isStatsDisplayed'];
+        isStatsDisplayed = isStatsDisplay;
+      }
+    } catch (e) {
+      print("Error fetching settings: $e");
+    }
+  }
+
 
   void updateProgressValues() {
     // Random number generator
@@ -467,7 +487,7 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
                 const SizedBox(
                   height: 10,
                 ),
-                if (showStats)
+                if (isStatsDisplayed)
                   if (showStats)
                     SizedBox(
                       height: 330,
@@ -925,6 +945,7 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
                 showStats
                     ? const SizedBox(width: 0, height: 0)
                     : const Spacer(),
+                
                 if (!showStats)
                   Row(
                     children: [
@@ -1606,8 +1627,8 @@ class _MiniLoadingBarState extends State<MiniLoadingBar>
     );
 
     // Define the progress animation
-    _progressAnimation = Tween<double>(begin: 0.0, end: widget.progress)
-        .animate(CurvedAnimation(
+    _progressAnimation =
+        Tween<double>(begin: 0.0, end: widget.progress).animate(CurvedAnimation(
       parent: _animationController,
       curve: Curves.easeInOut, // Smooth curve for progress animation
     ));
@@ -1677,7 +1698,6 @@ class _MiniLoadingBarState extends State<MiniLoadingBar>
     );
   }
 }
-
 
 void _showCommentDialog(
   BuildContext context,

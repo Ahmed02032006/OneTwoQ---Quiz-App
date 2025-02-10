@@ -2,18 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/pages/home.dart';
 
-class StuckScreen extends StatefulWidget {
-  const StuckScreen({super.key});
+class Preloader extends StatefulWidget {
+  const Preloader({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _StuckScreenState createState() => _StuckScreenState();
+  _PreloaderState createState() => _PreloaderState();
 }
 
-class _StuckScreenState extends State<StuckScreen>
+class _PreloaderState extends State<Preloader>
     with SingleTickerProviderStateMixin {
-  late bool isAppActive;
-  late bool hasDataAvailable;
+  bool isAppActive = false;
+  bool hasDataAvailable = false;
 
   late AnimationController _controller;
 
@@ -57,7 +57,7 @@ class _StuckScreenState extends State<StuckScreen>
           .doc('2fbG1GP9nX7XJrgGaA6H')
           .get();
       if (doc.exists) {
-        var isActive = doc.data()?['isActive'];
+        var isActive = doc.data()?['isAppOnline'];
         isAppActive = isActive;
         hasDataAvailable = true;
       } else {

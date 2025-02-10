@@ -269,7 +269,7 @@ class _QuestionsState extends State<Questions> {
         'sortOrder': 0, // Default value for sortOrder
       });
     } catch (e) {
-      print('Error adding question: $e');
+      debugPrint('Error adding question: $e');
     }
   }
 

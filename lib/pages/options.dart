@@ -1,10 +1,46 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/pages/categories.dart';
 import 'package:quiz_app/pages/faq.dart';
+import 'package:quiz_app/pages/privacy_policy.dart';
+import 'package:quiz_app/pages/terms_and_conditions.dart';
 import 'package:quiz_app/pages/truerandomquestions.dart';
 
-class Options extends StatelessWidget {
+class Options extends StatefulWidget {
   const Options({super.key});
+
+  @override
+  State<Options> createState() => _OptionsState();
+}
+
+class _OptionsState extends State<Options> {
+  bool isButtonDisplayed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchSettings();
+  }
+
+  Future<void> fetchSettings() async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
+          .instance
+          .collection('Settings')
+          .doc('2fbG1GP9nX7XJrgGaA6H')
+          .get();
+      if (doc.exists) {
+        var isbuttonDisplay = doc.data()?['isButtonDisplayed'];
+        setState(() {
+          isButtonDisplayed = isbuttonDisplay;
+        });
+      } else {
+        debugPrint("Document does not exist");
+      }
+    } catch (e) {
+      debugPrint("Error fetching settings: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,31 +59,74 @@ class Options extends StatelessWidget {
                   children: [
                     const SizedBox(height: 15),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.03),
+                            horizontal: screenWidth * 0.03,
+                          ),
                           child: GestureDetector(
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const Faq(),
+                                  builder: (context) => const TermsAndConditions(),
                                 ),
                               );
                             },
                             child: Image.asset(
-                              "assets/images/settings-gears 1.png",
-                              height: screenHeight * 0.05,
+                              "assets/images/TAC.png",
+                              height: screenHeight * 0.04,
                             ),
                           ),
+                        ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth * 0.03,
+                              ),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const PrivacyPolicy(),
+                                    ),
+                                  );
+                                },
+                                child: Image.asset(
+                                  "assets/images/PP.png",
+                                  height: screenHeight * 0.04,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth * 0.03,
+                              ),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Faq(),
+                                    ),
+                                  );
+                                },
+                                child: Image.asset(
+                                  "assets/images/settings-gears 1.png",
+                                  height: screenHeight * 0.04,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth * 0.1),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
                       child: Image.asset(
                         'assets/images/preloader.png', // Replace with your image asset path
                         width: screenWidth * 0.4,
@@ -56,50 +135,55 @@ class Options extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    buildButton(
-                      context,
-                      screenWidth,
-                      "Categories",
-                      "Choose a question category and then answer a grouping of questions. This is the definitive way to play.",
-                      const Categories(),
-                    ),
-                    const SizedBox(height: 35),
-                    buildButton(
-                      context,
-                      screenWidth,
-                      "True Random",
-                      "Feeling crazy? Answer questions taken randomly from every category on the app.",
-                      const TrueRandomQuestions(),
-                    ),
+                    if (isButtonDisplayed)
+                      Column(
+                        children: [
+                          buildButton(
+                            context,
+                            screenWidth,
+                            "Categories",
+                            "Choose a question category and then answer a grouping of questions. This is the definitive way to play.",
+                            const Categories(),
+                          ),
+                          const SizedBox(height: 35),
+                          buildButton(
+                            context,
+                            screenWidth,
+                            "True Random",
+                            "Feeling crazy? Answer questions taken randomly from every category on the app.",
+                            const TrueRandomQuestions(),
+                          ),
+                        ],
+                      )
                     // const SizedBox(height: 35),
                   ],
                 ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.grey,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(20),
-                                bottomRight: Radius.circular(20),
-                              ),
-                            ),
-                            minimumSize: Size(double.infinity, screenHeight * 0.05),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
                           ),
-                          child: const Text(
-                            '',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                            ),
-                          ),
+                        ),
+                        minimumSize: Size(double.infinity, screenHeight * 0.05),
+                      ),
+                      child: const Text(
+                        '',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
                         ),
                       ),
                     ),
+                  ),
+                ),
               ],
             );
           },

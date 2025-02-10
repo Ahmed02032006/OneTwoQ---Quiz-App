@@ -81,6 +81,8 @@ flutter:
     - assets/images/instagram.png
     - assets/images/settings-gears 1.png
     - assets/images/share.png
+    - assets/images/PP.png
+    - assets/images/TAC.png
     # ============= icons =================
     - assets/icons/Icon1SideA.png
     - assets/icons/Icon1SideB.png

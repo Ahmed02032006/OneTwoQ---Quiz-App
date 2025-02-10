@@ -200,7 +200,7 @@ class _AdminSubCategoryState extends State<AdminSubCategory> {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      print('Error adding subcategory: $e');
+      debugPrint('Error adding subcategory: $e');
     }
   }
 
@@ -562,7 +562,7 @@ class _AdminSubCategoryState extends State<AdminSubCategory> {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      print('Error updating subcategory: $e');
+      debugPrint('Error updating subcategory: $e');
     }
   }
 
@@ -606,7 +606,7 @@ class _AdminSubCategoryState extends State<AdminSubCategory> {
           .doc(subcategoryId)
           .delete();
     } catch (e) {
-      print('Error deleting subcategory: $e');
+      debugPrint('Error deleting subcategory: $e');
     }
   }
 }

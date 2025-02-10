@@ -169,7 +169,7 @@ class _CategoryState extends State<Category> {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      print('Error adding category: $e');
+      debugPrint('Error adding category: $e');
     }
   }
 
@@ -564,7 +564,7 @@ class _CategoryState extends State<Category> {
         'updatedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      print('Error updating category: $e');
+      debugPrint('Error updating category: $e');
     }
   }
 
@@ -606,7 +606,7 @@ class _CategoryState extends State<Category> {
           .doc(categoryId)
           .delete();
     } catch (e) {
-      print('Error deleting category: $e');
+      debugPrint('Error deleting category: $e');
     }
   }
 }
