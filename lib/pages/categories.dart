@@ -22,29 +22,14 @@ class Categories extends StatelessWidget {
       "categoryID": "OEi6NoO64UHgMXmhrySO"
     },
     {
-      "imagePath": "assets/icons/Icon4SideA.png",
-      "categoryNAME": "Life",
-      "categoryID": "WdHxSAsc3Sip48HBpd8f"
-    },
-    {
       "imagePath": "assets/icons/Icon5SideA.png",
       "categoryNAME": "Food",
       "categoryID": "yWPR43dxo6O5M48AD7Mp"
     },
     {
-      "imagePath": "assets/icons/Icon6SideA.png",
-      "categoryNAME": "Sport",
-      "categoryID": "xaqvzbd5oaRj7asdQUFy"
-    },
-    {
-      "imagePath": "assets/icons/Icon7SideA.png",
-      "categoryNAME": "Travel",
-      "categoryID": "AxAvElBNcpynDEtFMo6P"
-    },
-    {
-      "imagePath": "assets/icons/Icon8SideA.png",
-      "categoryNAME": "History",
-      "categoryID": "6LQxrGbjSHvvnCEXOiLK"
+      "imagePath": "assets/icons/Icon4SideA.png",
+      "categoryNAME": "Fun",
+      "categoryID": "WdHxSAsc3Sip48HBpd8f"
     },
     {
       "imagePath": "assets/icons/Icon9SideA.png",
@@ -52,9 +37,24 @@ class Categories extends StatelessWidget {
       "categoryID": "fGL4TdrmKC6RGYiCiElj"
     },
     {
+      "imagePath": "assets/icons/Icon8SideA.png",
+      "categoryNAME": "History",
+      "categoryID": "6LQxrGbjSHvvnCEXOiLK"
+    },
+    {
+      "imagePath": "assets/icons/Icon12SideA.png",
+      "categoryNAME": "Hypothetical",
+      "categoryID": "in5hPaBZj1fCv6aPIVYW",
+    },
+    {
       "imagePath": "assets/icons/Icon10SideA.png",
-      "categoryNAME": "Nature",
+      "categoryNAME": "In the Moment",
       "categoryID": "VDkm84EGFi68nYXDktoC"
+    },
+    {
+      "imagePath": "assets/icons/Icon14SideA.png",
+      "categoryNAME": "Life",
+      "categoryID": "w9w1TGH0CSbYbp83aO20"
     },
     {
       "imagePath": "assets/icons/Icon11SideA.png",
@@ -62,9 +62,9 @@ class Categories extends StatelessWidget {
       "categoryID": "N2x9mJqdGTShua64osLf"
     },
     {
-      "imagePath": "assets/icons/Icon12SideA.png",
-      "categoryNAME": "In the moment",
-      "categoryID": "in5hPaBZj1fCv6aPIVYW",
+      "imagePath": "assets/icons/Icon17SideA.png",
+      "categoryNAME": "Nature",
+      "categoryID": "6RwQD1LVJgm3QNsZi8m1"
     },
     {
       "imagePath": "assets/icons/Icon13SideA.png",
@@ -72,7 +72,7 @@ class Categories extends StatelessWidget {
       "categoryID": "zFH4NWj1xoIwrQRFyPvj"
     },
     {
-      "imagePath": "assets/icons/Icon14SideA.png",
+      "imagePath": "assets/icons/Icon19SideA.png",
       "categoryNAME": "Science",
       "categoryID": "w9w1TGH0CSbYbp83aO20"
     },
@@ -82,19 +82,29 @@ class Categories extends StatelessWidget {
       "categoryID": "DexR5qQrY6niZssl9aJL"
     },
     {
+      "imagePath": "assets/icons/Icon6SideA.png",
+      "categoryNAME": "Sport",
+      "categoryID": "xaqvzbd5oaRj7asdQUFy"
+    },
+    {
       "imagePath": "assets/icons/Icon16SideA.png",
       "categoryNAME": "Technology",
       "categoryID": "UnYaEBouegz2wIUqbGUp"
     },
     {
-      "imagePath": "assets/icons/Icon17SideA.png",
-      "categoryNAME": "Hypothetical",
-      "categoryID": "6RwQD1LVJgm3QNsZi8m1"
+      "imagePath": "assets/icons/Icon7SideA.png",
+      "categoryNAME": "Travel",
+      "categoryID": "AxAvElBNcpynDEtFMo6P"
     },
     {
       "imagePath": "assets/icons/Icon18SideA.png",
       "categoryNAME": "Work",
       "categoryID": "VmQo9nmHfDA1uXfSWS3r"
+    },
+    {
+      "imagePath": "assets/icons/Icon20SideA.png",
+      "categoryNAME": "One Two Q",
+      "categoryID": ""
     },
   ];
 

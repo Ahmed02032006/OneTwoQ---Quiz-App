@@ -1,0 +1,108 @@
+this is my mini animation loader for showing stats : 
+
+class MiniLoadingBar extends StatefulWidget {
+  final double progress; // Progress value between 0 and 1
+  final int delay;
+
+  const MiniLoadingBar({
+    super.key,
+    required this.progress,
+    required this.delay,
+  });
+
+  @override
+  State<MiniLoadingBar> createState() => _MiniLoadingBarState();
+}
+
+class _MiniLoadingBarState extends State<MiniLoadingBar>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _progressAnimation;
+
+  bool isVisible = false; // Tracks visibility of the loader
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize AnimationController for smooth progress animation
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2), // Smooth progress duration
+    );
+
+    // Define the progress animation
+    _progressAnimation =
+        Tween<double>(begin: 0.0, end: widget.progress).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut, // Smooth curve for progress animation
+    ));
+
+    // Delay visibility and start animations
+    Future.delayed(Duration(milliseconds: widget.delay), () {
+      if (mounted) {
+        setState(() {
+          isVisible = true; // Show the loader
+        });
+        _animationController.forward(); // Start the progress animation
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 300), // Smooth fade transition
+      child: isVisible
+          ? Stack(
+              children: [
+                // Background bar (inactive portion)
+                Container(
+                  width: 125,
+                  height: 20,
+                  color: Colors.grey.shade300,
+                ),
+                // Progress bar (active portion)
+                AnimatedBuilder(
+                  animation: _progressAnimation,
+                  builder: (context, child) {
+                    double animatedProgress = _progressAnimation.value;
+                    int progressPercentage = (animatedProgress * 100).toInt();
+
+                    return Container(
+                      width: 125 * animatedProgress,
+                      height: 20,
+                      color: const Color.fromARGB(255, 13, 211, 19),
+                      alignment: Alignment.center,
+                      child: Text(
+                        '$progressPercentage%',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            )
+          : SizedBox(
+              width: 125, // Fixed width
+              height: 20, // Fixed height
+              child: Container(
+                color: Colors.transparent, // Transparent placeholder
+              ),
+            ),
+    );
+  }
+}
+
+
+in this animation the text animation is the number stats from 0 to the random but i want to change this animation i want when animation complete then show a number with beautiful fade in animation and remember that dont change the ui of this loader

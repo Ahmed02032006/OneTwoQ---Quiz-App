@@ -49,6 +49,25 @@ class _PreloaderState extends State<Preloader>
     super.dispose();
   }
 
+  // Future<void> fetchSettings() async {
+  //   try {
+  //     DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
+  //         .instance
+  //         .collection('Settings')
+  //         .doc('2fbG1GP9nX7XJrgGaA6H')
+  //         .get();
+  //     if (doc.exists) {
+  //       var isActive = doc.data()?['isAppOnline'];
+  //       isAppActive = isActive;
+  //       hasDataAvailable = true;
+  //     } else {
+  //       hasDataAvailable = false;
+  //     }
+  //   } catch (e) {
+  //     print("Error fetching settings: $e");
+  //   }
+  // }
+
   Future<void> fetchSettings() async {
     try {
       DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
@@ -56,12 +75,18 @@ class _PreloaderState extends State<Preloader>
           .collection('Settings')
           .doc('2fbG1GP9nX7XJrgGaA6H')
           .get();
+
       if (doc.exists) {
         var isActive = doc.data()?['isAppOnline'];
-        isAppActive = isActive;
-        hasDataAvailable = true;
+
+        setState(() {
+          isAppActive = isActive ?? false; // Ensure it's a boolean
+          hasDataAvailable = true;
+        });
       } else {
-        hasDataAvailable = false;
+        setState(() {
+          hasDataAvailable = false;
+        });
       }
     } catch (e) {
       print("Error fetching settings: $e");

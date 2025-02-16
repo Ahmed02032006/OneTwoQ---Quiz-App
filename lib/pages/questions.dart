@@ -64,13 +64,14 @@ class _QuestionsState extends State<Questions>
           .get();
       if (doc.exists) {
         var isStatsDisplay = doc.data()?['isStatsDisplayed'];
-        isStatsDisplayed = isStatsDisplay;
+        setState(() {
+          isStatsDisplayed = isStatsDisplay;
+        });
       }
     } catch (e) {
       debugPrint("Error fetching settings: $e");
     }
   }
-
 
   @override
   void dispose() {
@@ -358,7 +359,7 @@ class _QuestionsState extends State<Questions>
                       opacity: _opacityAnimation,
                       child: Container(
                         width: 100,
-                        height: showStats == true ? 100 : 160,
+                        height: showStats == true ? 80 : 160,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: const Color.fromARGB(255, 13, 211, 19),
@@ -410,8 +411,462 @@ class _QuestionsState extends State<Questions>
                 ),
                 if (isStatsDisplayed)
                   if (showStats)
+                    // SizedBox(
+                    //   height: 330,
+                    //   child: SingleChildScrollView(
+                    //     scrollDirection: Axis.vertical,
+                    //     child: Column(
+                    //       children: [
+                    //         Column(
+                    //           children: [
+                    //             const Padding(
+                    //               padding: EdgeInsets.symmetric(horizontal: 35),
+                    //               child: Row(
+                    //                 mainAxisAlignment: MainAxisAlignment.center,
+                    //                 children: [
+                    //                   Text("YES or option 1"),
+                    //                   SizedBox(
+                    //                     width: 50,
+                    //                   ),
+                    //                   Text("NO or option 2"),
+                    //                 ],
+                    //               ),
+                    //             ),
+                    //             const SizedBox(
+                    //               height: 5,
+                    //             ),
+                    //             CustomLoadingBar(
+                    //               progress: m1Progress,
+                    //               delay: const Duration(milliseconds: 400),
+                    //             ),
+                    //             const SizedBox(
+                    //               height: 15,
+                    //             ),
+                    //             Padding(
+                    //               padding: const EdgeInsets.symmetric(
+                    //                   horizontal: 50),
+                    //               child: Column(
+                    //                 children: [
+                    //                   const Text("Did you like this question?"),
+                    //                   const SizedBox(
+                    //                     height: 5,
+                    //                   ),
+                    //                   Row(
+                    //                     mainAxisAlignment:
+                    //                         MainAxisAlignment.center,
+                    //                     children: [
+                    //                       Container(
+                    //                         padding: const EdgeInsets.symmetric(
+                    //                             horizontal: 40, vertical: 2),
+                    //                         decoration: BoxDecoration(
+                    //                           borderRadius:
+                    //                               const BorderRadius.all(
+                    //                             Radius.circular(10),
+                    //                           ),
+                    //                           border: Border.all(
+                    //                             width: 5,
+                    //                             color: const Color.fromARGB(
+                    //                                 255, 13, 211, 19),
+                    //                           ),
+                    //                         ),
+                    //                         child: const Icon(
+                    //                           Icons.thumb_up,
+                    //                           color: Color.fromARGB(
+                    //                               255, 13, 211, 19),
+                    //                         ),
+                    //                       ),
+                    //                       const SizedBox(
+                    //                         width: 10,
+                    //                       ),
+                    //                       Container(
+                    //                         padding: const EdgeInsets.symmetric(
+                    //                             horizontal: 40, vertical: 2),
+                    //                         decoration: BoxDecoration(
+                    //                           borderRadius:
+                    //                               const BorderRadius.all(
+                    //                             Radius.circular(10),
+                    //                           ),
+                    //                           border: Border.all(
+                    //                             color: Colors.grey,
+                    //                             width: 5,
+                    //                           ),
+                    //                         ),
+                    //                         child: const Icon(
+                    //                           Icons.thumb_down,
+                    //                           color: Colors.grey,
+                    //                         ),
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //             ),
+                    //             Column(
+                    //               children: [
+                    //                 const SizedBox(
+                    //                   height: 15,
+                    //                 ),
+                    //                 CustomLoadingBar(
+                    //                   progress: m2Progress,
+                    //                   delay: const Duration(milliseconds: 800),
+                    //                 ),
+                    //                 const SizedBox(
+                    //                   height: 15,
+                    //                 ),
+                    //                 Row(
+                    //                   crossAxisAlignment:
+                    //                       CrossAxisAlignment.start,
+                    //                   mainAxisAlignment:
+                    //                       MainAxisAlignment.center,
+                    //                   children: [
+                    //                     Column(
+                    //                       children: [
+                    //                         Row(
+                    //                           children: [
+                    //                             MiniLoadingBar(
+                    //                               progress: mProgress,
+                    //                               delay: 500,
+                    //                             ),
+                    //                             const SizedBox(width: 10),
+                    //                             const Text(
+                    //                               "M",
+                    //                               style: TextStyle(
+                    //                                 fontSize: 15,
+                    //                                 fontWeight: FontWeight.bold,
+                    //                               ),
+                    //                             ),
+                    //                           ],
+                    //                         ),
+                    //                         const SizedBox(height: 5),
+                    //                         Row(
+                    //                           children: [
+                    //                             MiniLoadingBar(
+                    //                               progress: fProgress,
+                    //                               delay: 1000,
+                    //                             ),
+                    //                             const SizedBox(width: 10),
+                    //                             const Text(
+                    //                               "F ",
+                    //                               style: TextStyle(
+                    //                                 fontSize: 15,
+                    //                                 fontWeight: FontWeight.bold,
+                    //                               ),
+                    //                             ),
+                    //                           ],
+                    //                         ),
+                    //                         const SizedBox(height: 5),
+                    //                         Row(
+                    //                           children: [
+                    //                             MiniLoadingBar(
+                    //                               progress: nProgress,
+                    //                               delay: 1500,
+                    //                             ),
+                    //                             const SizedBox(width: 10),
+                    //                             const Text(
+                    //                               "N",
+                    //                               style: TextStyle(
+                    //                                 fontSize: 15,
+                    //                                 fontWeight: FontWeight.bold,
+                    //                               ),
+                    //                             ),
+                    //                           ],
+                    //                         ),
+                    //                         const SizedBox(height: 15),
+                    //                       ],
+                    //                     ),
+                    //                     const SizedBox(
+                    //                       width: 15,
+                    //                     ),
+                    //                     Column(
+                    //                       children: [
+                    //                         Row(
+                    //                           children: [
+                    //                             MiniLoadingBar(
+                    //                               progress: a1Progress,
+                    //                               delay: 2000,
+                    //                             ),
+                    //                             const SizedBox(width: 10),
+                    //                             const Text(
+                    //                               "0 - 14   ",
+                    //                               style: TextStyle(
+                    //                                 fontSize: 15,
+                    //                                 fontWeight: FontWeight.bold,
+                    //                               ),
+                    //                             ),
+                    //                           ],
+                    //                         ),
+                    //                         const SizedBox(height: 5),
+                    //                         Row(
+                    //                           children: [
+                    //                             MiniLoadingBar(
+                    //                               progress: a2Progress,
+                    //                               delay: 2500,
+                    //                             ),
+                    //                             const SizedBox(width: 10),
+                    //                             const Text(
+                    //                               "15 - 24 ",
+                    //                               style: TextStyle(
+                    //                                 fontSize: 15,
+                    //                                 fontWeight: FontWeight.bold,
+                    //                               ),
+                    //                             ),
+                    //                           ],
+                    //                         ),
+                    //                         const SizedBox(height: 5),
+                    //                         Row(
+                    //                           children: [
+                    //                             MiniLoadingBar(
+                    //                               progress: a3Progress,
+                    //                               delay: 3000,
+                    //                             ),
+                    //                             const SizedBox(width: 10),
+                    //                             const Text(
+                    //                               "25 - 34",
+                    //                               style: TextStyle(
+                    //                                 fontSize: 15,
+                    //                                 fontWeight: FontWeight.bold,
+                    //                               ),
+                    //                             ),
+                    //                           ],
+                    //                         ),
+                    //                         const SizedBox(height: 5),
+                    //                         Row(
+                    //                           children: [
+                    //                             MiniLoadingBar(
+                    //                               progress: a4Progress,
+                    //                               delay: 3500,
+                    //                             ),
+                    //                             const SizedBox(width: 10),
+                    //                             const Text(
+                    //                               "35 - 44",
+                    //                               style: TextStyle(
+                    //                                 fontSize: 15,
+                    //                                 fontWeight: FontWeight.bold,
+                    //                               ),
+                    //                             ),
+                    //                           ],
+                    //                         ),
+                    //                         const SizedBox(height: 5),
+                    //                         Row(
+                    //                           children: [
+                    //                             MiniLoadingBar(
+                    //                               progress: a5Progress,
+                    //                               delay: 4000,
+                    //                             ),
+                    //                             const SizedBox(width: 10),
+                    //                             const Text(
+                    //                               "45 - 64",
+                    //                               style: TextStyle(
+                    //                                 fontSize: 15,
+                    //                                 fontWeight: FontWeight.bold,
+                    //                               ),
+                    //                             ),
+                    //                           ],
+                    //                         ),
+                    //                         const SizedBox(height: 5),
+                    //                         Row(
+                    //                           children: [
+                    //                             MiniLoadingBar(
+                    //                               progress: a6Progress,
+                    //                               delay: 4500,
+                    //                             ),
+                    //                             const SizedBox(width: 10),
+                    //                             const Text(
+                    //                               "65 +     ",
+                    //                               style: TextStyle(
+                    //                                 fontSize: 15,
+                    //                                 fontWeight: FontWeight.bold,
+                    //                               ),
+                    //                             ),
+                    //                           ],
+                    //                         ),
+                    //                         const SizedBox(height: 15),
+                    //                       ],
+                    //                     )
+                    //                   ],
+                    //                 ),
+                    //                 // ====================================================================== Country
+                    //                 // ======================================================================
+                    //                 Padding(
+                    //                   padding: const EdgeInsets.symmetric(
+                    //                       horizontal: 5),
+                    //                   child: Row(
+                    //                     crossAxisAlignment:
+                    //                         CrossAxisAlignment.start,
+                    //                     mainAxisAlignment:
+                    //                         MainAxisAlignment.center,
+                    //                     children: [
+                    //                       Column(
+                    //                         children: [
+                    //                           Row(
+                    //                             children: [
+                    //                               MiniLoadingBar(
+                    //                                 progress: c1Progress,
+                    //                                 delay: 5000,
+                    //                               ),
+                    //                               const SizedBox(width: 10),
+                    //                               SizedBox(
+                    //                                 width: 35,
+                    //                                 height: 20,
+                    //                                 child: Image.asset(
+                    //                                   "assets/images/USA.png",
+                    //                                 ),
+                    //                               ),
+                    //                             ],
+                    //                           ),
+                    //                           const SizedBox(height: 5),
+                    //                           Row(
+                    //                             children: [
+                    //                               MiniLoadingBar(
+                    //                                 progress: c2Progress,
+                    //                                 delay: 5500,
+                    //                               ),
+                    //                               const SizedBox(width: 10),
+                    //                               SizedBox(
+                    //                                 width: 35,
+                    //                                 height: 20,
+                    //                                 child: Image.asset(
+                    //                                   "assets/images/UK.png",
+                    //                                 ),
+                    //                               ),
+                    //                             ],
+                    //                           ),
+                    //                           const SizedBox(height: 5),
+                    //                           Row(
+                    //                             children: [
+                    //                               MiniLoadingBar(
+                    //                                 progress: c3Progress,
+                    //                                 delay: 6000,
+                    //                               ),
+                    //                               const SizedBox(width: 10),
+                    //                               SizedBox(
+                    //                                 width: 35,
+                    //                                 height: 20,
+                    //                                 child: Image.asset(
+                    //                                   "assets/images/FRANCE.png",
+                    //                                 ),
+                    //                               ),
+                    //                             ],
+                    //                           ),
+                    //                           const SizedBox(height: 15),
+                    //                         ],
+                    //                       ),
+                    //                       const SizedBox(
+                    //                         width: 7,
+                    //                       ),
+                    //                       Column(
+                    //                         children: [
+                    //                           Row(
+                    //                             children: [
+                    //                               MiniLoadingBar(
+                    //                                 progress: c4Progress,
+                    //                                 delay: 6500,
+                    //                               ),
+                    //                               const SizedBox(width: 10),
+                    //                               SizedBox(
+                    //                                 width: 35,
+                    //                                 height: 20,
+                    //                                 child: Image.asset(
+                    //                                   "assets/images/BOLIVIA.png",
+                    //                                 ),
+                    //                               ),
+                    //                             ],
+                    //                           ),
+                    //                           const SizedBox(height: 5),
+                    //                           Row(
+                    //                             children: [
+                    //                               MiniLoadingBar(
+                    //                                 progress: c5Progress,
+                    //                                 delay: 7000,
+                    //                               ),
+                    //                               const SizedBox(width: 10),
+                    //                               SizedBox(
+                    //                                 width: 35,
+                    //                                 height: 20,
+                    //                                 child: Image.asset(
+                    //                                   "assets/images/BELGIUM.png",
+                    //                                 ),
+                    //                               ),
+                    //                             ],
+                    //                           ),
+                    //                           const SizedBox(height: 5),
+                    //                           Row(
+                    //                             children: [
+                    //                               MiniLoadingBar(
+                    //                                 progress: c6Progress,
+                    //                                 delay: 7500,
+                    //                               ),
+                    //                               const SizedBox(width: 10),
+                    //                               SizedBox(
+                    //                                 width: 35,
+                    //                                 height: 20,
+                    //                                 child: Image.asset(
+                    //                                   "assets/images/PORTUGAL.png",
+                    //                                 ),
+                    //                               ),
+                    //                             ],
+                    //                           ),
+                    //                         ],
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                 ),
+                    //                 Padding(
+                    //                   padding: const EdgeInsets.symmetric(
+                    //                       horizontal: 20),
+                    //                   child: Align(
+                    //                     alignment: Alignment.topLeft,
+                    //                     child: Container(
+                    //                       width: 130,
+                    //                       height: 35,
+                    //                       padding: const EdgeInsets.symmetric(
+                    //                           horizontal: 10),
+                    //                       decoration: BoxDecoration(
+                    //                         color: Colors.grey
+                    //                             .shade500, // Grey background color
+                    //                         borderRadius:
+                    //                             BorderRadius.circular(5),
+                    //                       ),
+                    //                       child: DropdownButton<String>(
+                    //                         value:
+                    //                             "USA", // Default selected value
+                    //                         items: <String>[
+                    //                           "USA",
+                    //                           "UK",
+                    //                           "FRANCE",
+                    //                           "BELGIUM"
+                    //                         ].map((String value) {
+                    //                           return DropdownMenuItem<String>(
+                    //                             value: value,
+                    //                             child: Text(value),
+                    //                           );
+                    //                         }).toList(),
+                    //                         onChanged: (String? newValue) {
+                    //                           // Handle selection change
+                    //                         },
+                    //                         underline:
+                    //                             const SizedBox(), // Removes the default underline
+                    //                         dropdownColor: Colors.grey
+                    //                             .shade400, // Grey background for the dropdown
+                    //                       ),
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //               ],
+                    //             ),
+
+                    //             // const SizedBox(
+                    //             //   height: 60,
+                    //             // ),
+                    //           ],
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(
-                      height: 330,
+                      height: MediaQuery.of(context).size.height *
+                          0.6, // Adjust height relative to screen size
                       child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
                         child: Column(
@@ -436,14 +891,17 @@ class _QuestionsState extends State<Questions>
                                 ),
                                 CustomLoadingBar(
                                   progress: m1Progress,
-                                  delay: const Duration(milliseconds: 400),
+                                  delay: const Duration(milliseconds: 1000),
                                 ),
                                 const SizedBox(
                                   height: 15,
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 50),
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        MediaQuery.of(context).size.width *
+                                            0.1, // Responsive padding
+                                  ),
                                   child: Column(
                                     children: [
                                       const Text("Did you like this question?"),
@@ -454,45 +912,61 @@ class _QuestionsState extends State<Questions>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 40, vertical: 2),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                Radius.circular(10),
+                                          Flexible(
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: MediaQuery.of(
+                                                            context)
+                                                        .size
+                                                        .width *
+                                                    0.1, // Responsive padding
+                                                vertical: 2,
                                               ),
-                                              border: Border.all(
-                                                width: 5,
-                                                color: const Color.fromARGB(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(10),
+                                                ),
+                                                border: Border.all(
+                                                  width: 5,
+                                                  color: const Color.fromARGB(
+                                                      255, 13, 211, 19),
+                                                ),
+                                              ),
+                                              child: const Icon(
+                                                Icons.thumb_up,
+                                                color: Color.fromARGB(
                                                     255, 13, 211, 19),
                                               ),
-                                            ),
-                                            child: const Icon(
-                                              Icons.thumb_up,
-                                              color: Color.fromARGB(
-                                                  255, 13, 211, 19),
                                             ),
                                           ),
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 40, vertical: 2),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                Radius.circular(10),
+                                          Flexible(
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: MediaQuery.of(
+                                                            context)
+                                                        .size
+                                                        .width *
+                                                    0.1, // Responsive padding
+                                                vertical: 2,
                                               ),
-                                              border: Border.all(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(10),
+                                                ),
+                                                border: Border.all(
+                                                  color: Colors.grey,
+                                                  width: 5,
+                                                ),
+                                              ),
+                                              child: const Icon(
+                                                Icons.thumb_down,
                                                 color: Colors.grey,
-                                                width: 5,
                                               ),
-                                            ),
-                                            child: const Icon(
-                                              Icons.thumb_down,
-                                              color: Colors.grey,
                                             ),
                                           ),
                                         ],
@@ -507,193 +981,206 @@ class _QuestionsState extends State<Questions>
                                     ),
                                     CustomLoadingBar(
                                       progress: m2Progress,
-                                      delay: const Duration(milliseconds: 800),
+                                      delay: const Duration(milliseconds: 2000),
                                     ),
                                     const SizedBox(
                                       height: 15,
                                     ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Column(
+                                    LayoutBuilder(
+                                      builder: (context, constraints) {
+                                        return Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
-                                            Row(
+                                            Column(
                                               children: [
-                                                MiniLoadingBar(
-                                                  progress: mProgress,
-                                                  delay: 500,
+                                                Row(
+                                                  children: [
+                                                    MiniLoadingBar(
+                                                      progress: mProgress,
+                                                      delay: 2500,
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    const Text(
+                                                      "M",
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                                const SizedBox(width: 10),
-                                                const Text(
-                                                  "M",
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                                const SizedBox(height: 5),
+                                                Row(
+                                                  children: [
+                                                    MiniLoadingBar(
+                                                      progress: fProgress,
+                                                      delay: 3000,
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    const Text(
+                                                      "F ",
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
+                                                const SizedBox(height: 5),
+                                                Row(
+                                                  children: [
+                                                    MiniLoadingBar(
+                                                      progress: nProgress,
+                                                      delay: 3500,
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    const Text(
+                                                      "N",
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 15),
                                               ],
                                             ),
-                                            const SizedBox(height: 5),
-                                            Row(
+                                            const SizedBox(
+                                              width: 15,
+                                            ),
+                                            Column(
                                               children: [
-                                                MiniLoadingBar(
-                                                  progress: fProgress,
-                                                  delay: 1000,
+                                                Row(
+                                                  children: [
+                                                    MiniLoadingBar(
+                                                      progress: a1Progress,
+                                                      delay: 4000,
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    const Text(
+                                                      "0 - 14   ",
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                                const SizedBox(width: 10),
-                                                const Text(
-                                                  "F ",
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                                const SizedBox(height: 5),
+                                                Row(
+                                                  children: [
+                                                    MiniLoadingBar(
+                                                      progress: a2Progress,
+                                                      delay: 4500,
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    const Text(
+                                                      "15 - 24 ",
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
+                                                const SizedBox(height: 5),
+                                                Row(
+                                                  children: [
+                                                    MiniLoadingBar(
+                                                      progress: a3Progress,
+                                                      delay: 5000,
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    const Text(
+                                                      "25 - 34",
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 5),
+                                                Row(
+                                                  children: [
+                                                    MiniLoadingBar(
+                                                      progress: a4Progress,
+                                                      delay: 5500,
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    const Text(
+                                                      "35 - 44",
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 5),
+                                                Row(
+                                                  children: [
+                                                    MiniLoadingBar(
+                                                      progress: a5Progress,
+                                                      delay: 6000,
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    const Text(
+                                                      "45 - 64",
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 5),
+                                                Row(
+                                                  children: [
+                                                    MiniLoadingBar(
+                                                      progress: a6Progress,
+                                                      delay: 6500,
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    const Text(
+                                                      "65 +     ",
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 15),
                                               ],
                                             ),
-                                            const SizedBox(height: 5),
-                                            Row(
-                                              children: [
-                                                MiniLoadingBar(
-                                                  progress: nProgress,
-                                                  delay: 1500,
-                                                ),
-                                                const SizedBox(width: 10),
-                                                const Text(
-                                                  "N",
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 15),
                                           ],
-                                        ),
-                                        const SizedBox(
-                                          width: 15,
-                                        ),
-                                        Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                MiniLoadingBar(
-                                                  progress: a1Progress,
-                                                  delay: 2000,
-                                                ),
-                                                const SizedBox(width: 10),
-                                                const Text(
-                                                  "0 - 14   ",
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 5),
-                                            Row(
-                                              children: [
-                                                MiniLoadingBar(
-                                                  progress: a2Progress,
-                                                  delay: 2500,
-                                                ),
-                                                const SizedBox(width: 10),
-                                                const Text(
-                                                  "15 - 24 ",
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 5),
-                                            Row(
-                                              children: [
-                                                MiniLoadingBar(
-                                                  progress: a3Progress,
-                                                  delay: 3000,
-                                                ),
-                                                const SizedBox(width: 10),
-                                                const Text(
-                                                  "25 - 34",
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 5),
-                                            Row(
-                                              children: [
-                                                MiniLoadingBar(
-                                                  progress: a4Progress,
-                                                  delay: 3500,
-                                                ),
-                                                const SizedBox(width: 10),
-                                                const Text(
-                                                  "35 - 44",
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 5),
-                                            Row(
-                                              children: [
-                                                MiniLoadingBar(
-                                                  progress: a5Progress,
-                                                  delay: 4000,
-                                                ),
-                                                const SizedBox(width: 10),
-                                                const Text(
-                                                  "45 - 64",
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 5),
-                                            Row(
-                                              children: [
-                                                MiniLoadingBar(
-                                                  progress: a6Progress,
-                                                  delay: 4500,
-                                                ),
-                                                const SizedBox(width: 10),
-                                                const Text(
-                                                  "65 +     ",
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 15),
-                                          ],
-                                        )
-                                      ],
+                                        );
+                                      },
                                     ),
                                     // ====================================================================== Country
                                     // ======================================================================
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 5),
+                                          horizontal: 40),
                                       child: Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Column(
                                             children: [
@@ -701,7 +1188,8 @@ class _QuestionsState extends State<Questions>
                                                 children: [
                                                   MiniLoadingBar(
                                                     progress: c1Progress,
-                                                    delay: 5000,
+                                                    delay: 7000,
+                                                    myWidth: 110,
                                                   ),
                                                   const SizedBox(width: 10),
                                                   SizedBox(
@@ -718,7 +1206,8 @@ class _QuestionsState extends State<Questions>
                                                 children: [
                                                   MiniLoadingBar(
                                                     progress: c2Progress,
-                                                    delay: 5500,
+                                                    delay: 7500,
+                                                    myWidth: 110,
                                                   ),
                                                   const SizedBox(width: 10),
                                                   SizedBox(
@@ -735,7 +1224,8 @@ class _QuestionsState extends State<Questions>
                                                 children: [
                                                   MiniLoadingBar(
                                                     progress: c3Progress,
-                                                    delay: 6000,
+                                                    delay: 8000,
+                                                    myWidth: 110,
                                                   ),
                                                   const SizedBox(width: 10),
                                                   SizedBox(
@@ -759,7 +1249,8 @@ class _QuestionsState extends State<Questions>
                                                 children: [
                                                   MiniLoadingBar(
                                                     progress: c4Progress,
-                                                    delay: 6500,
+                                                    delay: 8500,
+                                                    myWidth: 110,
                                                   ),
                                                   const SizedBox(width: 10),
                                                   SizedBox(
@@ -776,7 +1267,8 @@ class _QuestionsState extends State<Questions>
                                                 children: [
                                                   MiniLoadingBar(
                                                     progress: c5Progress,
-                                                    delay: 7000,
+                                                    delay: 9000,
+                                                    myWidth: 110,
                                                   ),
                                                   const SizedBox(width: 10),
                                                   SizedBox(
@@ -793,7 +1285,8 @@ class _QuestionsState extends State<Questions>
                                                 children: [
                                                   MiniLoadingBar(
                                                     progress: c6Progress,
-                                                    delay: 7500,
+                                                    delay: 9500,
+                                                    myWidth: 110,
                                                   ),
                                                   const SizedBox(width: 10),
                                                   SizedBox(
@@ -812,7 +1305,7 @@ class _QuestionsState extends State<Questions>
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
+                                          horizontal: 32),
                                       child: Align(
                                         alignment: Alignment.topLeft,
                                         child: Container(
@@ -853,10 +1346,6 @@ class _QuestionsState extends State<Questions>
                                     ),
                                   ],
                                 ),
-
-                                // const SizedBox(
-                                //   height: 60,
-                                // ),
                               ],
                             ),
                           ],
@@ -898,18 +1387,18 @@ class _QuestionsState extends State<Questions>
                                 Text(
                                   'Yes',
                                   style: TextStyle(
-                                      color:
-                                          Colors.grey, // Black color for "Yes"
-                                      fontSize: 40, // Large size for "Yes"
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: "palatino"),
+                                    color: Colors.grey, // Black color for "Yes"
+                                    fontSize: 40, // Large size for "Yes"
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "palatino",
+                                  ),
                                 ),
                                 Text(
                                   'Option 1',
                                   style: TextStyle(
-                                    color: Colors
-                                        .grey, // Black color for "Option 1"
-                                    fontSize: 20, // Smaller size for "Option 1"
+                                    color: Colors.grey,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w900,
                                   ),
                                 ),
                               ],
@@ -944,20 +1433,25 @@ class _QuestionsState extends State<Questions>
                                 Text(
                                   'No',
                                   style: TextStyle(
-                                      color:
-                                          Colors.grey, // Black color for "No"
-                                      fontSize: 40, // Large size for "No"
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: "palatino"),
+                                    color: Colors.grey, // Black color for "No"
+                                    fontSize: 40, // Large size for "No"
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "palatino",
+                                  ),
                                 ),
                                 Text(
                                   'Option 2',
                                   style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    decorationColor: Colors.grey,
-                                    color: Colors
-                                        .grey, // Black color for "Option 2"
-                                    fontSize: 20, // Smaller size for "Option 2"
+                                    decoration: TextDecoration
+                                        .underline, // Underline the text
+                                    decorationColor:
+                                        Colors.black, // Color of the underline
+                                    color: Colors.grey, // Color of the text
+                                    fontSize: 20, // Font size
+                                    fontStyle: FontStyle
+                                        .italic, // Make the text italic
+                                    decorationThickness:
+                                        2.5, // Adjust the thickness of the underline (can create some space)
                                   ),
                                 ),
                               ],
@@ -1009,28 +1503,285 @@ class _QuestionsState extends State<Questions>
   }
 }
 
+// class CustomLoadingBar extends StatefulWidget {
+//   final double progress;
+//   final Duration delay; // New delay parameter
+
+//   const CustomLoadingBar({
+//     super.key,
+//     required this.progress,
+//     this.delay = const Duration(milliseconds: 500), // Default delay
+//   });
+
+//   @override
+//   State<CustomLoadingBar> createState() => _CustomLoadingBarState();
+// }
+
+// class _CustomLoadingBarState extends State<CustomLoadingBar> {
+//   double animatedProgress = 0.0;
+//   bool isVisible = false; // To manage fade-in visibility
+
+//   @override
+//   void didUpdateWidget(covariant CustomLoadingBar oldWidget) {
+//     super.didUpdateWidget(oldWidget);
+//     // Update the animated progress when the widget's progress changes
+//     if (widget.progress != oldWidget.progress) {
+//       setState(() {
+//         animatedProgress = widget.progress;
+//       });
+//     }
+//   }
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     // Delay the fade-in and initialize progress
+//     Future.delayed(widget.delay, () {
+//       setState(() {
+//         isVisible = true; // Start fade-in animation
+//         animatedProgress = widget.progress;
+//       });
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     int progressPercentage = (animatedProgress * 100).toInt();
+//     int remainingPercentage = 100 - progressPercentage;
+
+//     return AnimatedOpacity(
+//       opacity: isVisible ? 1.0 : 0.0,
+//       duration: const Duration(milliseconds: 500), // Fade-in animation duration
+//       child: Column(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [
+//           Stack(
+//             children: [
+//               // Background bar (inactive portion)
+//               Container(
+//                 width: 350, // Width of the loading bar
+//                 height: 20, // Height of the loading bar
+//                 decoration: BoxDecoration(
+//                   color: Colors.grey.shade300, // Grey background color
+//                 ),
+//               ),
+//               // Progress bar (active portion)
+//               AnimatedContainer(
+//                 duration:
+//                     const Duration(milliseconds: 1500), // Animation duration
+//                 curve: Curves.easeInOut, // Smooth easing curve
+//                 width: 350 * animatedProgress,
+//                 height: 20,
+//                 decoration: const BoxDecoration(
+//                   color:
+//                       Color.fromARGB(255, 13, 211, 19), // Green progress color
+//                 ),
+//                 child: Center(
+//                   child: Text(
+//                     '$progressPercentage%',
+//                     style: const TextStyle(
+//                       color: Colors.black,
+//                       fontWeight: FontWeight.bold,
+//                       fontSize: 12,
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//               // Remaining percentage text inside the grey bar
+//               Positioned(
+//                 left: 350 * animatedProgress,
+//                 top: 0,
+//                 child: Container(
+//                   width: 350 * (1 - animatedProgress),
+//                   height: 20,
+//                   alignment: Alignment.center,
+//                   child: Text(
+//                     '$remainingPercentage%',
+//                     style: const TextStyle(
+//                       color: Colors.black,
+//                       fontWeight: FontWeight.bold,
+//                       fontSize: 12,
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// class MiniLoadingBar extends StatefulWidget {
+//   final double progress; // Progress value between 0 and 1
+//   final int delay;
+
+//   const MiniLoadingBar({
+//     super.key,
+//     required this.progress,
+//     required this.delay,
+//   });
+
+//   @override
+//   State<MiniLoadingBar> createState() => _MiniLoadingBarState();
+// }
+
+// class _MiniLoadingBarState extends State<MiniLoadingBar>
+//     with SingleTickerProviderStateMixin {
+//   late AnimationController _animationController;
+//   late Animation<double> _progressAnimation;
+
+//   bool isVisible = false; // Tracks visibility of the loader
+
+//   @override
+//   void initState() {
+//     super.initState();
+
+//     // Initialize AnimationController for smooth progress animation
+//     _animationController = AnimationController(
+//       vsync: this,
+//       duration: const Duration(seconds: 2), // Smooth progress duration
+//     );
+
+//     // Define the progress animation
+//     _progressAnimation =
+//         Tween<double>(begin: 0.0, end: widget.progress).animate(CurvedAnimation(
+//       parent: _animationController,
+//       curve: Curves.easeInOut, // Smooth curve for progress animation
+//     ));
+
+//     // Delay visibility and start animations
+//     Future.delayed(Duration(milliseconds: widget.delay), () {
+//       if (mounted) {
+//         setState(() {
+//           isVisible = true; // Show the loader
+//         });
+//         _animationController.forward(); // Start the progress animation
+//       }
+//     });
+//   }
+
+//   @override
+//   void dispose() {
+//     _animationController.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return AnimatedSwitcher(
+//       duration: const Duration(milliseconds: 300), // Smooth fade transition
+//       child: isVisible
+//           ? Stack(
+//               children: [
+//                 // Background bar (inactive portion)
+//                 Container(
+//                   width: 125,
+//                   height: 20,
+//                   color: Colors.grey.shade300,
+//                 ),
+//                 // Progress bar (active portion)
+//                 AnimatedBuilder(
+//                   animation: _progressAnimation,
+//                   builder: (context, child) {
+//                     double animatedProgress = _progressAnimation.value;
+//                     int progressPercentage = (animatedProgress * 100).toInt();
+
+//                     return Container(
+//                       width: 125 * animatedProgress,
+//                       height: 20,
+//                       color: const Color.fromARGB(255, 13, 211, 19),
+//                       alignment: Alignment.center,
+//                       child: Text(
+//                         '$progressPercentage%',
+//                         style: const TextStyle(
+//                           color: Colors.black,
+//                           fontWeight: FontWeight.bold,
+//                           fontSize: 12,
+//                         ),
+//                       ),
+//                     );
+//                   },
+//                 ),
+//               ],
+//             )
+//           : SizedBox(
+//               width: 125, // Fixed width
+//               height: 20, // Fixed height
+//               child: Container(
+//                 color: Colors.transparent, // Transparent placeholder
+//               ),
+//             ),
+//     );
+//   }
+// }
+
+
 class CustomLoadingBar extends StatefulWidget {
   final double progress;
-  final Duration delay; // New delay parameter
+  final Duration delay;
 
   const CustomLoadingBar({
     super.key,
     required this.progress,
-    this.delay = const Duration(milliseconds: 500), // Default delay
+    this.delay = const Duration(milliseconds: 1000),
   });
 
   @override
   State<CustomLoadingBar> createState() => _CustomLoadingBarState();
 }
 
-class _CustomLoadingBarState extends State<CustomLoadingBar> {
+class _CustomLoadingBarState extends State<CustomLoadingBar>
+    with TickerProviderStateMixin {
+  late AnimationController _fadeController;
+  late Animation<double> _fadeAnimation;
+  late AnimationController _numberFadeController;
+  late Animation<double> _numberFadeAnimation;
+  
   double animatedProgress = 0.0;
-  bool isVisible = false; // To manage fade-in visibility
+  bool showNumbers = false; // To manage number fade-in
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Fade-in animation for the progress bar
+    _fadeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+    _fadeAnimation =
+        CurvedAnimation(parent: _fadeController, curve: Curves.easeInOut);
+
+    // Fade-in animation for the number (starts after progress animation)
+    _numberFadeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+    _numberFadeAnimation = CurvedAnimation(
+        parent: _numberFadeController, curve: Curves.easeInOut);
+
+    // Start the progress bar fade-in first
+    Future.delayed(widget.delay, () {
+      if (mounted) {
+        setState(() {
+          animatedProgress = widget.progress;
+        });
+        _fadeController.forward().then((_) {
+          // Once progress animation completes, start number fade-in
+          setState(() {
+            showNumbers = true;
+          });
+          _numberFadeController.forward();
+        });
+      }
+    });
+  }
 
   @override
   void didUpdateWidget(covariant CustomLoadingBar oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // Update the animated progress when the widget's progress changes
     if (widget.progress != oldWidget.progress) {
       setState(() {
         animatedProgress = widget.progress;
@@ -1039,15 +1790,10 @@ class _CustomLoadingBarState extends State<CustomLoadingBar> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    // Delay the fade-in and initialize progress
-    Future.delayed(widget.delay, () {
-      setState(() {
-        isVisible = true; // Start fade-in animation
-        animatedProgress = widget.progress;
-      });
-    });
+  void dispose() {
+    _fadeController.dispose();
+    _numberFadeController.dispose();
+    super.dispose();
   }
 
   @override
@@ -1055,9 +1801,8 @@ class _CustomLoadingBarState extends State<CustomLoadingBar> {
     int progressPercentage = (animatedProgress * 100).toInt();
     int remainingPercentage = 100 - progressPercentage;
 
-    return AnimatedOpacity(
-      opacity: isVisible ? 1.0 : 0.0,
-      duration: const Duration(milliseconds: 500), // Fade-in animation duration
+    return FadeTransition(
+      opacity: _fadeAnimation, // Fade animation for the progress bar
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -1065,30 +1810,31 @@ class _CustomLoadingBarState extends State<CustomLoadingBar> {
             children: [
               // Background bar (inactive portion)
               Container(
-                width: 350, // Width of the loading bar
-                height: 20, // Height of the loading bar
+                width: 350,
+                height: 20,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade300, // Grey background color
+                  color: Colors.grey.shade300,
                 ),
               ),
               // Progress bar (active portion)
               AnimatedContainer(
-                duration:
-                    const Duration(milliseconds: 1500), // Animation duration
-                curve: Curves.easeInOut, // Smooth easing curve
+                duration: const Duration(milliseconds: 1500),
+                curve: Curves.easeInOut,
                 width: 350 * animatedProgress,
                 height: 20,
                 decoration: const BoxDecoration(
-                  color:
-                      Color.fromARGB(255, 13, 211, 19), // Green progress color
+                  color: Color.fromARGB(255, 13, 211, 19),
                 ),
                 child: Center(
-                  child: Text(
-                    '$progressPercentage%',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
+                  child: FadeTransition(
+                    opacity: _numberFadeAnimation, // Number fades in after progress
+                    child: Text(
+                      '$progressPercentage%',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
                     ),
                   ),
                 ),
@@ -1101,12 +1847,15 @@ class _CustomLoadingBarState extends State<CustomLoadingBar> {
                   width: 350 * (1 - animatedProgress),
                   height: 20,
                   alignment: Alignment.center,
-                  child: Text(
-                    '$remainingPercentage%',
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
+                  child: FadeTransition(
+                    opacity: _numberFadeAnimation, // Remaining number fades in
+                    child: Text(
+                      '$remainingPercentage%',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
                     ),
                   ),
                 ),
@@ -1122,11 +1871,13 @@ class _CustomLoadingBarState extends State<CustomLoadingBar> {
 class MiniLoadingBar extends StatefulWidget {
   final double progress; // Progress value between 0 and 1
   final int delay;
+  final int myWidth;
 
   const MiniLoadingBar({
     super.key,
     required this.progress,
     required this.delay,
+    this.myWidth = 125,
   });
 
   @override
@@ -1134,95 +1885,146 @@ class MiniLoadingBar extends StatefulWidget {
 }
 
 class _MiniLoadingBarState extends State<MiniLoadingBar>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
+    with TickerProviderStateMixin {
+  late AnimationController _progressController;
   late Animation<double> _progressAnimation;
+  late AnimationController _fadeController;
+  late Animation<double> _fadeAnimation;
 
-  bool isVisible = false; // Tracks visibility of the loader
+  bool isVisible = false;
+  bool showText = false;
 
   @override
   void initState() {
     super.initState();
 
-    // Initialize AnimationController for smooth progress animation
-    _animationController = AnimationController(
+    _progressController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2), // Smooth progress duration
+      duration: const Duration(seconds: 2),
     );
 
-    // Define the progress animation
     _progressAnimation =
         Tween<double>(begin: 0.0, end: widget.progress).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut, // Smooth curve for progress animation
+      parent: _progressController,
+      curve: Curves.easeInOut,
     ));
 
-    // Delay visibility and start animations
+    _fadeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+      parent: _fadeController,
+      curve: Curves.easeInOut,
+    ));
+
     Future.delayed(Duration(milliseconds: widget.delay), () {
       if (mounted) {
         setState(() {
-          isVisible = true; // Show the loader
+          isVisible = true;
         });
-        _animationController.forward(); // Start the progress animation
+        _progressController.forward().then((_) {
+          if (mounted) {
+            setState(() {
+              showText = true;
+            });
+            _fadeController.forward();
+          }
+        });
       }
     });
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    _progressController.dispose();
+    _fadeController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 300), // Smooth fade transition
+      duration: const Duration(milliseconds: 300),
       child: isVisible
-          ? Stack(
-              children: [
-                // Background bar (inactive portion)
-                Container(
-                  width: 125,
-                  height: 20,
-                  color: Colors.grey.shade300,
-                ),
-                // Progress bar (active portion)
-                AnimatedBuilder(
-                  animation: _progressAnimation,
-                  builder: (context, child) {
-                    double animatedProgress = _progressAnimation.value;
-                    int progressPercentage = (animatedProgress * 100).toInt();
+          ? AnimatedBuilder(
+              animation: _progressAnimation,
+              builder: (context, child) {
+                double animatedProgress = _progressAnimation.value;
+                int filledPercentage = (widget.progress * 100).toInt();
+                int remainingPercentage = 100 - filledPercentage;
 
-                    return Container(
-                      width: 125 * animatedProgress,
+                return Stack(
+                  children: [
+                    // Background bar (inactive portion)
+                    Container(
+                      width: widget.myWidth.toDouble(),
                       height: 20,
-                      color: const Color.fromARGB(255, 13, 211, 19),
-                      alignment: Alignment.center,
-                      child: Text(
-                        '$progressPercentage%',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
                       ),
-                    );
-                  },
-                ),
-              ],
+                    ),
+                    // Progress bar (active portion)
+                    Container(
+                      width: widget.myWidth.toDouble() * animatedProgress,
+                      height: 20,
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 13, 211, 19),
+                      ),
+                    ),
+                    // Text inside progress bar (filled)
+                    Positioned(
+                      left: 10,
+                      top: 0,
+                      bottom: 0,
+                      child: showText
+                          ? FadeTransition(
+                              opacity: _fadeAnimation,
+                              child: Text(
+                                '$filledPercentage%',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
+                    ),
+                    // Text inside remaining bar (unfilled)
+                    Positioned(
+                      right: 10,
+                      top: 0,
+                      bottom: 0,
+                      child: showText
+                          ? FadeTransition(
+                              opacity: _fadeAnimation,
+                              child: Text(
+                                '$remainingPercentage%',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
+                    ),
+                  ],
+                );
+              },
             )
           : SizedBox(
-              width: 125, // Fixed width
-              height: 20, // Fixed height
+              width: widget.myWidth.toDouble(),
+              height: 20,
               child: Container(
-                color: Colors.transparent, // Transparent placeholder
+                color: Colors.transparent,
               ),
             ),
     );
   }
 }
-
 
 
 

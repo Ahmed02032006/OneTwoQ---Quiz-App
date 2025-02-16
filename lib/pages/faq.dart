@@ -39,7 +39,7 @@ class Faq extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 40),
-                  
+
                       // FAQ Content (scrollable)
                       Container(
                         padding: const EdgeInsets.all(25),
@@ -48,14 +48,88 @@ class Faq extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5),
                           color: const Color.fromARGB(255, 13, 211, 19),
                         ),
-                        child: const Text(
-                          "Hello again, my name is Aiden and I started working on One Two Q in 2019. I started this project because I was curious about how people from all over the world and from different walks of life might answer the same question. I want to know what makes us the people we are and how our life experiences define us and I hope that's why you're here too. Please know that all questions and information you give to the app are completely anonymous. You may be giving up your anonymity, however, if you decide to link a social media account and share your experiences with friends or by making comments on questions within the app.I hope you enjoy the app and the statistics for each question. If you would like to support me, the best thing you could do to help is just to tell your friends about the app and the things about the app and the things you like about it. I came up with a lot of questions over the years, but I can use your help and your creativity. I f you've got questions you want answered, please send them to me at xxxxx@xxxxx.com or join me on discord. Feel free to drop your username when submitting a username when submitting a question I'll put your name besides your question. One question is gret but i'm sure you've noticed that I group my questions into modules, if you have a series of questions you'll have a better shot of having your questions put in the app. If submitting a seriesof questions please submit a minimum of 6 questions that all relate to each other. I'll do my best to add your questions to the app but I cannot guarantee anything. I hope you understand.",
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 1,
-                          ),
+                        child: const Column(
+                          children: [
+                            Text(
+                              "Hello again, my name is Aidan and I started working on 1 2 Q back in 2019. I started this project because I was curious about how people from all over the world and from different walks of life might answer the same questions. I want to know what makes us the people we are and how our life experiences define us. I hope that’s why you’re here too. All information given is anonymous. The answers you choose and any other information you give to inform question statistics will be completely anonymous. Only if you wish to make comments will you be required to set up an account and username. Please note that your username will be linked to your social media accounts, and you may lose your anonymity if you decide to post question results to social media. Please skip questions if the question doesn’t apply to you or if you feel uncomfortable answering it.I hope you enjoy the app; it’s been an interesting ride getting the app off the ground starting with the years I spent brainstorming for questions. I of course, am only one person and if you think you’ve got some questions you’d like answered then send them over to me. A single question is good, but a series of questions is better. You’ll have a better shot of getting your question on to the app if you give me more to work with. Be sure to leave a name, real or fake that I can use to credit you with, anonymous is fine too though. I can’t guarantee that your questions will end up on the app, I hope you understand. If you do submit questions know that I myself, generally try to avoid questions about politics, religion, sex and other hot topics. I also do not have questions mentioning specific companies, groups, brands etc. There are, however, ways to ask questions about these things without being so forward. Please use your discretion. Please email your questions to aidan.one.two.q@gmail.com. That is my primary contact for this little venture of mine, if you have any business-related messages for me, send them there as well.If you’d like to support me, the best thing you could do is tell other people about the app. Here’s a fun way to play with friends, be sure to have snacks and drinks at the ready.",
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "1.	Get a group of friends around a table.",
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "2.	One player asks a question from the app to the group.",
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "3.	Other players then raise their hands for how they choose to answer the question.",
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "4.	Take note of how each player answered.",
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "5.	The player who asked the question then reveals how they would answer the question, players who answered the same as the person asking the question win. Losers, feel free to take a sip from their drink or grab some snacks in commiseration.",
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              "6.	Pass the device with 1 2 Q to the player on the left and repeat steps 2 through 6.",
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              "Alternatively, players can pass the device to another player after an entire module of questions is complete. Also, you can post questions to social media for your friends who didn’t make it to the hangout. Have fun!You'll notice the AI tag with a few modules. These questions have been generated by AI using information inputs directed by myself. These questions appear word per word as per how the AI generated them. The use of AI is becoming more and more prevalent in today’s society so this is why I am being transparent about my usage of AI. I use AI mostly as a sounding board to brainstorm questions, AI is good at throwing random topics at me which might inspire a question or two every now and again.P.S: The statistics on this app will never truly be correct, people will lie and people will choose against their better judgement for reasons only they can explain. I can be a troll sometimes too so I get it.P.S.S: It is not lost on me that we cannot truly find out how the world will answer if the app is only in English. One day I’d love to get everything on here translated into as many languages as I can.",
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Icon(

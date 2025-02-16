@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:quiz_app/firebase_options.dart';
 import 'package:quiz_app/pages/controls.dart';
-import 'package:quiz_app/pages/stuck_screen.dart';
+import 'package:quiz_app/pages/preLoader.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +16,7 @@ void main() async {
     debugPrint('Firebase initialized successfully');
     runApp(DevicePreview(
       enabled: false,
-      builder:(context) => const MyApp(),
+      builder: (context) => const MyApp(),
     ));
   } catch (e) {
     debugPrint('Error initializing Firebase: $e');
@@ -35,6 +35,10 @@ class MyApp extends StatelessWidget {
       ),
       home: const Preloader(),
       // home: const Controls(),
+      // home: const Questions(),
+      // home: const TrueRandomQuestions(),
+      // home: const Options(),
+      // home: const Categories(),
     );
   }
 }
