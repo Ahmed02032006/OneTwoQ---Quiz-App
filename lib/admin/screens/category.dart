@@ -15,6 +15,34 @@ class _CategoryState extends State<Category> {
   late String _selectedCategoryId;
   late String _searchQuery = '';
 
+  bool isSubCategoriesDisplayed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchSettings();
+  }
+
+  Future<void> fetchSettings() async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
+          .instance
+          .collection('Settings')
+          .doc('2fbG1GP9nX7XJrgGaA6H')
+          .get();
+      if (doc.exists) {
+        var isSubcategoriesDisplay = doc.data()?['isSubCategoriesDisplayed'];
+        setState(() {
+          isSubCategoriesDisplayed = isSubcategoriesDisplay;
+        });
+      } else {
+        debugPrint("Document does not exist");
+      }
+    } catch (e) {
+      debugPrint("Error fetching settings: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -392,25 +420,26 @@ class _CategoryState extends State<Category> {
                                       );
                                     },
                                   ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              AdminSubCategory(
-                                            categoryId: categoryId,
+                                  if (isSubCategoriesDisplayed)
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                AdminSubCategory(
+                                              categoryId: categoryId,
+                                            ),
                                           ),
+                                        );
+                                      },
+                                      child: const Text(
+                                        'View Sub Categories',
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.black,
                                         ),
-                                      );
-                                    },
-                                    child: const Text(
-                                      'View Sub Categories',
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.black,
                                       ),
                                     ),
-                                  ),
                                 ],
                               ),
                             ),

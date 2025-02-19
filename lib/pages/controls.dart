@@ -100,15 +100,6 @@ class _ControlsState extends State<Controls> {
                     ),
                     const SizedBox(height: 15),
                     _buildControlTile(
-                      title: "Is App Online",
-                      value: isAppOnline,
-                      onChanged: (val) {
-                        setState(() => isAppOnline = val);
-                        updateSetting("isAppOnline", val);
-                      },
-                    ),
-                    const SizedBox(height: 15),
-                    _buildControlTile(
                       title: "Is Stats Displayed",
                       value: isStatsDisplayed,
                       onChanged: (val) {
@@ -123,6 +114,15 @@ class _ControlsState extends State<Controls> {
                       onChanged: (val) {
                         setState(() => isButtonsDisplayed = val);
                         updateSetting("isButtonDisplayed", val);
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    _buildControlTile(
+                      title: "Is App Online",
+                      value: isAppOnline,
+                      onChanged: (val) {
+                        setState(() => isAppOnline = val);
+                        updateSetting("isAppOnline", val);
                       },
                     ),
                     const SizedBox(height: 25),

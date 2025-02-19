@@ -19,6 +19,34 @@ class _QuestionsState extends State<Questions> {
   String? _selectedSubcategoryId;
   String _searchQuery = '';
 
+  bool isCommentsDisplayed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchSettings();
+  }
+
+  Future<void> fetchSettings() async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
+          .instance
+          .collection('Settings')
+          .doc('2fbG1GP9nX7XJrgGaA6H')
+          .get();
+      if (doc.exists) {
+        var isCommentsDisplay = doc.data()?['isCommetsDisplayed'];
+        setState(() {
+          isCommentsDisplayed = isCommentsDisplay;
+        });
+      } else {
+        debugPrint("Document does not exist");
+      }
+    } catch (e) {
+      debugPrint("Error fetching settings: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -627,24 +655,25 @@ class _QuestionsState extends State<Questions> {
                                       _deleteQuestion(questionId);
                                     },
                                   ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => Comments(
-                                            questionId: questionId,
+                                  if (isCommentsDisplayed)
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) => Comments(
+                                              questionId: questionId,
+                                            ),
                                           ),
+                                        );
+                                      },
+                                      child: const Text(
+                                        'View Comments',
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.black,
                                         ),
-                                      );
-                                    },
-                                    child: const Text(
-                                      'View Comments',
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.black,
                                       ),
                                     ),
-                                  ),
                                 ],
                               ),
                             ),

@@ -13,7 +13,6 @@ class Preloader extends StatefulWidget {
 class _PreloaderState extends State<Preloader>
     with SingleTickerProviderStateMixin {
   bool isAppActive = false;
-  bool hasDataAvailable = false;
 
   late AnimationController _controller;
 
@@ -23,7 +22,7 @@ class _PreloaderState extends State<Preloader>
     fetchSettings();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
     );
 
     // Start animation
@@ -32,7 +31,7 @@ class _PreloaderState extends State<Preloader>
     // Navigate after the animation is complete
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        if (isAppActive && hasDataAvailable) {
+        if (isAppActive) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (context) => const Home(),
@@ -49,25 +48,6 @@ class _PreloaderState extends State<Preloader>
     super.dispose();
   }
 
-  // Future<void> fetchSettings() async {
-  //   try {
-  //     DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
-  //         .instance
-  //         .collection('Settings')
-  //         .doc('2fbG1GP9nX7XJrgGaA6H')
-  //         .get();
-  //     if (doc.exists) {
-  //       var isActive = doc.data()?['isAppOnline'];
-  //       isAppActive = isActive;
-  //       hasDataAvailable = true;
-  //     } else {
-  //       hasDataAvailable = false;
-  //     }
-  //   } catch (e) {
-  //     print("Error fetching settings: $e");
-  //   }
-  // }
-
   Future<void> fetchSettings() async {
     try {
       DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
@@ -75,23 +55,39 @@ class _PreloaderState extends State<Preloader>
           .collection('Settings')
           .doc('2fbG1GP9nX7XJrgGaA6H')
           .get();
-
       if (doc.exists) {
         var isActive = doc.data()?['isAppOnline'];
-
-        setState(() {
-          isAppActive = isActive ?? false; // Ensure it's a boolean
-          hasDataAvailable = true;
-        });
-      } else {
-        setState(() {
-          hasDataAvailable = false;
-        });
+        isAppActive = isActive;
       }
     } catch (e) {
       print("Error fetching settings: $e");
     }
   }
+
+  // Future<void> fetchSettings() async {
+  //   try {
+  //     DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
+  //         .instance
+  //         .collection('Settings')
+  //         .doc('2fbG1GP9nX7XJrgGaA6H')
+  //         .get();
+
+  //     if (doc.exists) {
+  //       var isActive = doc.data()?['isAppOnline'];
+  //       debugPrint("===============================================================================");
+  //       debugPrint("===============================================================================");
+  //       debugPrint(isActive);
+  //       debugPrint("===============================================================================");
+  //       debugPrint("===============================================================================");
+
+  //       setState(() {
+  //         isAppActive = isActive ?? false; // Ensure it's a boolean
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print("Error fetching settings: $e");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

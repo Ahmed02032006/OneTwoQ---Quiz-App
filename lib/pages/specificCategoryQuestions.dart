@@ -1128,7 +1128,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                     ),
                                     CustomLoadingBar(
                                       progress: m2Progress,
-                                      delay: const Duration(milliseconds: 2000),
+                                      delay: const Duration(milliseconds: 2500),
                                     ),
                                     const SizedBox(
                                       height: 15,
@@ -1147,7 +1147,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                                   children: [
                                                     MiniLoadingBar(
                                                       progress: mProgress,
-                                                      delay: 2500,
+                                                      delay: 4000,
                                                     ),
                                                     const SizedBox(width: 10),
                                                     const Text(
@@ -1165,7 +1165,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                                   children: [
                                                     MiniLoadingBar(
                                                       progress: fProgress,
-                                                      delay: 3000,
+                                                      delay: 5000,
                                                     ),
                                                     const SizedBox(width: 10),
                                                     const Text(
@@ -1183,7 +1183,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                                   children: [
                                                     MiniLoadingBar(
                                                       progress: nProgress,
-                                                      delay: 3500,
+                                                      delay: 6000,
                                                     ),
                                                     const SizedBox(width: 10),
                                                     const Text(
@@ -1208,7 +1208,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                                   children: [
                                                     MiniLoadingBar(
                                                       progress: a1Progress,
-                                                      delay: 4000,
+                                                      delay: 7000,
                                                     ),
                                                     const SizedBox(width: 10),
                                                     const Text(
@@ -1226,7 +1226,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                                   children: [
                                                     MiniLoadingBar(
                                                       progress: a2Progress,
-                                                      delay: 4500,
+                                                      delay: 8000,
                                                     ),
                                                     const SizedBox(width: 10),
                                                     const Text(
@@ -1244,7 +1244,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                                   children: [
                                                     MiniLoadingBar(
                                                       progress: a3Progress,
-                                                      delay: 5000,
+                                                      delay: 9000,
                                                     ),
                                                     const SizedBox(width: 10),
                                                     const Text(
@@ -1262,7 +1262,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                                   children: [
                                                     MiniLoadingBar(
                                                       progress: a4Progress,
-                                                      delay: 5500,
+                                                      delay: 10000,
                                                     ),
                                                     const SizedBox(width: 10),
                                                     const Text(
@@ -1280,7 +1280,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                                   children: [
                                                     MiniLoadingBar(
                                                       progress: a5Progress,
-                                                      delay: 6000,
+                                                      delay: 11000,
                                                     ),
                                                     const SizedBox(width: 10),
                                                     const Text(
@@ -1298,7 +1298,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                                   children: [
                                                     MiniLoadingBar(
                                                       progress: a6Progress,
-                                                      delay: 6500,
+                                                      delay: 12000,
                                                     ),
                                                     const SizedBox(width: 10),
                                                     const Text(
@@ -1335,7 +1335,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                                 children: [
                                                   MiniLoadingBar(
                                                     progress: c1Progress,
-                                                    delay: 7000,
+                                                    delay: 13000,
                                                     myWidth: 110,
                                                   ),
                                                   const SizedBox(width: 10),
@@ -1353,7 +1353,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                                 children: [
                                                   MiniLoadingBar(
                                                     progress: c2Progress,
-                                                    delay: 7500,
+                                                    delay: 14000,
                                                     myWidth: 110,
                                                   ),
                                                   const SizedBox(width: 10),
@@ -1371,7 +1371,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                                 children: [
                                                   MiniLoadingBar(
                                                     progress: c3Progress,
-                                                    delay: 8000,
+                                                    delay: 15000,
                                                     myWidth: 110,
                                                   ),
                                                   const SizedBox(width: 10),
@@ -1396,7 +1396,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                                 children: [
                                                   MiniLoadingBar(
                                                     progress: c4Progress,
-                                                    delay: 8500,
+                                                    delay: 16000,
                                                     myWidth: 110,
                                                   ),
                                                   const SizedBox(width: 10),
@@ -1414,7 +1414,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                                 children: [
                                                   MiniLoadingBar(
                                                     progress: c5Progress,
-                                                    delay: 9000,
+                                                    delay: 17000,
                                                     myWidth: 110,
                                                   ),
                                                   const SizedBox(width: 10),
@@ -1432,7 +1432,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                                 children: [
                                                   MiniLoadingBar(
                                                     progress: c6Progress,
-                                                    delay: 9500,
+                                                    delay: 18000,
                                                     myWidth: 110,
                                                   ),
                                                   const SizedBox(width: 10),
@@ -2510,7 +2510,7 @@ class CustomLoadingBar extends StatefulWidget {
   const CustomLoadingBar({
     super.key,
     required this.progress,
-    this.delay = const Duration(milliseconds: 1000),
+    this.delay = const Duration(milliseconds: 1500), // Slower start delay
   });
 
   @override
@@ -2525,36 +2525,36 @@ class _CustomLoadingBarState extends State<CustomLoadingBar>
   late Animation<double> _numberFadeAnimation;
 
   double animatedProgress = 0.0;
-  bool showNumbers = false; // To manage number fade-in
+  bool showNumbers = false;
 
   @override
   void initState() {
     super.initState();
 
-    // Fade-in animation for the progress bar
+    // Slower fade-in animation for the progress bar
     _fadeController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 2500),
     );
     _fadeAnimation =
         CurvedAnimation(parent: _fadeController, curve: Curves.easeInOut);
 
-    // Fade-in animation for the number (starts after progress animation)
+    // Slower fade-in animation for the number
     _numberFadeController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 1500),
     );
     _numberFadeAnimation =
         CurvedAnimation(parent: _numberFadeController, curve: Curves.easeInOut);
 
-    // Start the progress bar fade-in first
+    // Start the progress bar fade-in after the delay
     Future.delayed(widget.delay, () {
       if (mounted) {
         setState(() {
           animatedProgress = widget.progress;
         });
         _fadeController.forward().then((_) {
-          // Once progress animation completes, start number fade-in
+          // Start number fade-in after progress animation
           setState(() {
             showNumbers = true;
           });
@@ -2587,13 +2587,13 @@ class _CustomLoadingBarState extends State<CustomLoadingBar>
     int remainingPercentage = 100 - progressPercentage;
 
     return FadeTransition(
-      opacity: _fadeAnimation, // Fade animation for the progress bar
+      opacity: _fadeAnimation,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Stack(
             children: [
-              // Background bar (inactive portion)
+              // Background bar
               Container(
                 width: 350,
                 height: 20,
@@ -2601,9 +2601,9 @@ class _CustomLoadingBarState extends State<CustomLoadingBar>
                   color: Colors.grey.shade300,
                 ),
               ),
-              // Progress bar (active portion)
+              // Slower progress bar animation
               AnimatedContainer(
-                duration: const Duration(milliseconds: 1500),
+                duration: const Duration(milliseconds: 2500),
                 curve: Curves.easeInOut,
                 width: 350 * animatedProgress,
                 height: 20,
@@ -2612,8 +2612,7 @@ class _CustomLoadingBarState extends State<CustomLoadingBar>
                 ),
                 child: Center(
                   child: FadeTransition(
-                    opacity:
-                        _numberFadeAnimation, // Number fades in after progress
+                    opacity: _numberFadeAnimation,
                     child: Text(
                       '$progressPercentage%',
                       style: const TextStyle(
@@ -2625,7 +2624,7 @@ class _CustomLoadingBarState extends State<CustomLoadingBar>
                   ),
                 ),
               ),
-              // Remaining percentage text inside the grey bar
+              // Remaining percentage
               Positioned(
                 left: 350 * animatedProgress,
                 top: 0,
@@ -2634,7 +2633,7 @@ class _CustomLoadingBarState extends State<CustomLoadingBar>
                   height: 20,
                   alignment: Alignment.center,
                   child: FadeTransition(
-                    opacity: _numberFadeAnimation, // Remaining number fades in
+                    opacity: _numberFadeAnimation,
                     child: Text(
                       '$remainingPercentage%',
                       style: const TextStyle(
@@ -2653,6 +2652,7 @@ class _CustomLoadingBarState extends State<CustomLoadingBar>
     );
   }
 }
+
 
 class MiniLoadingBar extends StatefulWidget {
   final double progress; // Progress value between 0 and 1
@@ -2930,3 +2930,4 @@ void _showCommentDialog(
     },
   );
 }
+

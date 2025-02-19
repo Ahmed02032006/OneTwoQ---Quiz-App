@@ -59,48 +59,48 @@ class _OptionsState extends State<Options> {
                   children: [
                     const SizedBox(height: 15),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.03,
-                          ),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const TermsAndConditions(),
-                                ),
-                              );
-                            },
-                            child: Image.asset(
-                              "assets/images/TAC.png",
-                              height: screenHeight * 0.04,
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: EdgeInsets.symmetric(
+                        //     horizontal: screenWidth * 0.03,
+                        //   ),
+                        //   child: GestureDetector(
+                        //     onTap: () {
+                        //       Navigator.push(
+                        //         context,
+                        //         MaterialPageRoute(
+                        //           builder: (context) => const TermsAndConditions(),
+                        //         ),
+                        //       );
+                        //     },
+                        //     child: Image.asset(
+                        //       "assets/images/TAC.png",
+                        //       height: screenHeight * 0.04,
+                        //     ),
+                        //   ),
+                        // ),
                         Row(
                           children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: screenWidth * 0.03,
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const PrivacyPolicy(),
-                                    ),
-                                  );
-                                },
-                                child: Image.asset(
-                                  "assets/images/PP.png",
-                                  height: screenHeight * 0.04,
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: EdgeInsets.symmetric(
+                            //     horizontal: screenWidth * 0.03,
+                            //   ),
+                            //   child: GestureDetector(
+                            //     onTap: () {
+                            //       Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //           builder: (context) => const PrivacyPolicy(),
+                            //         ),
+                            //       );
+                            //     },
+                            //     child: Image.asset(
+                            //       "assets/images/PP.png",
+                            //       height: screenHeight * 0.04,
+                            //     ),
+                            //   ),
+                            // ),
                             Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: screenWidth * 0.03,

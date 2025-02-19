@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:quiz_app/firebase_options.dart';
-import 'package:quiz_app/pages/controls.dart';
 import 'package:quiz_app/pages/preLoader.dart';
+import 'package:quiz_app/pages/questions.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,11 +34,6 @@ class MyApp extends StatelessWidget {
         fontFamily: "Urbanist",
       ),
       home: const Preloader(),
-      // home: const Controls(),
-      // home: const Questions(),
-      // home: const TrueRandomQuestions(),
-      // home: const Options(),
-      // home: const Categories(),
     );
   }
 }

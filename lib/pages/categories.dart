@@ -29,7 +29,7 @@ class Categories extends StatelessWidget {
     {
       "imagePath": "assets/icons/Icon4SideA.png",
       "categoryNAME": "Fun",
-      "categoryID": "WdHxSAsc3Sip48HBpd8f"
+      "categoryID": "LKPLh8TziRVuEpDvlFZs"
     },
     {
       "imagePath": "assets/icons/Icon9SideA.png",
@@ -44,7 +44,7 @@ class Categories extends StatelessWidget {
     {
       "imagePath": "assets/icons/Icon12SideA.png",
       "categoryNAME": "Hypothetical",
-      "categoryID": "in5hPaBZj1fCv6aPIVYW",
+      "categoryID": "6RwQD1LVJgm3QNsZi8m1",
     },
     {
       "imagePath": "assets/icons/Icon10SideA.png",
@@ -54,7 +54,7 @@ class Categories extends StatelessWidget {
     {
       "imagePath": "assets/icons/Icon14SideA.png",
       "categoryNAME": "Life",
-      "categoryID": "w9w1TGH0CSbYbp83aO20"
+      "categoryID": "WdHxSAsc3Sip48HBpd8f"
     },
     {
       "imagePath": "assets/icons/Icon11SideA.png",
@@ -64,7 +64,7 @@ class Categories extends StatelessWidget {
     {
       "imagePath": "assets/icons/Icon17SideA.png",
       "categoryNAME": "Nature",
-      "categoryID": "6RwQD1LVJgm3QNsZi8m1"
+      "categoryID": "VDkm84EGFi68nYXDktoC"
     },
     {
       "imagePath": "assets/icons/Icon13SideA.png",
@@ -104,7 +104,7 @@ class Categories extends StatelessWidget {
     {
       "imagePath": "assets/icons/Icon20SideA.png",
       "categoryNAME": "One Two Q",
-      "categoryID": ""
+      "categoryID": "vTYCgTVtqxjJxcErFvjV"
     },
   ];
 
@@ -173,19 +173,19 @@ class Categories extends StatelessWidget {
                                 children: [
                                   Image.asset(
                                     imagePath,
-                                    width: screenWidth > 600 ? 120 : 100,
-                                    height: screenWidth > 600 ? 120 : 100,
+                                    width: screenWidth > 600 ? 150 : 130,
+                                    height: screenWidth > 600 ? 150 : 130,
                                     fit: BoxFit.cover,
                                   ),
                                   const SizedBox(height: 8),
-                                  Text(
-                                    categoryNames,
-                                    style: TextStyle(
-                                      fontSize: screenWidth > 600 ? 16 : 14,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
+                                  // Text(
+                                  //   categoryNames,
+                                  //   style: TextStyle(
+                                  //     fontSize: screenWidth > 600 ? 16 : 14,
+                                  //     fontWeight: FontWeight.bold,
+                                  //   ),
+                                  //   textAlign: TextAlign.center,
+                                  // ),
                                 ],
                               ),
                             ),

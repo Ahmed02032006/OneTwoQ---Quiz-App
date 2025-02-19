@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/pages/questions.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class BasicInfo extends StatefulWidget {
   const BasicInfo({super.key});
@@ -76,9 +78,7 @@ class _BasicInfoState extends State<BasicInfo> {
                           child: TextFormField(
                             keyboardType: TextInputType.number,
                             enabled: false,
-                            style: const TextStyle(
-                              color: Colors.white
-                            ),
+                            style: const TextStyle(color: Colors.white),
                             controller: TextEditingController(
                               text: selectedDate != null
                                   ? '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}'
@@ -370,7 +370,6 @@ class _BasicInfoState extends State<BasicInfo> {
 }
 
 
-
 class CountryDropdown extends StatefulWidget {
   @override
   _CountryDropdownState createState() => _CountryDropdownState();
@@ -378,31 +377,31 @@ class CountryDropdown extends StatefulWidget {
 
 class _CountryDropdownState extends State<CountryDropdown> {
   String? selectedCountry;
+  List<Map<String, String>> countries = [];
 
-  // List of all country names
-final List<String> countryNames = [
-  'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia',
-  'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 
-  'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 
-  'Cabo Verde', 'Cambodia', 'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 
-  'Comoros', 'Congo (Congo-Brazzaville)', 'Congo (Congo-Kinshasa)', 'Costa Rica', 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic',
-  'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea',
-  'Estonia', 'Eswatini', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece',
-  'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia',
-  'Iran', 'Iraq', 'Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Korea (North)',
-  'Korea (South)', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein',
-  'Lithuania', 'Luxembourg', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania',
-  'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar',
-  'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'North Macedonia', 'Norway', 
-  'Oman', 'Pakistan', 'Palau', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar',
-  'Romania', 'Russia', 'Rwanda', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa',
-  'San Marino', 'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia',
-  'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Sweden', 
-  'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste', 'Togo', 'Tonga', 'Trinidad and Tobago',
-  'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States',
-  'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'
-];
+  @override
+  void initState() {
+    super.initState();
+    fetchCountries();
+  }
 
+  Future<void> fetchCountries() async {
+    final response = await http.get(Uri.parse('https://restcountries.com/v3.1/all?fields=name,flags'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      setState(() {
+        countries = data.map((country) {
+          return {
+            'name': country['name']['common'].toString(),
+            'flag': country['flags']['png'].toString(),
+          };
+        }).toList();
+      });
+    } else {
+      throw Exception('Failed to load countries');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -416,7 +415,7 @@ final List<String> countryNames = [
         ),
         child: Center(
           child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.6, // 60% width
+            width: MediaQuery.of(context).size.width * 0.8, // 80% width
             child: DropdownButtonFormField<String>(
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -432,12 +431,36 @@ final List<String> countryNames = [
                 'Country Select',
                 style: TextStyle(color: Colors.white), // White hint text
               ),
-              items: countryNames.map<DropdownMenuItem<String>>((String country) {
+              items: countries.map<DropdownMenuItem<String>>((Map<String, String> country) {
                 return DropdownMenuItem<String>(
-                  value: country,
-                  child: Text(
-                    country,
-                    style: const TextStyle(color: Colors.white), // White text for items
+                  value: country['name'],
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.5, // Constrain the width
+                    child: Row(
+                      children: [
+                        // Display flag or a placeholder if the URL is invalid
+                        country['flag'] != null && country['flag']!.isNotEmpty
+                            ? Image.network(
+                                country['flag']!,
+                                width: 24,
+                                height: 16,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  // Fallback widget if the image fails to load
+                                  return Icon(Icons.flag, size: 24, color: Colors.white);
+                                },
+                              )
+                            : Icon(Icons.flag, size: 24, color: Colors.white), // Placeholder
+                        const SizedBox(width: 10),
+                        Flexible(
+                          child: Text(
+                            country['name']!,
+                            style: const TextStyle(color: Colors.white),
+                            overflow: TextOverflow.ellipsis, // Handle overflow
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }).toList(),
@@ -450,3 +473,4 @@ final List<String> countryNames = [
     );
   }
 }
+
