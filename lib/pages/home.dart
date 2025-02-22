@@ -122,7 +122,6 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:quiz_app/helpers/ad_helper.dart';
@@ -167,50 +166,122 @@ class _HomeState extends State<Home> {
     )..load();
   }
 
+  // void _showTermsAndConditions() {
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     showModalBottomSheet(
+  //       context: context,
+  //       isDismissible: false, // User cannot dismiss without agreeing
+  //       enableDrag: false,
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(20),
+  //       ),
+  //       builder: (context) {
+  //         return Padding(
+  //           padding: const EdgeInsets.all(20.0),
+  //           child: Column(
+  //             mainAxisSize: MainAxisSize.min,
+  //             children: [
+  //               const Text(
+  //                 "Terms & Conditions",
+  //                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+  //               ),
+  //               const SizedBox(height: 15),
+  //               const Text(
+  //                 "By using this App, you acknowledge and accept that we use personalized ads through third-party services like Google AdMob. These ads are tailored based on your preferences and may involve the collection of data such as your device ID and usage patterns. If you agree to the use of personalized ads, please click 'Accept.' If you do not agree, you can still use the App, but non-personalized ads will be shown instead. For more information on how your data is handled, please refer to our Privacy Policy.",
+  //                 textAlign: TextAlign.center,
+  //                 style: TextStyle(fontSize: 16),
+  //               ),
+  //               const SizedBox(height: 20),
+  //               ElevatedButton(
+  //                 onPressed: () {
+  //                   setState(() {
+  //                     _isAgreed = true; // User has agreed
+  //                   });
+  //                   Navigator.pop(context); // Close modal
+  //                 },
+  //                 style: ElevatedButton.styleFrom(
+  //                   backgroundColor: const Color.fromARGB(255, 13, 211, 19),
+  //                   minimumSize: const Size(double.infinity, 50),
+  //                 ),
+  //                 child: const Text(
+  //                   "I Agree",
+  //                   style: TextStyle(fontSize: 18, color: Colors.white),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         );
+  //       },
+  //     );
+  //   });
+  // }
+
   void _showTermsAndConditions() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showModalBottomSheet(
         context: context,
-        isDismissible: false, // User cannot dismiss without agreeing
+        isDismissible: false,
         enableDrag: false,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
         builder: (context) {
-          return Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  "Terms & Conditions",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              double screenWidth = constraints.maxWidth;
+              double screenHeight = constraints.maxHeight;
+
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.05,
+                  vertical: screenHeight * 0.03,
                 ),
-                const SizedBox(height: 15),
-                const Text(
-                  "By using this App, you acknowledge and accept that we use personalized ads through third-party services like Google AdMob. These ads are tailored based on your preferences and may involve the collection of data such as your device ID and usage patterns. If you agree to the use of personalized ads, please click 'Accept.' If you do not agree, you can still use the App, but non-personalized ads will be shown instead. For more information on how your data is handled, please refer to our Privacy Policy.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _isAgreed = true; // User has agreed
-                    });
-                    Navigator.pop(context); // Close modal
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 13, 211, 19),
-                    minimumSize: const Size(double.infinity, 50),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Terms & Conditions",
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.06, // Responsive font size
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: screenHeight * 0.02),
+                      Text(
+                        "By using this App, you acknowledge and accept that we use personalized ads through third-party services like Google AdMob. These ads are tailored based on your preferences and may involve the collection of data such as your device ID and usage patterns. If you agree to the use of personalized ads, please click 'Accept.' If you do not agree, you can still use the App, but non-personalized ads will be shown instead. For more information on how your data is handled, please refer to our Privacy Policy.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.04, // Responsive font size
+                        ),
+                      ),
+                      SizedBox(height: screenHeight * 0.03),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _isAgreed = true; // User has agreed
+                          });
+                          Navigator.pop(context); // Close modal
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 13, 211, 19),
+                          minimumSize:
+                              Size(screenWidth * 0.8, screenHeight * 0.06),
+                        ),
+                        child: Text(
+                          "I Agree",
+                          style: TextStyle(
+                            fontSize: screenWidth * 0.045,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  child: const Text(
-                    "I Agree",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
                 ),
-              ],
-            ),
+              );
+            },
           );
         },
       );
