@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:quiz_app/AnimationFormat/FadeAnimation.dart';
 import 'package:quiz_app/Common/UserIdPreferences.dart';
 import 'package:quiz_app/pages/categories.dart';
 import 'package:quiz_app/pages/options.dart';
@@ -404,11 +405,15 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                           children: [
                             GestureDetector(
                               onTap: () async {
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => const Options(),
+                                //   ),
+                                // );
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const Options(),
-                                  ),
+                                  FadePageRoute(page: const Options()),
                                 );
                               },
                               child: Container(
@@ -2653,7 +2658,6 @@ class _CustomLoadingBarState extends State<CustomLoadingBar>
   }
 }
 
-
 class MiniLoadingBar extends StatefulWidget {
   final double progress; // Progress value between 0 and 1
   final int delay;
@@ -2930,4 +2934,3 @@ void _showCommentDialog(
     },
   );
 }
-

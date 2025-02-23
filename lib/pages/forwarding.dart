@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/AnimationFormat/FadeAnimation.dart';
 import 'package:quiz_app/pages/options.dart';
 
 class Forwarding extends StatelessWidget {
@@ -51,11 +52,15 @@ class Forwarding extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: ElevatedButton(
                 onPressed: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const Options(),
+                  //   ),
+                  // );
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const Options(),
-                    ),
+                    FadePageRoute(page: const Options()),
                   );
                 },
                 style: ElevatedButton.styleFrom(

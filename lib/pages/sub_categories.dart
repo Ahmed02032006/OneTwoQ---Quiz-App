@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:quiz_app/AnimationFormat/FadeAnimation.dart';
 import 'package:quiz_app/pages/specificCategoryQuestions.dart';
 
 class SubCategories extends StatelessWidget {
@@ -65,7 +66,6 @@ class SubCategories extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      
                       Column(
                         children: [
                           Padding(
@@ -126,14 +126,26 @@ class SubCategories extends StatelessWidget {
                                     const SizedBox(width: 20),
                                     GestureDetector(
                                       onTap: () {
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) =>
+                                        //         SpecificCategoryQuestions(
+                                        //       SelectedCategoryId: subcategoryId,
+                                        //       SelectedCategoryName:selectedCategoryName,
+                                        //       SelectSubCategoryName:subcategoryName,
+                                        //     ),
+                                        //   ),
+                                        // );
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                SpecificCategoryQuestions(
+                                          FadePageRoute(
+                                            page: SpecificCategoryQuestions(
                                               SelectedCategoryId: subcategoryId,
-                                              SelectedCategoryName:selectedCategoryName,
-                                              SelectSubCategoryName:subcategoryName,
+                                              SelectedCategoryName:
+                                                  selectedCategoryName,
+                                              SelectSubCategoryName:
+                                                  subcategoryName,
                                             ),
                                           ),
                                         );

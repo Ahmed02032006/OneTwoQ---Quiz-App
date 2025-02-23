@@ -2,8 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/pages/home.dart';
 
+// ignore: must_be_immutable
 class Preloader extends StatefulWidget {
-  const Preloader({super.key});
+  late bool isAppActive;
+
+  Preloader({
+    super.key,
+    required this.isAppActive,
+  });
 
   @override
   // ignore: library_private_types_in_public_api
@@ -19,7 +25,8 @@ class _PreloaderState extends State<Preloader>
   @override
   void initState() {
     super.initState();
-    fetchSettings();
+    isAppActive = widget.isAppActive;
+    print(isAppActive);
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3),
@@ -31,6 +38,8 @@ class _PreloaderState extends State<Preloader>
     // Navigate after the animation is complete
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
+        print("in preloader");
+        print(isAppActive);
         if (isAppActive) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
@@ -38,6 +47,10 @@ class _PreloaderState extends State<Preloader>
             ),
           );
         }
+        // Navigator.push(
+        //   context,
+        //   FadePageRoute(page: const Home()),
+        // );
       }
     });
   }
@@ -47,47 +60,6 @@ class _PreloaderState extends State<Preloader>
     _controller.dispose();
     super.dispose();
   }
-
-  Future<void> fetchSettings() async {
-    try {
-      DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
-          .instance
-          .collection('Settings')
-          .doc('2fbG1GP9nX7XJrgGaA6H')
-          .get();
-      if (doc.exists) {
-        var isActive = doc.data()?['isAppOnline'];
-        isAppActive = isActive;
-      }
-    } catch (e) {
-      print("Error fetching settings: $e");
-    }
-  }
-
-  // Future<void> fetchSettings() async {
-  //   try {
-  //     DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
-  //         .instance
-  //         .collection('Settings')
-  //         .doc('2fbG1GP9nX7XJrgGaA6H')
-  //         .get();
-
-  //     if (doc.exists) {
-  //       var isActive = doc.data()?['isAppOnline'];
-  //       debugPrint("===============================================================================");
-  //       debugPrint("===============================================================================");
-  //       debugPrint(isActive);
-  //       debugPrint("===============================================================================");
-  //       debugPrint("===============================================================================");
-
-  //       setState(() {
-  //         isAppActive = isActive ?? false; // Ensure it's a boolean
-  //       });
-  //     }
-  //   } catch (e) {
-  //     print("Error fetching settings: $e");
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

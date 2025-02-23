@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:quiz_app/AnimationFormat/FadeAnimation.dart';
 import 'package:quiz_app/Common/UserIdPreferences.dart';
 import 'package:quiz_app/pages/options.dart';
 import 'package:share_plus/share_plus.dart';
@@ -379,12 +380,16 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
                           children: [
                             GestureDetector(
                               onTap: () async {
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => const Options(),
+                                //   ),
+                                // );
                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const Options(),
-                                  ),
-                                );
+      context,
+      FadePageRoute(page: const Options()),
+    );
                               },
                               child: Container(
                                 padding: const EdgeInsets.all(5),
@@ -1611,11 +1616,15 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
                           ),
                           GestureDetector(
                             onTap: () {
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const Options(),
+                              //   ),
+                              // );
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Options(),
-                                ),
+                                FadePageRoute(page: const Options()),
                               );
                             },
                             child: const Text(
@@ -1629,12 +1638,17 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushReplacement(
+                              // Navigator.pushReplacement(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) =>
+                              //         const TrueRandomQuestions(),
+                              //   ),
+                              // );
+                              Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const TrueRandomQuestions(),
-                                ),
+                                FadePageRoute(
+                                    page: const TrueRandomQuestions()),
                               );
                             },
                             child: const Text(
@@ -2357,6 +2371,7 @@ class MiniLoadingBar extends StatefulWidget {
   @override
   State<MiniLoadingBar> createState() => _MiniLoadingBarState();
 }
+
 class _MiniLoadingBarState extends State<MiniLoadingBar>
     with TickerProviderStateMixin {
   late AnimationController _progressController;
@@ -2501,6 +2516,7 @@ class _MiniLoadingBarState extends State<MiniLoadingBar>
 }
 
 void _showCommentDialog(
+  
   BuildContext context,
   TextEditingController usernameController,
   TextEditingController commentController,

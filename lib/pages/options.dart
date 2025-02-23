@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:quiz_app/AnimationFormat/FadeAnimation.dart';
+import 'package:quiz_app/helpers/ad_helper.dart';
 import 'package:quiz_app/pages/categories.dart';
 import 'package:quiz_app/pages/faq.dart';
 import 'package:quiz_app/pages/privacy_policy.dart';
@@ -16,10 +19,34 @@ class Options extends StatefulWidget {
 class _OptionsState extends State<Options> {
   bool isButtonDisplayed = false;
 
+  BannerAd? _bannerAd;
+  bool _isAdLoaded = false; // Track ad loading status
+
   @override
   void initState() {
     super.initState();
     fetchSettings();
+    _loadBannerAd();
+  }
+
+  void _loadBannerAd() {
+    _bannerAd = BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _isAdLoaded = true; // Mark ad as loaded
+          });
+          debugPrint("Banner Ad loaded successfully");
+        },
+        onAdFailedToLoad: (ad, err) {
+          debugPrint('Failed to load banner ad: ${err.message}');
+          ad.dispose();
+        },
+      ),
+    )..load();
   }
 
   Future<void> fetchSettings() async {
@@ -43,6 +70,12 @@ class _OptionsState extends State<Options> {
   }
 
   @override
+  void dispose() {
+    _bannerAd?.dispose(); // Dispose of ad when leaving screen
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
@@ -59,59 +92,72 @@ class _OptionsState extends State<Options> {
                   children: [
                     const SizedBox(height: 15),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Padding(
-                        //   padding: EdgeInsets.symmetric(
-                        //     horizontal: screenWidth * 0.03,
-                        //   ),
-                        //   child: GestureDetector(
-                        //     onTap: () {
-                        //       Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //           builder: (context) => const TermsAndConditions(),
-                        //         ),
-                        //       );
-                        //     },
-                        //     child: Image.asset(
-                        //       "assets/images/TAC.png",
-                        //       height: screenHeight * 0.04,
-                        //     ),
-                        //   ),
-                        // ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.03,
+                          ),
+                          child: GestureDetector(
+                            onTap: () {
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) =>
+                              //         const TermsAndConditions(),
+                              //   ),
+                              // );
+                              Navigator.push(
+                                context,
+                                FadePageRoute(page: const TermsAndConditions()),
+                              );
+                            },
+                            child: Image.asset(
+                              "assets/images/TAC.png",
+                              height: screenHeight * 0.04,
+                            ),
+                          ),
+                        ),
                         Row(
                           children: [
-                            // Padding(
-                            //   padding: EdgeInsets.symmetric(
-                            //     horizontal: screenWidth * 0.03,
-                            //   ),
-                            //   child: GestureDetector(
-                            //     onTap: () {
-                            //       Navigator.push(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //           builder: (context) => const PrivacyPolicy(),
-                            //         ),
-                            //       );
-                            //     },
-                            //     child: Image.asset(
-                            //       "assets/images/PP.png",
-                            //       height: screenHeight * 0.04,
-                            //     ),
-                            //   ),
-                            // ),
                             Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: screenWidth * 0.03,
                               ),
                               child: GestureDetector(
                                 onTap: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => const PrivacyPolicy(),
+                                  //   ),
+                                  // );
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const Faq(),
-                                    ),
+                                    FadePageRoute(page: const PrivacyPolicy()),
+                                  );
+                                },
+                                child: Image.asset(
+                                  "assets/images/PP.png",
+                                  height: screenHeight * 0.04,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth * 0.03,
+                              ),
+                              child: GestureDetector(
+                                onTap: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => const Faq(),
+                                  //   ),
+                                  // );
+                                  Navigator.push(
+                                    context,
+                                    FadePageRoute(page: const Faq()),
                                   );
                                 },
                                 child: Image.asset(
@@ -189,6 +235,13 @@ class _OptionsState extends State<Options> {
           },
         ),
       ),
+      bottomNavigationBar: _isAdLoaded
+          ? SizedBox(
+              height: _bannerAd!.size.height.toDouble(),
+              width: _bannerAd!.size.width.toDouble(),
+              child: AdWidget(ad: _bannerAd!),
+            )
+          : const SizedBox(), // Hide if ad is not loaded
     );
   }
 
@@ -202,11 +255,16 @@ class _OptionsState extends State<Options> {
     return Column(
       children: [
         GestureDetector(
-          onTap: () => Navigator.push(
+          onTap: () =>
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => targetScreen,
+              //   ),
+              // ),
+              Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => targetScreen,
-            ),
+            FadePageRoute(page: targetScreen),
           ),
           child: Container(
             width: screenWidth * 0.7,

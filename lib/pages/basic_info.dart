@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/AnimationFormat/FadeAnimation.dart';
 import 'package:quiz_app/pages/questions.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -131,61 +132,8 @@ class _BasicInfoState extends State<BasicInfo> {
                   height: 10,
                 ),
 
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 70),
-                //   child: Container(
-                //     margin: const EdgeInsets.only(bottom: 20),
-                //     decoration: BoxDecoration(
-                //       color: Colors.grey, // Green background for consistency
-                //       borderRadius: BorderRadius.circular(5),
-                //     ),
-                //     child: Center(
-                //       // Center the dropdown container in the parent widget
-                //       child: SizedBox(
-                //         width: MediaQuery.of(context).size.width *
-                //             0.6, // 60% of the screen width
-                //         child: DropdownButtonFormField<String>(
-                //           decoration: const InputDecoration(
-                //             border: OutlineInputBorder(),
-                //             enabledBorder: InputBorder
-                //                 .none, // Removing default border for consistency
-                //           ),
-                //           value: selectedCountry,
-                //           onChanged: (String? value) {
-                //             setState(() {
-                //               selectedCountry = value;
-                //             });
-                //           },
-                //           hint: const Text(
-                //             'Country Select',
-                //             style: TextStyle(
-                //                 color: Colors.white), // White hint text
-                //           ),
-                //           items: <String>['USA', 'CAN', 'UK', 'AUS']
-                //               .map<DropdownMenuItem<String>>((String value) {
-                //             return DropdownMenuItem<String>(
-                //               value: value,
-                //               child: Text(
-                //                 value,
-                //                 style: const TextStyle(
-                //                     color:
-                //                         Colors.white), // White text for items
-                //               ),
-                //             );
-                //           }).toList(),
-                //           dropdownColor: Colors
-                //               .grey, // Set dropdown background color to gray
-                //           style: const TextStyle(
-                //               color: Colors
-                //                   .white), // White text for the selected value
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 CountryDropdown(),
 
-                // 4. Container for Gender Selection and Checkboxes
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Container(
@@ -342,6 +290,10 @@ class _BasicInfoState extends State<BasicInfo> {
                     builder: (context) => const Questions(),
                   ),
                 );
+                // Navigator.push(
+                //   context,
+                //   FadePageRoute(page: const Questions()),
+                // );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey,
@@ -369,7 +321,6 @@ class _BasicInfoState extends State<BasicInfo> {
   }
 }
 
-
 class CountryDropdown extends StatefulWidget {
   @override
   _CountryDropdownState createState() => _CountryDropdownState();
@@ -386,7 +337,8 @@ class _CountryDropdownState extends State<CountryDropdown> {
   }
 
   Future<void> fetchCountries() async {
-    final response = await http.get(Uri.parse('https://restcountries.com/v3.1/all?fields=name,flags'));
+    final response = await http
+        .get(Uri.parse('https://restcountries.com/v3.1/all?fields=name,flags'));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
@@ -419,7 +371,8 @@ class _CountryDropdownState extends State<CountryDropdown> {
             child: DropdownButtonFormField<String>(
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                enabledBorder: InputBorder.none, // Removing default border for consistency
+                enabledBorder:
+                    InputBorder.none, // Removing default border for consistency
               ),
               value: selectedCountry,
               onChanged: (String? value) {
@@ -431,11 +384,13 @@ class _CountryDropdownState extends State<CountryDropdown> {
                 'Country Select',
                 style: TextStyle(color: Colors.white), // White hint text
               ),
-              items: countries.map<DropdownMenuItem<String>>((Map<String, String> country) {
+              items: countries
+                  .map<DropdownMenuItem<String>>((Map<String, String> country) {
                 return DropdownMenuItem<String>(
                   value: country['name'],
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.5, // Constrain the width
+                    width: MediaQuery.of(context).size.width *
+                        0.5, // Constrain the width
                     child: Row(
                       children: [
                         // Display flag or a placeholder if the URL is invalid
@@ -447,10 +402,12 @@ class _CountryDropdownState extends State<CountryDropdown> {
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) {
                                   // Fallback widget if the image fails to load
-                                  return Icon(Icons.flag, size: 24, color: Colors.white);
+                                  return Icon(Icons.flag,
+                                      size: 24, color: Colors.white);
                                 },
                               )
-                            : Icon(Icons.flag, size: 24, color: Colors.white), // Placeholder
+                            : Icon(Icons.flag,
+                                size: 24, color: Colors.white), // Placeholder
                         const SizedBox(width: 10),
                         Flexible(
                           child: Text(
@@ -465,7 +422,8 @@ class _CountryDropdownState extends State<CountryDropdown> {
                 );
               }).toList(),
               dropdownColor: Colors.grey, // Set dropdown background color
-              style: const TextStyle(color: Colors.white), // White text for the selected value
+              style: const TextStyle(
+                  color: Colors.white), // White text for the selected value
             ),
           ),
         ),
@@ -473,4 +431,3 @@ class _CountryDropdownState extends State<CountryDropdown> {
     );
   }
 }
-

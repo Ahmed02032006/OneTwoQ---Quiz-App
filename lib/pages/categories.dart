@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/AnimationFormat/FadeAnimation.dart';
 import 'package:quiz_app/pages/options.dart';
 import 'package:quiz_app/pages/sub_categories.dart';
 
@@ -153,10 +154,19 @@ class Categories extends StatelessWidget {
 
                         return GestureDetector(
                           onTap: () {
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => SubCategories(
+                            //       selectedCategoryName: categoryNames,
+                            //       selectedCategoryId: categoryId,
+                            //     ),
+                            //   ),
+                            // );
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                builder: (context) => SubCategories(
+                              FadePageRoute(
+                                page: SubCategories(
                                   selectedCategoryName: categoryNames,
                                   selectedCategoryId: categoryId,
                                 ),
@@ -202,11 +212,15 @@ class Categories extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: ElevatedButton(
                 onPressed: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const Options(),
+                  //   ),
+                  // );
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const Options(),
-                    ),
+                    FadePageRoute(page: const Options()),
                   );
                 },
                 style: ElevatedButton.styleFrom(

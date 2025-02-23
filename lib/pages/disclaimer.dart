@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/AnimationFormat/FadeAnimation.dart';
 import 'package:quiz_app/pages/basic_info.dart';
 
 class Disclaimer extends StatelessWidget {
@@ -108,6 +109,10 @@ class Disclaimer extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => const BasicInfo()),
                 );
+                // Navigator.push(
+                //   context,
+                //   FadePageRoute(page: const BasicInfo()),
+                // );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey,
