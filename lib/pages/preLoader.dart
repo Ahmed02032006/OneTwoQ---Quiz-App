@@ -26,7 +26,6 @@ class _PreloaderState extends State<Preloader>
   void initState() {
     super.initState();
     isAppActive = widget.isAppActive;
-    print(isAppActive);
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3),

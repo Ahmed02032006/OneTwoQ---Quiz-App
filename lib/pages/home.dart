@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:quiz_app/AnimationFormat/FadeAnimation.dart';
+import 'package:quiz_app/helpers/ad_helper.dart';
 import 'package:quiz_app/pages/disclaimer.dart';
 
 class Home extends StatefulWidget {
@@ -13,12 +14,34 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   BannerAd? _bannerAd;
+  bool _isAdLoaded = false; // Track ad loading status
   bool _isAgreed = false; // Track if the user has agreed to the terms
+
+  void _loadBannerAd() {
+    _bannerAd = BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            _isAdLoaded = true; // Mark ad as loaded
+          });
+          debugPrint("Banner Ad loaded successfully");
+        },
+        onAdFailedToLoad: (ad, err) {
+          debugPrint('Failed to load banner ad: ${err.message}');
+          ad.dispose();
+        },
+      ),
+    )..load();
+  }
 
   @override
   void initState() {
     super.initState();
     _showTermsAndConditions();
+    _loadBannerAd();
   }
 
   void _showTermsAndConditions() {
@@ -182,6 +205,13 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
+    bottomNavigationBar: _isAdLoaded
+          ? SizedBox(
+              height: _bannerAd!.size.height.toDouble(),
+              width: _bannerAd!.size.width.toDouble(),
+              child: AdWidget(ad: _bannerAd!),
+            )
+          : const SizedBox(),
     );
   }
 }

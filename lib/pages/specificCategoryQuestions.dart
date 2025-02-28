@@ -1,7 +1,6 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'dart:math';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:quiz_app/AnimationFormat/FadeAnimation.dart';
@@ -1018,7 +1017,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                     // ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height *
-                          0.6, // Adjust height relative to screen size
+                          0.5, // Adjust height relative to screen size
                       child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
                         child: Column(
@@ -1325,177 +1324,16 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                     ),
                                     // ====================================================================== Country
                                     // ======================================================================
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 40),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  MiniLoadingBar(
-                                                    progress: c1Progress,
-                                                    delay: 13000,
-                                                    myWidth: 110,
-                                                  ),
-                                                  const SizedBox(width: 10),
-                                                  SizedBox(
-                                                    width: 35,
-                                                    height: 20,
-                                                    child: Image.asset(
-                                                      "assets/images/USA.png",
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(height: 5),
-                                              Row(
-                                                children: [
-                                                  MiniLoadingBar(
-                                                    progress: c2Progress,
-                                                    delay: 14000,
-                                                    myWidth: 110,
-                                                  ),
-                                                  const SizedBox(width: 10),
-                                                  SizedBox(
-                                                    width: 35,
-                                                    height: 20,
-                                                    child: Image.asset(
-                                                      "assets/images/UK.png",
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(height: 5),
-                                              Row(
-                                                children: [
-                                                  MiniLoadingBar(
-                                                    progress: c3Progress,
-                                                    delay: 15000,
-                                                    myWidth: 110,
-                                                  ),
-                                                  const SizedBox(width: 10),
-                                                  SizedBox(
-                                                    width: 35,
-                                                    height: 20,
-                                                    child: Image.asset(
-                                                      "assets/images/FRANCE.png",
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(height: 15),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            width: 7,
-                                          ),
-                                          Column(
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  MiniLoadingBar(
-                                                    progress: c4Progress,
-                                                    delay: 16000,
-                                                    myWidth: 110,
-                                                  ),
-                                                  const SizedBox(width: 10),
-                                                  SizedBox(
-                                                    width: 35,
-                                                    height: 20,
-                                                    child: Image.asset(
-                                                      "assets/images/BOLIVIA.png",
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(height: 5),
-                                              Row(
-                                                children: [
-                                                  MiniLoadingBar(
-                                                    progress: c5Progress,
-                                                    delay: 17000,
-                                                    myWidth: 110,
-                                                  ),
-                                                  const SizedBox(width: 10),
-                                                  SizedBox(
-                                                    width: 35,
-                                                    height: 20,
-                                                    child: Image.asset(
-                                                      "assets/images/BELGIUM.png",
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(height: 5),
-                                              Row(
-                                                children: [
-                                                  MiniLoadingBar(
-                                                    progress: c6Progress,
-                                                    delay: 18000,
-                                                    myWidth: 110,
-                                                  ),
-                                                  const SizedBox(width: 10),
-                                                  SizedBox(
-                                                    width: 35,
-                                                    height: 20,
-                                                    child: Image.asset(
-                                                      "assets/images/PORTUGAL.png",
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                    ByDefaultCountries(
+                                      cp1: c1Progress,
+                                      cp2: c2Progress,
+                                      cp3: c3Progress,
+                                      cp4: c4Progress,
+                                      cp5: c5Progress,
+                                      cp6: c6Progress,
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 32),
-                                      child: Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Container(
-                                          width: 130,
-                                          height: 35,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey
-                                                .shade500, // Grey background color
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: DropdownButton<String>(
-                                            value:
-                                                "USA", // Default selected value
-                                            items: <String>[
-                                              "USA",
-                                              "UK",
-                                              "FRANCE",
-                                              "BELGIUM"
-                                            ].map((String value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(value),
-                                              );
-                                            }).toList(),
-                                            onChanged: (String? newValue) {
-                                              // Handle selection change
-                                            },
-                                            underline:
-                                                const SizedBox(), // Removes the default underline
-                                            dropdownColor: Colors.grey
-                                                .shade400, // Grey background for the dropdown
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                    const CountryDropdown(),
+                                    const SizedBox(height: 5),
                                   ],
                                 ),
                               ],
@@ -1771,6 +1609,315 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
     );
   }
 }
+
+class CountryDropdown extends StatefulWidget {
+  const CountryDropdown({super.key});
+
+  @override
+  _CountryDropdownState createState() => _CountryDropdownState();
+}
+
+class _CountryDropdownState extends State<CountryDropdown> {
+  Map<String, String>? selectedCountry;
+  List<Map<String, String>> countries = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCountries();
+  }
+
+  Future<void> fetchCountries() async {
+    final response = await http
+        .get(Uri.parse('https://restcountries.com/v3.1/all?fields=name,flags'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      setState(() {
+        countries = data.map((country) {
+          return {
+            'name': country['name']['common'].toString(),
+            'flag': country['flags']['png'].toString(),
+          };
+        }).toList();
+      });
+    } else {
+      throw Exception('Failed to load countries');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 20),
+        alignment: Alignment.centerLeft, // Left alignment
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, // Left-align column children
+          children: [
+            Container(
+              margin: const EdgeInsets.only(left: 19,),
+              width: MediaQuery.of(context).size.width * 0.4, // Reduced width
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(35),
+              ),
+              child: DropdownButtonFormField<Map<String, String>>(
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  filled: true,
+                  fillColor: Colors.grey,
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 13,
+                    vertical: 10, // Reduced vertical padding
+                  ),
+                ),
+                isExpanded: true,
+                value: selectedCountry,
+                onChanged: (Map<String, String>? value) {
+                  setState(() {
+                    selectedCountry = value;
+                  });
+                },
+                hint: const Text(
+                  'Country Select',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14, // Smaller font size
+                  ),
+                ),
+                items: countries.map<DropdownMenuItem<Map<String, String>>>(
+                  (Map<String, String> country) {
+                    return DropdownMenuItem<Map<String, String>>(
+                      value: country,
+                      child: Text(
+                        country['name']!,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14, // Smaller font size
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    );
+                  },
+                ).toList(),
+                dropdownColor: Colors.grey,
+                style: const TextStyle(color: Colors.white),
+                icon: const Icon(
+                  Icons.arrow_drop_down,
+                  color: Colors.white,
+                  size: 20, // Smaller icon
+                ),
+              ),
+            ),
+            if (selectedCountry != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 8,left: 12),
+                child: SelectedCountryStats(
+                  flagUrl: selectedCountry!['flag']!,
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SelectedCountryStats extends StatelessWidget {
+  final String flagUrl;
+
+  const SelectedCountryStats({
+    super.key,
+    required this.flagUrl,
+  });
+
+  double getRandomProgress() {
+    Random random = Random();
+    return 0.1 +
+        random.nextDouble() * 0.6; // Generates a value between 0.1 and 0.7
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(left: 8,),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 270,
+            child: CustomLoadingBar(
+              progress: getRandomProgress(),
+              delay: const Duration(milliseconds: 50),
+            ),
+          ),
+          const SizedBox(width: 10),
+          SizedBox(
+              width: 35,
+              height: 20,
+              child: Image.network(
+                flagUrl,
+                width: 24,
+                height: 16,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Icon(Icons.flag, size: 24, color: Colors.white);
+                },
+              )),
+        ],
+      ),
+    );
+  }
+}
+
+class ByDefaultCountries extends StatelessWidget {
+  final double cp1;
+  final double cp2;
+  final double cp3;
+  final double cp4;
+  final double cp5;
+  final double cp6;
+
+  const ByDefaultCountries(
+      {super.key,
+      required this.cp1,
+      required this.cp2,
+      required this.cp3,
+      required this.cp4,
+      required this.cp5,
+      required this.cp6});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Column(
+          children: [
+            Row(
+              children: [
+                MiniLoadingBar(
+                  progress: cp1,
+                  delay: 13000,
+                  myWidth: 110,
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 35,
+                  height: 20,
+                  child: Image.asset(
+                    "assets/images/USA.png",
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                MiniLoadingBar(
+                  progress: cp2,
+                  delay: 14000,
+                  myWidth: 110,
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 35,
+                  height: 20,
+                  child: Image.asset(
+                    "assets/images/UK.png",
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                MiniLoadingBar(
+                  progress: cp3,
+                  delay: 15000,
+                  myWidth: 110,
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 35,
+                  height: 20,
+                  child: Image.asset(
+                    "assets/images/FRANCE.png",
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 15),
+          ],
+        ),
+        const SizedBox(
+          width: 15,
+        ),
+        Column(
+          children: [
+            Row(
+              children: [
+                MiniLoadingBar(
+                  progress: cp4,
+                  delay: 16000,
+                  myWidth: 110,
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 35,
+                  height: 20,
+                  child: Image.asset(
+                    "assets/images/BOLIVIA.png",
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                MiniLoadingBar(
+                  progress: cp5,
+                  delay: 17000,
+                  myWidth: 110,
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 35,
+                  height: 20,
+                  child: Image.asset(
+                    "assets/images/BELGIUM.png",
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                MiniLoadingBar(
+                  progress: cp6,
+                  delay: 18000,
+                  myWidth: 110,
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 35,
+                  height: 20,
+                  child: Image.asset(
+                    "assets/images/PORTUGAL.png",
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
 
 class CommentBox extends StatelessWidget {
   const CommentBox({

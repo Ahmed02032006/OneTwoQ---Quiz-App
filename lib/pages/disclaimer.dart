@@ -105,14 +105,14 @@ class Disclaimer extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const BasicInfo()),
-                );
                 // Navigator.push(
                 //   context,
-                //   FadePageRoute(page: const BasicInfo()),
+                //   MaterialPageRoute(builder: (context) => const BasicInfo()),
                 // );
+                Navigator.push(
+                  context,
+                  FadePageRoute(page: const BasicInfo()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey,

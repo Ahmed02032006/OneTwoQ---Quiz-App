@@ -414,461 +414,8 @@ class _QuestionsState extends State<Questions>
                 ),
                 if (isStatsDisplayed)
                   if (showStats)
-                    // SizedBox(
-                    //   height: 330,
-                    //   child: SingleChildScrollView(
-                    //     scrollDirection: Axis.vertical,
-                    //     child: Column(
-                    //       children: [
-                    //         Column(
-                    //           children: [
-                    //             const Padding(
-                    //               padding: EdgeInsets.symmetric(horizontal: 35),
-                    //               child: Row(
-                    //                 mainAxisAlignment: MainAxisAlignment.center,
-                    //                 children: [
-                    //                   Text("YES or option 1"),
-                    //                   SizedBox(
-                    //                     width: 50,
-                    //                   ),
-                    //                   Text("NO or option 2"),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //             const SizedBox(
-                    //               height: 5,
-                    //             ),
-                    //             CustomLoadingBar(
-                    //               progress: m1Progress,
-                    //               delay: const Duration(milliseconds: 400),
-                    //             ),
-                    //             const SizedBox(
-                    //               height: 15,
-                    //             ),
-                    //             Padding(
-                    //               padding: const EdgeInsets.symmetric(
-                    //                   horizontal: 50),
-                    //               child: Column(
-                    //                 children: [
-                    //                   const Text("Did you like this question?"),
-                    //                   const SizedBox(
-                    //                     height: 5,
-                    //                   ),
-                    //                   Row(
-                    //                     mainAxisAlignment:
-                    //                         MainAxisAlignment.center,
-                    //                     children: [
-                    //                       Container(
-                    //                         padding: const EdgeInsets.symmetric(
-                    //                             horizontal: 40, vertical: 2),
-                    //                         decoration: BoxDecoration(
-                    //                           borderRadius:
-                    //                               const BorderRadius.all(
-                    //                             Radius.circular(10),
-                    //                           ),
-                    //                           border: Border.all(
-                    //                             width: 5,
-                    //                             color: const Color.fromARGB(
-                    //                                 255, 13, 211, 19),
-                    //                           ),
-                    //                         ),
-                    //                         child: const Icon(
-                    //                           Icons.thumb_up,
-                    //                           color: Color.fromARGB(
-                    //                               255, 13, 211, 19),
-                    //                         ),
-                    //                       ),
-                    //                       const SizedBox(
-                    //                         width: 10,
-                    //                       ),
-                    //                       Container(
-                    //                         padding: const EdgeInsets.symmetric(
-                    //                             horizontal: 40, vertical: 2),
-                    //                         decoration: BoxDecoration(
-                    //                           borderRadius:
-                    //                               const BorderRadius.all(
-                    //                             Radius.circular(10),
-                    //                           ),
-                    //                           border: Border.all(
-                    //                             color: Colors.grey,
-                    //                             width: 5,
-                    //                           ),
-                    //                         ),
-                    //                         child: const Icon(
-                    //                           Icons.thumb_down,
-                    //                           color: Colors.grey,
-                    //                         ),
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //             Column(
-                    //               children: [
-                    //                 const SizedBox(
-                    //                   height: 15,
-                    //                 ),
-                    //                 CustomLoadingBar(
-                    //                   progress: m2Progress,
-                    //                   delay: const Duration(milliseconds: 800),
-                    //                 ),
-                    //                 const SizedBox(
-                    //                   height: 15,
-                    //                 ),
-                    //                 Row(
-                    //                   crossAxisAlignment:
-                    //                       CrossAxisAlignment.start,
-                    //                   mainAxisAlignment:
-                    //                       MainAxisAlignment.center,
-                    //                   children: [
-                    //                     Column(
-                    //                       children: [
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: mProgress,
-                    //                               delay: 500,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "M",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 5),
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: fProgress,
-                    //                               delay: 1000,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "F ",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 5),
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: nProgress,
-                    //                               delay: 1500,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "N",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 15),
-                    //                       ],
-                    //                     ),
-                    //                     const SizedBox(
-                    //                       width: 15,
-                    //                     ),
-                    //                     Column(
-                    //                       children: [
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: a1Progress,
-                    //                               delay: 2000,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "0 - 14   ",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 5),
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: a2Progress,
-                    //                               delay: 2500,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "15 - 24 ",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 5),
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: a3Progress,
-                    //                               delay: 3000,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "25 - 34",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 5),
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: a4Progress,
-                    //                               delay: 3500,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "35 - 44",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 5),
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: a5Progress,
-                    //                               delay: 4000,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "45 - 64",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 5),
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: a6Progress,
-                    //                               delay: 4500,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "65 +     ",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 15),
-                    //                       ],
-                    //                     )
-                    //                   ],
-                    //                 ),
-                    //                 // ====================================================================== Country
-                    //                 // ======================================================================
-                    //                 Padding(
-                    //                   padding: const EdgeInsets.symmetric(
-                    //                       horizontal: 5),
-                    //                   child: Row(
-                    //                     crossAxisAlignment:
-                    //                         CrossAxisAlignment.start,
-                    //                     mainAxisAlignment:
-                    //                         MainAxisAlignment.center,
-                    //                     children: [
-                    //                       Column(
-                    //                         children: [
-                    //                           Row(
-                    //                             children: [
-                    //                               MiniLoadingBar(
-                    //                                 progress: c1Progress,
-                    //                                 delay: 5000,
-                    //                               ),
-                    //                               const SizedBox(width: 10),
-                    //                               SizedBox(
-                    //                                 width: 35,
-                    //                                 height: 20,
-                    //                                 child: Image.asset(
-                    //                                   "assets/images/USA.png",
-                    //                                 ),
-                    //                               ),
-                    //                             ],
-                    //                           ),
-                    //                           const SizedBox(height: 5),
-                    //                           Row(
-                    //                             children: [
-                    //                               MiniLoadingBar(
-                    //                                 progress: c2Progress,
-                    //                                 delay: 5500,
-                    //                               ),
-                    //                               const SizedBox(width: 10),
-                    //                               SizedBox(
-                    //                                 width: 35,
-                    //                                 height: 20,
-                    //                                 child: Image.asset(
-                    //                                   "assets/images/UK.png",
-                    //                                 ),
-                    //                               ),
-                    //                             ],
-                    //                           ),
-                    //                           const SizedBox(height: 5),
-                    //                           Row(
-                    //                             children: [
-                    //                               MiniLoadingBar(
-                    //                                 progress: c3Progress,
-                    //                                 delay: 6000,
-                    //                               ),
-                    //                               const SizedBox(width: 10),
-                    //                               SizedBox(
-                    //                                 width: 35,
-                    //                                 height: 20,
-                    //                                 child: Image.asset(
-                    //                                   "assets/images/FRANCE.png",
-                    //                                 ),
-                    //                               ),
-                    //                             ],
-                    //                           ),
-                    //                           const SizedBox(height: 15),
-                    //                         ],
-                    //                       ),
-                    //                       const SizedBox(
-                    //                         width: 7,
-                    //                       ),
-                    //                       Column(
-                    //                         children: [
-                    //                           Row(
-                    //                             children: [
-                    //                               MiniLoadingBar(
-                    //                                 progress: c4Progress,
-                    //                                 delay: 6500,
-                    //                               ),
-                    //                               const SizedBox(width: 10),
-                    //                               SizedBox(
-                    //                                 width: 35,
-                    //                                 height: 20,
-                    //                                 child: Image.asset(
-                    //                                   "assets/images/BOLIVIA.png",
-                    //                                 ),
-                    //                               ),
-                    //                             ],
-                    //                           ),
-                    //                           const SizedBox(height: 5),
-                    //                           Row(
-                    //                             children: [
-                    //                               MiniLoadingBar(
-                    //                                 progress: c5Progress,
-                    //                                 delay: 7000,
-                    //                               ),
-                    //                               const SizedBox(width: 10),
-                    //                               SizedBox(
-                    //                                 width: 35,
-                    //                                 height: 20,
-                    //                                 child: Image.asset(
-                    //                                   "assets/images/BELGIUM.png",
-                    //                                 ),
-                    //                               ),
-                    //                             ],
-                    //                           ),
-                    //                           const SizedBox(height: 5),
-                    //                           Row(
-                    //                             children: [
-                    //                               MiniLoadingBar(
-                    //                                 progress: c6Progress,
-                    //                                 delay: 7500,
-                    //                               ),
-                    //                               const SizedBox(width: 10),
-                    //                               SizedBox(
-                    //                                 width: 35,
-                    //                                 height: 20,
-                    //                                 child: Image.asset(
-                    //                                   "assets/images/PORTUGAL.png",
-                    //                                 ),
-                    //                               ),
-                    //                             ],
-                    //                           ),
-                    //                         ],
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ),
-                    //                 Padding(
-                    //                   padding: const EdgeInsets.symmetric(
-                    //                       horizontal: 20),
-                    //                   child: Align(
-                    //                     alignment: Alignment.topLeft,
-                    //                     child: Container(
-                    //                       width: 130,
-                    //                       height: 35,
-                    //                       padding: const EdgeInsets.symmetric(
-                    //                           horizontal: 10),
-                    //                       decoration: BoxDecoration(
-                    //                         color: Colors.grey
-                    //                             .shade500, // Grey background color
-                    //                         borderRadius:
-                    //                             BorderRadius.circular(5),
-                    //                       ),
-                    //                       child: DropdownButton<String>(
-                    //                         value:
-                    //                             "USA", // Default selected value
-                    //                         items: <String>[
-                    //                           "USA",
-                    //                           "UK",
-                    //                           "FRANCE",
-                    //                           "BELGIUM"
-                    //                         ].map((String value) {
-                    //                           return DropdownMenuItem<String>(
-                    //                             value: value,
-                    //                             child: Text(value),
-                    //                           );
-                    //                         }).toList(),
-                    //                         onChanged: (String? newValue) {
-                    //                           // Handle selection change
-                    //                         },
-                    //                         underline:
-                    //                             const SizedBox(), // Removes the default underline
-                    //                         dropdownColor: Colors.grey
-                    //                             .shade400, // Grey background for the dropdown
-                    //                       ),
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               ],
-                    //             ),
-
-                    //             // const SizedBox(
-                    //             //   height: 60,
-                    //             // ),
-                    //           ],
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.6,
+                      height: MediaQuery.of(context).size.height * 0.5,
                       child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
                         child: Column(
@@ -1374,237 +921,6 @@ class _QuestionsState extends State<Questions>
   }
 }
 
-// class CountryDropdown extends StatefulWidget {
-//   const CountryDropdown({super.key});
-
-//   @override
-//   _CountryDropdownState createState() => _CountryDropdownState();
-// }
-
-// class _CountryDropdownState extends State<CountryDropdown> {
-//   Map<String, String>? selectedCountry;
-//   List<Map<String, String>> countries = [];
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     fetchCountries();
-//   }
-
-//   Future<void> fetchCountries() async {
-//     final response = await http
-//         .get(Uri.parse('https://restcountries.com/v3.1/all?fields=name,flags'));
-
-//     if (response.statusCode == 200) {
-//       final List<dynamic> data = json.decode(response.body);
-//       setState(() {
-//         countries = data.map((country) {
-//           return {
-//             'name': country['name']['common'].toString(),
-//             'flag': country['flags']['png'].toString(),
-//           };
-//         }).toList();
-//       });
-//     } else {
-//       throw Exception('Failed to load countries');
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 70),
-//       child: Container(
-//         margin: const EdgeInsets.only(bottom: 20),
-//         decoration: BoxDecoration(
-//           color: Colors.grey,
-//           borderRadius: BorderRadius.circular(5),
-//         ),
-//         child: Center(
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Expanded(
-//                 child: SizedBox(
-//                   width: MediaQuery.of(context).size.width * 0.7,
-//                   child: DropdownButtonFormField<Map<String, String>>(
-//                     decoration: const InputDecoration(
-//                       border: OutlineInputBorder(),
-//                       enabledBorder: InputBorder.none,
-//                     ),
-//                     value: selectedCountry,
-//                     onChanged: (Map<String, String>? value) {
-//                       setState(() {
-//                         selectedCountry = value;
-//                       });
-//                     },
-//                     hint: const Text(
-//                       'Country Select',
-//                       style: TextStyle(color: Colors.white),
-//                     ),
-//                     items: countries
-//                         .map<DropdownMenuItem<Map<String, String>>>(
-//                             (Map<String, String> country) {
-//                       return DropdownMenuItem<Map<String, String>>(
-//                         value: country,
-//                         child: SizedBox(
-//                           width: MediaQuery.of(context).size.width * 0.5,
-//                           child: Row(
-//                             children: [
-//                               country['flag'] != null &&
-//                                       country['flag']!.isNotEmpty
-//                                   ? Image.network(
-//                                       country['flag']!,
-//                                       width: 24,
-//                                       height: 16,
-//                                       fit: BoxFit.cover,
-//                                       errorBuilder:
-//                                           (context, error, stackTrace) {
-//                                         return const Icon(Icons.flag,
-//                                             size: 24, color: Colors.white);
-//                                       },
-//                                     )
-//                                   : const Icon(Icons.flag,
-//                                       size: 24, color: Colors.white),
-//                               const SizedBox(width: 10),
-//                               Flexible(
-//                                 child: Text(
-//                                   country['name']!,
-//                                   style: const TextStyle(color: Colors.white),
-//                                   overflow: TextOverflow.ellipsis,
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       );
-//                     }).toList(),
-//                     dropdownColor: Colors.grey,
-//                     style: const TextStyle(color: Colors.white),
-//                   ),
-//                 ),
-//               ),
-//               // if (selectedCountry != null && selectedCountry!['flag'] != null)
-//               //   Padding(
-//               //     padding: const EdgeInsets.only(left: 10),
-//               //     child: Image.network(
-//               //       selectedCountry!['flag']!,
-//               //       width: 24,
-//               //       height: 16,
-//               //       fit: BoxFit.cover,
-//               //       errorBuilder: (context, error, stackTrace) {
-//               //         return Icon(Icons.flag, size: 24, color: Colors.white);
-//               //       },
-//               //     ),
-//               //   ),
-//               if (selectedCountry != null && selectedCountry!['flag'] != null)
-//                 const SelectedCountryStats(),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-// class CountryDropdown extends StatefulWidget {
-//   const CountryDropdown({super.key});
-
-//   @override
-//   _CountryDropdownState createState() => _CountryDropdownState();
-// }
-
-// class _CountryDropdownState extends State<CountryDropdown> {
-//   Map<String, String>? selectedCountry;
-//   List<Map<String, String>> countries = [];
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     fetchCountries();
-//   }
-
-//   Future<void> fetchCountries() async {
-//     final response = await http
-//         .get(Uri.parse('https://restcountries.com/v3.1/all?fields=name,flags'));
-
-//     if (response.statusCode == 200) {
-//       final List<dynamic> data = json.decode(response.body);
-//       setState(() {
-//         countries = data.map((country) {
-//           return {
-//             'name': country['name']['common'].toString(),
-//             'flag': country['flags']['png'].toString(),
-//           };
-//         }).toList();
-//       });
-//     } else {
-//       throw Exception('Failed to load countries');
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 20), // Reduced padding
-//       child: Container(
-//         margin: const EdgeInsets.only(bottom: 20),
-//         decoration: BoxDecoration(
-//           color: selectedCountry == null ? Colors.grey : Colors.transparent,
-//           borderRadius: BorderRadius.circular(5),
-//         ),
-//         child: Column(
-//           children: [
-//             SizedBox(
-//               width: MediaQuery.of(context).size.width * 0.6, // Reduced width
-//               child: DropdownButtonFormField<Map<String, String>>(
-//                 decoration: const InputDecoration(
-//                   border: InputBorder.none,
-//                   enabledBorder: InputBorder.none,
-//                   filled: true,
-//                   fillColor: Colors.grey,
-//                   contentPadding: EdgeInsets.symmetric(horizontal: 15),
-//                 ),
-//                 isExpanded: true, // Ensures proper width handling
-//                 value: selectedCountry,
-//                 onChanged: (Map<String, String>? value) {
-//                   setState(() {
-//                     selectedCountry = value;
-//                   });
-//                 },
-//                 hint: const Text(
-//                   'Country Select',
-//                   style: TextStyle(color: Colors.white),
-//                 ),
-//                 items: countries.map<DropdownMenuItem<Map<String, String>>>(
-//                     (Map<String, String> country) {
-//                   return DropdownMenuItem<Map<String, String>>(
-//                     value: country,
-//                     child: Text(
-//                       country['name']!,
-//                       style: const TextStyle(color: Colors.white),
-//                       overflow: TextOverflow.ellipsis,
-//                     ),
-//                   );
-//                 }).toList(),
-//                 dropdownColor: Colors.grey,
-//                 style: const TextStyle(color: Colors.white),
-//               ),
-//             ),
-//             if (selectedCountry != null)
-//               Padding(
-//                 padding: const EdgeInsets.only(top: 10),
-//                 child: SelectedCountryStats(
-//                   flagUrl: selectedCountry!['flag']!,
-//                   // Pass other required parameters if needed
-//                 ),
-//               ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 class CountryDropdown extends StatefulWidget {
   const CountryDropdown({super.key});
 
@@ -1644,15 +960,18 @@ class _CountryDropdownState extends State<CountryDropdown> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Container(
         margin: const EdgeInsets.only(bottom: 20),
         alignment: Alignment.centerLeft, // Left alignment
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Left-align column children
+          crossAxisAlignment:
+              CrossAxisAlignment.start, // Left-align column children
           children: [
             Container(
-              margin: const EdgeInsets.only(left: 19,),
+              margin: const EdgeInsets.only(
+                left: 19,
+              ),
               width: MediaQuery.of(context).size.width * 0.4, // Reduced width
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(35),
@@ -1708,7 +1027,7 @@ class _CountryDropdownState extends State<CountryDropdown> {
             ),
             if (selectedCountry != null)
               Padding(
-                padding: const EdgeInsets.only(top: 8,left: 12),
+                padding: const EdgeInsets.only(top: 8, left: 12),
                 child: SelectedCountryStats(
                   flagUrl: selectedCountry!['flag']!,
                 ),
@@ -1736,18 +1055,22 @@ class SelectedCountryStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: 300,
-          child: CustomLoadingBar(
-            progress: getRandomProgress(),
-            delay: const Duration(milliseconds: 50),
+    return Container(
+      margin: EdgeInsets.only(
+        left: 8,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 270,
+            child: CustomLoadingBar(
+              progress: getRandomProgress(),
+              delay: const Duration(milliseconds: 50),
+            ),
           ),
-        ),
-        const SizedBox(width: 10),
-        SizedBox(
+          const SizedBox(width: 10),
+          SizedBox(
             width: 35,
             height: 20,
             child: Image.network(
@@ -1758,8 +1081,10 @@ class SelectedCountryStats extends StatelessWidget {
               errorBuilder: (context, error, stackTrace) {
                 return const Icon(Icons.flag, size: 24, color: Colors.white);
               },
-            )),
-      ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -1783,349 +1108,132 @@ class ByDefaultCountries extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              Row(
-                children: [
-                  MiniLoadingBar(
-                    progress: cp1,
-                    delay: 13000,
-                    myWidth: 110,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Column(
+          children: [
+            Row(
+              children: [
+                MiniLoadingBar(
+                  progress: cp1,
+                  delay: 13000,
+                  myWidth: 110,
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 35,
+                  height: 20,
+                  child: Image.asset(
+                    "assets/images/USA.png",
                   ),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    width: 35,
-                    height: 20,
-                    child: Image.asset(
-                      "assets/images/USA.png",
-                    ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                MiniLoadingBar(
+                  progress: cp2,
+                  delay: 14000,
+                  myWidth: 110,
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 35,
+                  height: 20,
+                  child: Image.asset(
+                    "assets/images/UK.png",
                   ),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Row(
-                children: [
-                  MiniLoadingBar(
-                    progress: cp2,
-                    delay: 14000,
-                    myWidth: 110,
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                MiniLoadingBar(
+                  progress: cp3,
+                  delay: 15000,
+                  myWidth: 110,
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 35,
+                  height: 20,
+                  child: Image.asset(
+                    "assets/images/FRANCE.png",
                   ),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    width: 35,
-                    height: 20,
-                    child: Image.asset(
-                      "assets/images/UK.png",
-                    ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 15),
+          ],
+        ),
+        const SizedBox(
+          width: 15,
+        ),
+        Column(
+          children: [
+            Row(
+              children: [
+                MiniLoadingBar(
+                  progress: cp4,
+                  delay: 16000,
+                  myWidth: 110,
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 35,
+                  height: 20,
+                  child: Image.asset(
+                    "assets/images/BOLIVIA.png",
                   ),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Row(
-                children: [
-                  MiniLoadingBar(
-                    progress: cp3,
-                    delay: 15000,
-                    myWidth: 110,
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                MiniLoadingBar(
+                  progress: cp5,
+                  delay: 17000,
+                  myWidth: 110,
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 35,
+                  height: 20,
+                  child: Image.asset(
+                    "assets/images/BELGIUM.png",
                   ),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    width: 35,
-                    height: 20,
-                    child: Image.asset(
-                      "assets/images/FRANCE.png",
-                    ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                MiniLoadingBar(
+                  progress: cp6,
+                  delay: 18000,
+                  myWidth: 110,
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 35,
+                  height: 20,
+                  child: Image.asset(
+                    "assets/images/PORTUGAL.png",
                   ),
-                ],
-              ),
-              const SizedBox(height: 15),
-            ],
-          ),
-          const SizedBox(
-            width: 7,
-          ),
-          Column(
-            children: [
-              Row(
-                children: [
-                  MiniLoadingBar(
-                    progress: cp4,
-                    delay: 16000,
-                    myWidth: 110,
-                  ),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    width: 35,
-                    height: 20,
-                    child: Image.asset(
-                      "assets/images/BOLIVIA.png",
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Row(
-                children: [
-                  MiniLoadingBar(
-                    progress: cp5,
-                    delay: 17000,
-                    myWidth: 110,
-                  ),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    width: 35,
-                    height: 20,
-                    child: Image.asset(
-                      "assets/images/BELGIUM.png",
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Row(
-                children: [
-                  MiniLoadingBar(
-                    progress: cp6,
-                    delay: 18000,
-                    myWidth: 110,
-                  ),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    width: 35,
-                    height: 20,
-                    child: Image.asset(
-                      "assets/images/PORTUGAL.png",
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
-
-// class CustomLoadingBar extends StatefulWidget {
-//   final double progress;
-//   final Duration delay; // New delay parameter
-
-//   const CustomLoadingBar({
-//     super.key,
-//     required this.progress,
-//     this.delay = const Duration(milliseconds: 500), // Default delay
-//   });
-
-//   @override
-//   State<CustomLoadingBar> createState() => _CustomLoadingBarState();
-// }
-
-// class _CustomLoadingBarState extends State<CustomLoadingBar> {
-//   double animatedProgress = 0.0;
-//   bool isVisible = false; // To manage fade-in visibility
-
-//   @override
-//   void didUpdateWidget(covariant CustomLoadingBar oldWidget) {
-//     super.didUpdateWidget(oldWidget);
-//     // Update the animated progress when the widget's progress changes
-//     if (widget.progress != oldWidget.progress) {
-//       setState(() {
-//         animatedProgress = widget.progress;
-//       });
-//     }
-//   }
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     // Delay the fade-in and initialize progress
-//     Future.delayed(widget.delay, () {
-//       setState(() {
-//         isVisible = true; // Start fade-in animation
-//         animatedProgress = widget.progress;
-//       });
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     int progressPercentage = (animatedProgress * 100).toInt();
-//     int remainingPercentage = 100 - progressPercentage;
-
-//     return AnimatedOpacity(
-//       opacity: isVisible ? 1.0 : 0.0,
-//       duration: const Duration(milliseconds: 500), // Fade-in animation duration
-//       child: Column(
-//         mainAxisSize: MainAxisSize.min,
-//         children: [
-//           Stack(
-//             children: [
-//               // Background bar (inactive portion)
-//               Container(
-//                 width: 350, // Width of the loading bar
-//                 height: 20, // Height of the loading bar
-//                 decoration: BoxDecoration(
-//                   color: Colors.grey.shade300, // Grey background color
-//                 ),
-//               ),
-//               // Progress bar (active portion)
-//               AnimatedContainer(
-//                 duration:
-//                     const Duration(milliseconds: 1500), // Animation duration
-//                 curve: Curves.easeInOut, // Smooth easing curve
-//                 width: 350 * animatedProgress,
-//                 height: 20,
-//                 decoration: const BoxDecoration(
-//                   color:
-//                       Color.fromARGB(255, 13, 211, 19), // Green progress color
-//                 ),
-//                 child: Center(
-//                   child: Text(
-//                     '$progressPercentage%',
-//                     style: const TextStyle(
-//                       color: Colors.black,
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 12,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               // Remaining percentage text inside the grey bar
-//               Positioned(
-//                 left: 350 * animatedProgress,
-//                 top: 0,
-//                 child: Container(
-//                   width: 350 * (1 - animatedProgress),
-//                   height: 20,
-//                   alignment: Alignment.center,
-//                   child: Text(
-//                     '$remainingPercentage%',
-//                     style: const TextStyle(
-//                       color: Colors.black,
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 12,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-// class MiniLoadingBar extends StatefulWidget {
-//   final double progress; // Progress value between 0 and 1
-//   final int delay;
-
-//   const MiniLoadingBar({
-//     super.key,
-//     required this.progress,
-//     required this.delay,
-//   });
-
-//   @override
-//   State<MiniLoadingBar> createState() => _MiniLoadingBarState();
-// }
-
-// class _MiniLoadingBarState extends State<MiniLoadingBar>
-//     with SingleTickerProviderStateMixin {
-//   late AnimationController _animationController;
-//   late Animation<double> _progressAnimation;
-
-//   bool isVisible = false; // Tracks visibility of the loader
-
-//   @override
-//   void initState() {
-//     super.initState();
-
-//     // Initialize AnimationController for smooth progress animation
-//     _animationController = AnimationController(
-//       vsync: this,
-//       duration: const Duration(seconds: 2), // Smooth progress duration
-//     );
-
-//     // Define the progress animation
-//     _progressAnimation =
-//         Tween<double>(begin: 0.0, end: widget.progress).animate(CurvedAnimation(
-//       parent: _animationController,
-//       curve: Curves.easeInOut, // Smooth curve for progress animation
-//     ));
-
-//     // Delay visibility and start animations
-//     Future.delayed(Duration(milliseconds: widget.delay), () {
-//       if (mounted) {
-//         setState(() {
-//           isVisible = true; // Show the loader
-//         });
-//         _animationController.forward(); // Start the progress animation
-//       }
-//     });
-//   }
-
-//   @override
-//   void dispose() {
-//     _animationController.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return AnimatedSwitcher(
-//       duration: const Duration(milliseconds: 300), // Smooth fade transition
-//       child: isVisible
-//           ? Stack(
-//               children: [
-//                 // Background bar (inactive portion)
-//                 Container(
-//                   width: 125,
-//                   height: 20,
-//                   color: Colors.grey.shade300,
-//                 ),
-//                 // Progress bar (active portion)
-//                 AnimatedBuilder(
-//                   animation: _progressAnimation,
-//                   builder: (context, child) {
-//                     double animatedProgress = _progressAnimation.value;
-//                     int progressPercentage = (animatedProgress * 100).toInt();
-
-//                     return Container(
-//                       width: 125 * animatedProgress,
-//                       height: 20,
-//                       color: const Color.fromARGB(255, 13, 211, 19),
-//                       alignment: Alignment.center,
-//                       child: Text(
-//                         '$progressPercentage%',
-//                         style: const TextStyle(
-//                           color: Colors.black,
-//                           fontWeight: FontWeight.bold,
-//                           fontSize: 12,
-//                         ),
-//                       ),
-//                     );
-//                   },
-//                 ),
-//               ],
-//             )
-//           : SizedBox(
-//               width: 125, // Fixed width
-//               height: 20, // Fixed height
-//               child: Container(
-//                 color: Colors.transparent, // Transparent placeholder
-//               ),
-//             ),
-//     );
-//   }
-// }
 
 class CustomLoadingBar extends StatefulWidget {
   final double progress;

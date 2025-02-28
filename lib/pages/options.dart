@@ -241,7 +241,7 @@ class _OptionsState extends State<Options> {
               width: _bannerAd!.size.width.toDouble(),
               child: AdWidget(ad: _bannerAd!),
             )
-          : const SizedBox(), // Hide if ad is not loaded
+          : const SizedBox(),
     );
   }
 

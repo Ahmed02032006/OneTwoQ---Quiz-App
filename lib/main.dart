@@ -38,15 +38,14 @@
 //   }
 // }
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:quiz_app/admin/dashboard.dart';
 import 'package:quiz_app/firebase_options.dart';
 import 'package:quiz_app/pages/preLoader.dart';
-import 'package:quiz_app/pages/questions.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -107,7 +106,7 @@ class _MyAppState extends State<MyApp> {
             fontFamily: "Urbanist",
           ),
           // home: Preloader(isAppActive: snapshot.data ?? false),
-          home: const Questions(),
+          home: const Dashboard(),
         );
       },
     );
