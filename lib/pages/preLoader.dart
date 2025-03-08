@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/pages/home.dart';
 
-// ignore: must_be_immutable
 class Preloader extends StatefulWidget {
   late bool isAppActive;
 
@@ -12,7 +10,6 @@ class Preloader extends StatefulWidget {
   });
 
   @override
-  // ignore: library_private_types_in_public_api
   _PreloaderState createState() => _PreloaderState();
 }
 
@@ -37,8 +34,6 @@ class _PreloaderState extends State<Preloader>
     // Navigate after the animation is complete
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        print("in preloader");
-        print(isAppActive);
         if (isAppActive) {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
@@ -46,10 +41,6 @@ class _PreloaderState extends State<Preloader>
             ),
           );
         }
-        // Navigator.push(
-        //   context,
-        //   FadePageRoute(page: const Home()),
-        // );
       }
     });
   }
@@ -60,31 +51,90 @@ class _PreloaderState extends State<Preloader>
     super.dispose();
   }
 
-  @override
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     backgroundColor: Colors.white,
+  //     body: Center(
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [
+  //           AnimatedBuilder(
+  //             animation: _controller,
+  //             builder: (context, child) {
+  //               return Transform.translate(
+  //                 offset: Offset(0.0, -50 * (1 - _controller.value)),
+  //                 child: child,
+  //               );
+  //             },
+  //             child: Image.asset(
+  //               'assets/images/preloader.png',
+  //               width: 150,
+  //               height: 150,
+  //             ),
+  //           ),
+  //           const SizedBox(height: 20),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) {
-                return Transform.translate(
-                  offset: Offset(0.0, -50 * (1 - _controller.value)),
-                  child: child,
-                );
-              },
-              child: Image.asset(
-                'assets/images/preloader.png',
-                width: 150,
-                height: 150,
-              ),
+      body: Stack(
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AnimatedBuilder(
+                  animation: _controller,
+                  builder: (context, child) {
+                    return Transform.translate(
+                      offset: Offset(0.0, -50 * (1 - _controller.value)),
+                      child: child,
+                    );
+                  },
+                  child: Image.asset(
+                    'assets/images/preloader.png',
+                    width: 150,
+                    height: 150,
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ],
             ),
-            const SizedBox(height: 20),
-          ],
-        ),
+          ),
+          Positioned(
+            bottom: MediaQuery.of(context).size.height * 0.02,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Designed & Developed By ",
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                    color: Colors.grey[600],
+                    letterSpacing: 1.7,
+                  ),
+                ),
+                Text(
+                  "amddevanddesign",
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[800],
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

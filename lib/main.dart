@@ -105,8 +105,7 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             fontFamily: "Urbanist",
           ),
-          // home: Preloader(isAppActive: snapshot.data ?? false),
-          home: const Dashboard(),
+          home: Preloader(isAppActive: snapshot.data ?? false),
         );
       },
     );
