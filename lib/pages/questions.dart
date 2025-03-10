@@ -418,7 +418,7 @@ class _QuestionsState extends State<Questions>
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
                                           ),
-                                          textAlign: TextAlign.start,
+                                          textAlign: TextAlign.center,
                                         ),
                                       ],
                                     )
@@ -431,7 +431,7 @@ class _QuestionsState extends State<Questions>
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15,
                                         ),
-                                        textAlign: TextAlign.start,
+                                        textAlign: TextAlign.center,
                                       ),
                                     ),
                         ),
@@ -965,128 +965,6 @@ class _QuestionsState extends State<Questions>
   }
 }
 
-// class CountryDropdown extends StatefulWidget {
-//   const CountryDropdown({super.key});
-
-//   @override
-//   _CountryDropdownState createState() => _CountryDropdownState();
-// }
-
-// class _CountryDropdownState extends State<CountryDropdown> {
-//   List<Map<String, String>> selectedCountries = [];
-//   List<Map<String, String>> countries = [];
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     fetchCountries();
-//   }
-
-//   Future<void> fetchCountries() async {
-//     final response = await http
-//         .get(Uri.parse('https://restcountries.com/v3.1/all?fields=name,flags'));
-
-//     if (response.statusCode == 200) {
-//       final List<dynamic> data = json.decode(response.body);
-//       setState(() {
-//         countries = data.map((country) {
-//           return {
-//             'name': country['name']['common'].toString(),
-//             'flag': country['flags']['png'].toString(),
-//           };
-//         }).toList();
-
-//         countries.sort((a, b) => a['name']!.compareTo(b['name']!));
-//       });
-//     } else {
-//       throw Exception('Failed to load countries');
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 8),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Container(
-//             margin: const EdgeInsets.only(left: 19),
-//             width: MediaQuery.of(context).size.width * 0.4,
-//             alignment: Alignment.centerLeft,
-//             child: DropdownButtonFormField<Map<String, String>>(
-//               decoration: const InputDecoration(
-//                 border: InputBorder.none,
-//                 enabledBorder: InputBorder.none,
-//                 filled: true,
-//                 fillColor: Colors.grey,
-//                 contentPadding:
-//                     EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-//               ),
-//               isExpanded: true, // Ensures the dropdown takes full width
-//               value: null,
-//               onChanged: (Map<String, String>? value) {
-//                 if (value != null &&
-//                     !selectedCountries
-//                         .any((country) => country['name'] == value['name'])) {
-//                   setState(() {
-//                     selectedCountries.add(Map<String, String>.from(value));
-//                   });
-//                 }
-//               },
-//               // Modified hint to ensure left alignment
-//               hint: const Text(
-//                 'Select Country',
-//                 style: TextStyle(color: Colors.white, fontSize: 14),
-//                 textAlign: TextAlign.left, // Aligns text to the left
-//               ),
-//               items: countries.map<DropdownMenuItem<Map<String, String>>>(
-//                 (Map<String, String> country) {
-//                   return DropdownMenuItem<Map<String, String>>(
-//                     value: country,
-//                     alignment: Alignment.centerLeft,
-//                     child: Text(
-//                       country['name']!,
-//                       style: const TextStyle(color: Colors.white, fontSize: 14),
-//                       overflow: TextOverflow.ellipsis,
-//                     ),
-//                   );
-//                 },
-//               ).toList(),
-//               dropdownColor: Colors.grey,
-//               style: const TextStyle(color: Colors.white),
-//               icon: const Icon(Icons.arrow_drop_down,
-//                   color: Colors.white, size: 20),
-//               menuMaxHeight: 300,
-//               alignment: Alignment.centerLeft, // Aligns selected item to left
-//             ),
-//           ),
-//           const SizedBox(height: 10),
-//           if (selectedCountries.isNotEmpty)
-//             SizedBox(
-//               height: 200,
-//               child: ListView.builder(
-//                 shrinkWrap: true,
-//                 physics: const AlwaysScrollableScrollPhysics(),
-//                 itemCount: selectedCountries.length,
-//                 itemBuilder: (context, index) {
-//                   final country = selectedCountries[index];
-//                   return Padding(
-//                     padding: const EdgeInsets.only(top: 8, left: 12),
-//                     child: SelectedCountryStats(
-//                       flagUrl: country['flag']!,
-//                       countryName: country['name']!,
-//                     ),
-//                   );
-//                 },
-//               ),
-//             ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 class CountryDropdown extends StatefulWidget {
   const CountryDropdown({super.key});
 
@@ -1095,7 +973,7 @@ class CountryDropdown extends StatefulWidget {
 }
 
 class _CountryDropdownState extends State<CountryDropdown> {
-  List<Map<String, String>> selectedCountries = []; // Store all selected countries
+  List<Map<String, String>> selectedCountries = [];
   List<Map<String, String>> countries = [];
 
   @override
@@ -1118,13 +996,14 @@ class _CountryDropdownState extends State<CountryDropdown> {
           };
         }).toList();
 
-        // Sort countries alphabetically
         countries.sort((a, b) => a['name']!.compareTo(b['name']!));
       });
     } else {
       throw Exception('Failed to load countries');
     }
   }
+
+  Map<String, String>? selectedCountry;
 
   @override
   Widget build(BuildContext context) {
@@ -1133,7 +1012,6 @@ class _CountryDropdownState extends State<CountryDropdown> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Use Row to force dropdown to start from left
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1141,11 +1019,11 @@ class _CountryDropdownState extends State<CountryDropdown> {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.4,
                 child: Theme(
-                  // Apply a theme override to force left alignment
                   data: Theme.of(context).copyWith(
                     inputDecorationTheme: const InputDecorationTheme(
                       alignLabelWithHint: false,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 13, vertical: 10),
                     ),
                   ),
                   child: DropdownButtonFormField<Map<String, String>>(
@@ -1154,15 +1032,23 @@ class _CountryDropdownState extends State<CountryDropdown> {
                       enabledBorder: InputBorder.none,
                       filled: true,
                       fillColor: Colors.grey,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 13, vertical: 10),
                     ),
                     isExpanded: true,
-                    value: null,
+                    value: selectedCountry, // Set selected value here
                     onChanged: (Map<String, String>? value) {
-                      if (value != null &&
-                          !selectedCountries.any((country) => country['name'] == value['name'])) {
+                      if (value != null) {
                         setState(() {
-                          selectedCountries.add(Map<String, String>.from(value));
+                          selectedCountry = value; // Update selected country
+                          if (selectedCountries.any(
+                              (country) => country['name'] == value['name'])) {
+                            selectedCountries
+                                .removeWhere((c) => c['name'] == value['name']);
+                          } else {
+                            selectedCountries
+                                .add(Map<String, String>.from(value));
+                          }
                         });
                       }
                     },
@@ -1176,36 +1062,67 @@ class _CountryDropdownState extends State<CountryDropdown> {
                     ),
                     items: countries.map<DropdownMenuItem<Map<String, String>>>(
                       (Map<String, String> country) {
+                        final isSelected = selectedCountries
+                            .any((c) => c['name'] == country['name']);
                         return DropdownMenuItem<Map<String, String>>(
                           value: country,
                           alignment: Alignment.centerLeft,
                           child: Container(
-                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 12),
+                            width: double.infinity, // Ensures full width
+                            color: isSelected
+                                ? const Color.fromARGB(255, 13, 211, 19)
+                                : Colors
+                                    .transparent,
                             child: Text(
                               country['name']!,
-                              style: const TextStyle(color: Colors.white, fontSize: 14),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
                               overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
                             ),
                           ),
                         );
                       },
                     ).toList(),
-                    dropdownColor: Colors.grey,
+                    dropdownColor: Colors.grey.shade500,
                     style: const TextStyle(color: Colors.white),
-                    icon: const Icon(Icons.arrow_drop_down, color: Colors.white, size: 20),
+                    icon: const Icon(Icons.arrow_drop_down,
+                        color: Colors.white, size: 20),
                     menuMaxHeight: 300,
                     alignment: Alignment.centerLeft,
+                    // Fix the selectedItemBuilder
+                    selectedItemBuilder: (BuildContext context) {
+                      return countries
+                          .map<Widget>((Map<String, String> country) {
+                        // Only show text for the currently selected country
+                        if (selectedCountry != null &&
+                            selectedCountry!['name'] == country['name']) {
+                          return Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              country['name']!,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          );
+                        }
+                        // Return an empty container for non-selected countries
+                        return Container();
+                      }).toList();
+                    },
                   ),
                 ),
               ),
-              // Use Spacer to push dropdown to the left
               const Spacer(),
             ],
           ),
-
           const SizedBox(height: 10),
-
           if (selectedCountries.isNotEmpty)
             SizedBox(
               height: 200,
@@ -1238,7 +1155,7 @@ class SelectedCountryStats extends StatefulWidget {
   const SelectedCountryStats({
     super.key,
     required this.flagUrl,
-    required this.countryName, // Add country name parameter
+    required this.countryName,
   });
 
   @override
@@ -1246,16 +1163,13 @@ class SelectedCountryStats extends StatefulWidget {
 }
 
 class _SelectedCountryStatsState extends State<SelectedCountryStats> {
-  late final double
-      progressing; // Store the random progress value when widget is created
+  late final double progressing;
 
   @override
   void initState() {
     super.initState();
-    // Generate random progress once when widget is created
     Random random = Random();
-    progressing = 0.1 +
-        random.nextDouble() * 0.4; // Generates a value between 0.1 and 0.7
+    progressing = 0.1 + random.nextDouble() * 0.4;
   }
 
   @override
@@ -1291,6 +1205,211 @@ class _SelectedCountryStatsState extends State<SelectedCountryStats> {
     );
   }
 }
+
+// class CountryDropdown extends StatefulWidget {
+//   const CountryDropdown({super.key});
+
+//   @override
+//   _CountryDropdownState createState() => _CountryDropdownState();
+// }
+
+// class _CountryDropdownState extends State<CountryDropdown> {
+//   List<Map<String, String>> selectedCountries = []; // Store all selected countries
+//   List<Map<String, String>> countries = [];
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchCountries();
+//   }
+
+//   Future<void> fetchCountries() async {
+//     final response = await http
+//         .get(Uri.parse('https://restcountries.com/v3.1/all?fields=name,flags'));
+
+//     if (response.statusCode == 200) {
+//       final List<dynamic> data = json.decode(response.body);
+//       setState(() {
+//         countries = data.map((country) {
+//           return {
+//             'name': country['name']['common'].toString(),
+//             'flag': country['flags']['png'].toString(),
+//           };
+//         }).toList();
+
+//         // Sort countries alphabetically
+//         countries.sort((a, b) => a['name']!.compareTo(b['name']!));
+//       });
+//     } else {
+//       throw Exception('Failed to load countries');
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(horizontal: 40),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           // Use Row to force dropdown to start from left
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.start,
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               SizedBox(
+//                 width: MediaQuery.of(context).size.width * 0.4,
+//                 child: Theme(
+//                   // Apply a theme override to force left alignment
+//                   data: Theme.of(context).copyWith(
+//                     inputDecorationTheme: const InputDecorationTheme(
+//                       alignLabelWithHint: false,
+//                       contentPadding: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+//                     ),
+//                   ),
+//                   child: DropdownButtonFormField<Map<String, String>>(
+//                     decoration: const InputDecoration(
+//                       border: InputBorder.none,
+//                       enabledBorder: InputBorder.none,
+//                       filled: true,
+//                       fillColor: Colors.grey,
+//                       contentPadding: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+//                     ),
+//                     isExpanded: true,
+//                     value: null,
+//                     onChanged: (Map<String, String>? value) {
+//                       if (value != null &&
+//                           !selectedCountries.any((country) => country['name'] == value['name'])) {
+//                         setState(() {
+//                           selectedCountries.add(Map<String, String>.from(value));
+//                         });
+//                       }
+//                     },
+//                     hint: Container(
+//                       alignment: Alignment.centerLeft,
+//                       child: const Text(
+//                         'Select Country',
+//                         style: TextStyle(color: Colors.white, fontSize: 14),
+//                         textAlign: TextAlign.left,
+//                       ),
+//                     ),
+//                     items: countries.map<DropdownMenuItem<Map<String, String>>>(
+//                       (Map<String, String> country) {
+//                         return DropdownMenuItem<Map<String, String>>(
+//                           value: country,
+//                           alignment: Alignment.centerLeft,
+//                           child: Container(
+//                             alignment: Alignment.centerLeft,
+//                             child: Text(
+//                               country['name']!,
+//                               style: const TextStyle(color: Colors.white, fontSize: 14),
+//                               overflow: TextOverflow.ellipsis,
+//                               textAlign: TextAlign.left,
+//                             ),
+//                           ),
+//                         );
+//                       },
+//                     ).toList(),
+//                     dropdownColor: Colors.grey,
+//                     style: const TextStyle(color: Colors.white),
+//                     icon: const Icon(Icons.arrow_drop_down, color: Colors.white, size: 20),
+//                     menuMaxHeight: 300,
+//                     alignment: Alignment.centerLeft,
+//                   ),
+//                 ),
+//               ),
+//               // Use Spacer to push dropdown to the left
+//               const Spacer(),
+//             ],
+//           ),
+
+//           const SizedBox(height: 10),
+
+//           if (selectedCountries.isNotEmpty)
+//             SizedBox(
+//               height: 200,
+//               child: ListView.builder(
+//                 shrinkWrap: true,
+//                 physics: const AlwaysScrollableScrollPhysics(),
+//                 itemCount: selectedCountries.length,
+//                 itemBuilder: (context, index) {
+//                   final country = selectedCountries[index];
+//                   return Padding(
+//                     padding: const EdgeInsets.only(top: 8, left: 0),
+//                     child: SelectedCountryStats(
+//                       flagUrl: country['flag']!,
+//                       countryName: country['name']!,
+//                     ),
+//                   );
+//                 },
+//               ),
+//             ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// class SelectedCountryStats extends StatefulWidget {
+//   final String flagUrl;
+//   final String countryName;
+
+//   const SelectedCountryStats({
+//     super.key,
+//     required this.flagUrl,
+//     required this.countryName, // Add country name parameter
+//   });
+
+//   @override
+//   State<SelectedCountryStats> createState() => _SelectedCountryStatsState();
+// }
+
+// class _SelectedCountryStatsState extends State<SelectedCountryStats> {
+//   late final double
+//       progressing; // Store the random progress value when widget is created
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     // Generate random progress once when widget is created
+//     Random random = Random();
+//     progressing = 0.1 +
+//         random.nextDouble() * 0.4; // Generates a value between 0.1 and 0.7
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       margin: const EdgeInsets.only(left: 8),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.start,
+//         children: [
+//           SizedBox(
+//             width: 270,
+//             child: CustomLoadingBar(
+//               progress: progressing,
+//               delay: const Duration(milliseconds: 50),
+//             ),
+//           ),
+//           const SizedBox(width: 10),
+//           SizedBox(
+//             width: 35,
+//             height: 20,
+//             child: Image.network(
+//               widget.flagUrl,
+//               width: 24,
+//               height: 16,
+//               fit: BoxFit.cover,
+//               errorBuilder: (context, error, stackTrace) {
+//                 return const Icon(Icons.flag, size: 24, color: Colors.white);
+//               },
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class ByDefaultCountries extends StatelessWidget {
   final double cp1;
