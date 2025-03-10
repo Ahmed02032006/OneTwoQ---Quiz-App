@@ -382,6 +382,36 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
     return spans;
   }
 
+  int? selectedIndex;
+
+  void _showSnackbar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.white,
+        duration: const Duration(seconds: 1), // Show for 1 second
+        content: Container(
+          padding: const EdgeInsets.all(8.0),
+          decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Color.fromARGB(255, 13, 211, 19), // Border color
+                width: 5, // Border width
+              ),
+            ),
+          ),
+          child: Text(
+            message,
+            textAlign: TextAlign.center, // Center the text
+            style: const TextStyle(
+              color: Color.fromARGB(255, 13, 211, 19), // Text color
+              fontSize: 20,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -562,459 +592,6 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                 ),
                 if (isStatsDisplayed)
                   if (showStats)
-                    // SizedBox(
-                    //   height: 330,
-                    //   child: SingleChildScrollView(
-                    //     scrollDirection: Axis.vertical,
-                    //     child: Column(
-                    //       children: [
-                    //         Column(
-                    //           children: [
-                    //             const Padding(
-                    //               padding: EdgeInsets.symmetric(horizontal: 35),
-                    //               child: Row(
-                    //                 mainAxisAlignment: MainAxisAlignment.center,
-                    //                 children: [
-                    //                   Text("YES or option 1"),
-                    //                   SizedBox(
-                    //                     width: 50,
-                    //                   ),
-                    //                   Text("NO or option 2"),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //             const SizedBox(
-                    //               height: 5,
-                    //             ),
-                    //             CustomLoadingBar(
-                    //               progress: m1Progress,
-                    //               delay: const Duration(milliseconds: 400),
-                    //             ),
-                    //             const SizedBox(
-                    //               height: 15,
-                    //             ),
-                    //             Padding(
-                    //               padding: const EdgeInsets.symmetric(
-                    //                   horizontal: 50),
-                    //               child: Column(
-                    //                 children: [
-                    //                   const Text("Did you like this question?"),
-                    //                   const SizedBox(
-                    //                     height: 5,
-                    //                   ),
-                    //                   Row(
-                    //                     mainAxisAlignment:
-                    //                         MainAxisAlignment.center,
-                    //                     children: [
-                    //                       Container(
-                    //                         padding: const EdgeInsets.symmetric(
-                    //                             horizontal: 40, vertical: 2),
-                    //                         decoration: BoxDecoration(
-                    //                           borderRadius:
-                    //                               const BorderRadius.all(
-                    //                             Radius.circular(10),
-                    //                           ),
-                    //                           border: Border.all(
-                    //                             width: 5,
-                    //                             color: const Color.fromARGB(
-                    //                                 255, 13, 211, 19),
-                    //                           ),
-                    //                         ),
-                    //                         child: const Icon(
-                    //                           Icons.thumb_up,
-                    //                           color: Color.fromARGB(
-                    //                               255, 13, 211, 19),
-                    //                         ),
-                    //                       ),
-                    //                       const SizedBox(
-                    //                         width: 10,
-                    //                       ),
-                    //                       Container(
-                    //                         padding: const EdgeInsets.symmetric(
-                    //                             horizontal: 40, vertical: 2),
-                    //                         decoration: BoxDecoration(
-                    //                           borderRadius:
-                    //                               const BorderRadius.all(
-                    //                             Radius.circular(10),
-                    //                           ),
-                    //                           border: Border.all(
-                    //                             color: Colors.grey,
-                    //                             width: 5,
-                    //                           ),
-                    //                         ),
-                    //                         child: const Icon(
-                    //                           Icons.thumb_down,
-                    //                           color: Colors.grey,
-                    //                         ),
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    //             Column(
-                    //               children: [
-                    //                 const SizedBox(
-                    //                   height: 15,
-                    //                 ),
-                    //                 CustomLoadingBar(
-                    //                   progress: m2Progress,
-                    //                   delay: const Duration(milliseconds: 800),
-                    //                 ),
-                    //                 const SizedBox(
-                    //                   height: 15,
-                    //                 ),
-                    //                 Row(
-                    //                   crossAxisAlignment:
-                    //                       CrossAxisAlignment.start,
-                    //                   mainAxisAlignment:
-                    //                       MainAxisAlignment.center,
-                    //                   children: [
-                    //                     Column(
-                    //                       children: [
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: mProgress,
-                    //                               delay: 500,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "M",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 5),
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: fProgress,
-                    //                               delay: 1000,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "F ",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 5),
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: nProgress,
-                    //                               delay: 1500,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "N",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 15),
-                    //                       ],
-                    //                     ),
-                    //                     const SizedBox(
-                    //                       width: 15,
-                    //                     ),
-                    //                     Column(
-                    //                       children: [
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: a1Progress,
-                    //                               delay: 2000,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "0 - 14   ",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 5),
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: a2Progress,
-                    //                               delay: 2500,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "15 - 24 ",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 5),
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: a3Progress,
-                    //                               delay: 3000,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "25 - 34",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 5),
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: a4Progress,
-                    //                               delay: 3500,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "35 - 44",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 5),
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: a5Progress,
-                    //                               delay: 4000,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "45 - 64",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 5),
-                    //                         Row(
-                    //                           children: [
-                    //                             MiniLoadingBar(
-                    //                               progress: a6Progress,
-                    //                               delay: 4500,
-                    //                             ),
-                    //                             const SizedBox(width: 10),
-                    //                             const Text(
-                    //                               "65 +     ",
-                    //                               style: TextStyle(
-                    //                                 fontSize: 15,
-                    //                                 fontWeight: FontWeight.bold,
-                    //                               ),
-                    //                             ),
-                    //                           ],
-                    //                         ),
-                    //                         const SizedBox(height: 15),
-                    //                       ],
-                    //                     )
-                    //                   ],
-                    //                 ),
-                    //                 // ====================================================================== Country
-                    //                 // ======================================================================
-                    //                 Padding(
-                    //                   padding: const EdgeInsets.symmetric(
-                    //                       horizontal: 5),
-                    //                   child: Row(
-                    //                     crossAxisAlignment:
-                    //                         CrossAxisAlignment.start,
-                    //                     mainAxisAlignment:
-                    //                         MainAxisAlignment.center,
-                    //                     children: [
-                    //                       Column(
-                    //                         children: [
-                    //                           Row(
-                    //                             children: [
-                    //                               MiniLoadingBar(
-                    //                                 progress: c1Progress,
-                    //                                 delay: 5000,
-                    //                               ),
-                    //                               const SizedBox(width: 10),
-                    //                               SizedBox(
-                    //                                 width: 35,
-                    //                                 height: 20,
-                    //                                 child: Image.asset(
-                    //                                   "assets/images/USA.png",
-                    //                                 ),
-                    //                               ),
-                    //                             ],
-                    //                           ),
-                    //                           const SizedBox(height: 5),
-                    //                           Row(
-                    //                             children: [
-                    //                               MiniLoadingBar(
-                    //                                 progress: c2Progress,
-                    //                                 delay: 5500,
-                    //                               ),
-                    //                               const SizedBox(width: 10),
-                    //                               SizedBox(
-                    //                                 width: 35,
-                    //                                 height: 20,
-                    //                                 child: Image.asset(
-                    //                                   "assets/images/UK.png",
-                    //                                 ),
-                    //                               ),
-                    //                             ],
-                    //                           ),
-                    //                           const SizedBox(height: 5),
-                    //                           Row(
-                    //                             children: [
-                    //                               MiniLoadingBar(
-                    //                                 progress: c3Progress,
-                    //                                 delay: 6000,
-                    //                               ),
-                    //                               const SizedBox(width: 10),
-                    //                               SizedBox(
-                    //                                 width: 35,
-                    //                                 height: 20,
-                    //                                 child: Image.asset(
-                    //                                   "assets/images/FRANCE.png",
-                    //                                 ),
-                    //                               ),
-                    //                             ],
-                    //                           ),
-                    //                           const SizedBox(height: 15),
-                    //                         ],
-                    //                       ),
-                    //                       const SizedBox(
-                    //                         width: 7,
-                    //                       ),
-                    //                       Column(
-                    //                         children: [
-                    //                           Row(
-                    //                             children: [
-                    //                               MiniLoadingBar(
-                    //                                 progress: c4Progress,
-                    //                                 delay: 6500,
-                    //                               ),
-                    //                               const SizedBox(width: 10),
-                    //                               SizedBox(
-                    //                                 width: 35,
-                    //                                 height: 20,
-                    //                                 child: Image.asset(
-                    //                                   "assets/images/BOLIVIA.png",
-                    //                                 ),
-                    //                               ),
-                    //                             ],
-                    //                           ),
-                    //                           const SizedBox(height: 5),
-                    //                           Row(
-                    //                             children: [
-                    //                               MiniLoadingBar(
-                    //                                 progress: c5Progress,
-                    //                                 delay: 7000,
-                    //                               ),
-                    //                               const SizedBox(width: 10),
-                    //                               SizedBox(
-                    //                                 width: 35,
-                    //                                 height: 20,
-                    //                                 child: Image.asset(
-                    //                                   "assets/images/BELGIUM.png",
-                    //                                 ),
-                    //                               ),
-                    //                             ],
-                    //                           ),
-                    //                           const SizedBox(height: 5),
-                    //                           Row(
-                    //                             children: [
-                    //                               MiniLoadingBar(
-                    //                                 progress: c6Progress,
-                    //                                 delay: 7500,
-                    //                               ),
-                    //                               const SizedBox(width: 10),
-                    //                               SizedBox(
-                    //                                 width: 35,
-                    //                                 height: 20,
-                    //                                 child: Image.asset(
-                    //                                   "assets/images/PORTUGAL.png",
-                    //                                 ),
-                    //                               ),
-                    //                             ],
-                    //                           ),
-                    //                         ],
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ),
-                    //                 Padding(
-                    //                   padding: const EdgeInsets.symmetric(
-                    //                       horizontal: 20),
-                    //                   child: Align(
-                    //                     alignment: Alignment.topLeft,
-                    //                     child: Container(
-                    //                       width: 130,
-                    //                       height: 35,
-                    //                       padding: const EdgeInsets.symmetric(
-                    //                           horizontal: 10),
-                    //                       decoration: BoxDecoration(
-                    //                         color: Colors.grey
-                    //                             .shade500, // Grey background color
-                    //                         borderRadius:
-                    //                             BorderRadius.circular(5),
-                    //                       ),
-                    //                       child: DropdownButton<String>(
-                    //                         value:
-                    //                             "USA", // Default selected value
-                    //                         items: <String>[
-                    //                           "USA",
-                    //                           "UK",
-                    //                           "FRANCE",
-                    //                           "BELGIUM"
-                    //                         ].map((String value) {
-                    //                           return DropdownMenuItem<String>(
-                    //                             value: value,
-                    //                             child: Text(value),
-                    //                           );
-                    //                         }).toList(),
-                    //                         onChanged: (String? newValue) {
-                    //                           // Handle selection change
-                    //                         },
-                    //                         underline:
-                    //                             const SizedBox(), // Removes the default underline
-                    //                         dropdownColor: Colors.grey
-                    //                             .shade400, // Grey background for the dropdown
-                    //                       ),
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               ],
-                    //             ),
-
-                    //             // const SizedBox(
-                    //             //   height: 60,
-                    //             // ),
-                    //           ],
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height *
                           0.5, // Adjust height relative to screen size
@@ -1063,7 +640,14 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Flexible(
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedIndex = 0;
+                                              });
+                                              _showSnackbar(context,
+                                                  "Your Feedback Submitted!");
+                                            },
                                             child: Container(
                                               padding: EdgeInsets.symmetric(
                                                 horizontal: MediaQuery.of(
@@ -1075,11 +659,11 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                               ),
                                               decoration: BoxDecoration(
                                                 borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(10),
-                                                ),
+                                                    BorderRadius.circular(10),
                                                 border: Border.all(
-                                                  width: 5,
+                                                  width: selectedIndex == 0
+                                                      ? 6
+                                                      : 4, // Increase border width on selection
                                                   color: const Color.fromARGB(
                                                       255, 13, 211, 19),
                                                 ),
@@ -1091,27 +675,34 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Flexible(
+                                          const SizedBox(width: 10),
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedIndex = 1;
+                                              });
+                                              _showSnackbar(
+                                                context,
+                                                "Your Feedback Submitted!",
+                                              );
+                                            },
                                             child: Container(
                                               padding: EdgeInsets.symmetric(
-                                                horizontal: MediaQuery.of(
-                                                            context)
-                                                        .size
-                                                        .width *
-                                                    0.1, // Responsive padding
+                                                horizontal:
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.1,
                                                 vertical: 2,
                                               ),
                                               decoration: BoxDecoration(
                                                 borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(10),
-                                                ),
+                                                    BorderRadius.circular(10),
                                                 border: Border.all(
+                                                  width: selectedIndex == 1
+                                                      ? 6
+                                                      : 4, // Increase border width on selection
                                                   color: Colors.grey,
-                                                  width: 5,
                                                 ),
                                               ),
                                               child: const Icon(
@@ -1497,7 +1088,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                               decoration: TextDecoration
                                                   .underline, // Underline the text
                                               decorationColor: Colors
-                                                  .black, // Color of the underline
+                                                  .grey, // Color of the underline
                                               color: Colors
                                                   .grey, // Color of the text
                                               fontSize: 20, // Font size
@@ -1530,13 +1121,15 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                         children: [
                           GestureDetector(
                             onTap: () {
-                              _showCommentDialog(
-                                context,
-                                usernameController,
-                                commentController,
-                                question,
-                                currentCategoryId,
-                                currentQuestionId,
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) {
+                                  return CommentBox(
+                                    currentQuestionId: currentQuestionId,
+                                    currentCategoryId: currentCategoryId,
+                                  );
+                                },
                               );
                             },
                             child: const Text(
@@ -1583,22 +1176,6 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                               ),
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled:
-                                    true, // Makes the bottom sheet responsive
-                                builder: (context) {
-                                  return CommentBox(
-                                    CommentBoxCurrentQuestionId:
-                                        currentQuestionId,
-                                  );
-                                },
-                              );
-                            },
-                            child: const Icon(Icons.arrow_circle_up_outlined),
-                          ),
                         ],
                       ),
                     ),
@@ -1618,7 +1195,8 @@ class CountryDropdown extends StatefulWidget {
 }
 
 class _CountryDropdownState extends State<CountryDropdown> {
-  Map<String, String>? selectedCountry;
+  List<Map<String, String>> selectedCountries =
+      []; // Store all selected countries
   List<Map<String, String>> countries = [];
 
   @override
@@ -1640,6 +1218,9 @@ class _CountryDropdownState extends State<CountryDropdown> {
             'flag': country['flags']['png'].toString(),
           };
         }).toList();
+
+        // Sort countries alphabetically
+        countries.sort((a, b) => a['name']!.compareTo(b['name']!));
       });
     } else {
       throw Exception('Failed to load countries');
@@ -1649,123 +1230,169 @@ class _CountryDropdownState extends State<CountryDropdown> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 20),
-        alignment: Alignment.centerLeft, // Left alignment
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Left-align column children
-          children: [
-            Container(
-              margin: const EdgeInsets.only(left: 19,),
-              width: MediaQuery.of(context).size.width * 0.4, // Reduced width
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(35),
-              ),
-              child: DropdownButtonFormField<Map<String, String>>(
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  filled: true,
-                  fillColor: Colors.grey,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 13,
-                    vertical: 10, // Reduced vertical padding
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Use Row to force dropdown to start from left
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.4,
+                child: Theme(
+                  // Apply a theme override to force left alignment
+                  data: Theme.of(context).copyWith(
+                    inputDecorationTheme: const InputDecorationTheme(
+                      alignLabelWithHint: false,
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                    ),
                   ),
-                ),
-                isExpanded: true,
-                value: selectedCountry,
-                onChanged: (Map<String, String>? value) {
-                  setState(() {
-                    selectedCountry = value;
-                  });
-                },
-                hint: const Text(
-                  'Country Select',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14, // Smaller font size
-                  ),
-                ),
-                items: countries.map<DropdownMenuItem<Map<String, String>>>(
-                  (Map<String, String> country) {
-                    return DropdownMenuItem<Map<String, String>>(
-                      value: country,
-                      child: Text(
-                        country['name']!,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14, // Smaller font size
-                        ),
-                        overflow: TextOverflow.ellipsis,
+                  child: DropdownButtonFormField<Map<String, String>>(
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      filled: true,
+                      fillColor: Colors.grey,
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                    ),
+                    isExpanded: true,
+                    value: null,
+                    onChanged: (Map<String, String>? value) {
+                      if (value != null &&
+                          !selectedCountries.any(
+                              (country) => country['name'] == value['name'])) {
+                        setState(() {
+                          selectedCountries
+                              .add(Map<String, String>.from(value));
+                        });
+                      }
+                    },
+                    hint: Container(
+                      alignment: Alignment.centerLeft,
+                      child: const Text(
+                        'Select Country',
+                        style: TextStyle(color: Colors.white, fontSize: 14),
+                        textAlign: TextAlign.left,
                       ),
-                    );
-                  },
-                ).toList(),
-                dropdownColor: Colors.grey,
-                style: const TextStyle(color: Colors.white),
-                icon: const Icon(
-                  Icons.arrow_drop_down,
-                  color: Colors.white,
-                  size: 20, // Smaller icon
+                    ),
+                    items: countries.map<DropdownMenuItem<Map<String, String>>>(
+                      (Map<String, String> country) {
+                        return DropdownMenuItem<Map<String, String>>(
+                          value: country,
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              country['name']!,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 14),
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                        );
+                      },
+                    ).toList(),
+                    dropdownColor: Colors.grey,
+                    style: const TextStyle(color: Colors.white),
+                    icon: const Icon(Icons.arrow_drop_down,
+                        color: Colors.white, size: 20),
+                    menuMaxHeight: 300,
+                    alignment: Alignment.centerLeft,
+                  ),
                 ),
+              ),
+              // Use Spacer to push dropdown to the left
+              const Spacer(),
+            ],
+          ),
+
+          const SizedBox(height: 10),
+
+          if (selectedCountries.isNotEmpty)
+            SizedBox(
+              height: 200,
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: selectedCountries.length,
+                itemBuilder: (context, index) {
+                  final country = selectedCountries[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 8, left: 0),
+                    child: SelectedCountryStats(
+                      flagUrl: country['flag']!,
+                      countryName: country['name']!,
+                    ),
+                  );
+                },
               ),
             ),
-            if (selectedCountry != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 8,left: 12),
-                child: SelectedCountryStats(
-                  flagUrl: selectedCountry!['flag']!,
-                ),
-              ),
-          ],
-        ),
+        ],
       ),
     );
   }
 }
 
-class SelectedCountryStats extends StatelessWidget {
+class SelectedCountryStats extends StatefulWidget {
   final String flagUrl;
+  final String countryName;
 
   const SelectedCountryStats({
     super.key,
     required this.flagUrl,
+    required this.countryName, // Add country name parameter
   });
 
-  double getRandomProgress() {
+  @override
+  State<SelectedCountryStats> createState() => _SelectedCountryStatsState();
+}
+
+class _SelectedCountryStatsState extends State<SelectedCountryStats> {
+  late final double
+      progressing; // Store the random progress value when widget is created
+
+  @override
+  void initState() {
+    super.initState();
+    // Generate random progress once when widget is created
     Random random = Random();
-    return 0.1 +
-        random.nextDouble() * 0.6; // Generates a value between 0.1 and 0.7
+    progressing = 0.1 +
+        random.nextDouble() * 0.4; // Generates a value between 0.1 and 0.7
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 8,),
+      margin: const EdgeInsets.only(left: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
             width: 270,
             child: CustomLoadingBar(
-              progress: getRandomProgress(),
+              progress: progressing,
               delay: const Duration(milliseconds: 50),
             ),
           ),
           const SizedBox(width: 10),
           SizedBox(
-              width: 35,
-              height: 20,
-              child: Image.network(
-                flagUrl,
-                width: 24,
-                height: 16,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Icon(Icons.flag, size: 24, color: Colors.white);
-                },
-              )),
+            width: 35,
+            height: 20,
+            child: Image.network(
+              widget.flagUrl,
+              width: 24,
+              height: 16,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return const Icon(Icons.flag, size: 24, color: Colors.white);
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -1914,52 +1541,6 @@ class ByDefaultCountries extends StatelessWidget {
           ],
         ),
       ],
-    );
-  }
-}
-
-
-class CommentBox extends StatelessWidget {
-  const CommentBox({
-    super.key,
-    required this.CommentBoxCurrentQuestionId,
-  });
-
-  final String CommentBoxCurrentQuestionId;
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(30),
-        topRight: Radius.circular(30),
-      ),
-      child: Container(
-        height: MediaQuery.of(context).size.height *
-            0.6, // 60% of the screen height
-        padding: const EdgeInsets.all(16),
-        color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Comments',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(height: 16),
-            // Displaying the comments from Firestore
-            Expanded(
-              child: CommentsList(
-                ComentListCurrentQuestionId: CommentBoxCurrentQuestionId,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -2223,437 +1804,6 @@ class _CommentItemState extends State<CommentItem> {
     );
   }
 }
-
-// class CustomLoadingBar extends StatefulWidget {
-//   final double progress;
-//   final Duration delay; // New delay parameter
-
-//   const CustomLoadingBar({
-//     super.key,
-//     required this.progress,
-//     this.delay = const Duration(milliseconds: 500), // Default delay
-//   });
-
-//   @override
-//   State<CustomLoadingBar> createState() => _CustomLoadingBarState();
-// }
-// class _CustomLoadingBarState extends State<CustomLoadingBar> {
-//   double animatedProgress = 0.0;
-//   bool isVisible = false; // To manage fade-in visibility
-
-//   @override
-//   void didUpdateWidget(covariant CustomLoadingBar oldWidget) {
-//     super.didUpdateWidget(oldWidget);
-//     // Update the animated progress when the widget's progress changes
-//     if (widget.progress != oldWidget.progress) {
-//       setState(() {
-//         animatedProgress = widget.progress;
-//       });
-//     }
-//   }
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     // Delay the fade-in and initialize progress
-//     Future.delayed(widget.delay, () {
-//       setState(() {
-//         isVisible = true; // Start fade-in animation
-//         animatedProgress = widget.progress;
-//       });
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     int progressPercentage = (animatedProgress * 100).toInt();
-//     int remainingPercentage = 100 - progressPercentage;
-
-//     return AnimatedOpacity(
-//       opacity: isVisible ? 1.0 : 0.0,
-//       duration: const Duration(milliseconds: 500), // Fade-in animation duration
-//       child: Column(
-//         mainAxisSize: MainAxisSize.min,
-//         children: [
-//           Stack(
-//             children: [
-//               // Background bar (inactive portion)
-//               Container(
-//                 width: 350, // Width of the loading bar
-//                 height: 20, // Height of the loading bar
-//                 decoration: BoxDecoration(
-//                   color: Colors.grey.shade300, // Grey background color
-//                 ),
-//               ),
-//               // Progress bar (active portion)
-//               AnimatedContainer(
-//                 duration:
-//                     const Duration(milliseconds: 1500), // Animation duration
-//                 curve: Curves.easeInOut, // Smooth easing curve
-//                 width: 350 * animatedProgress,
-//                 height: 20,
-//                 decoration: const BoxDecoration(
-//                   color:
-//                       Color.fromARGB(255, 13, 211, 19), // Green progress color
-//                 ),
-//                 child: Center(
-//                   child: Text(
-//                     '$progressPercentage%',
-//                     style: const TextStyle(
-//                       color: Colors.black,
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 12,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               // Remaining percentage text inside the grey bar
-//               Positioned(
-//                 left: 350 * animatedProgress,
-//                 top: 0,
-//                 child: Container(
-//                   width: 350 * (1 - animatedProgress),
-//                   height: 20,
-//                   alignment: Alignment.center,
-//                   child: Text(
-//                     '$remainingPercentage%',
-//                     style: const TextStyle(
-//                       color: Colors.black,
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 12,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-// class MiniLoadingBar extends StatefulWidget {
-//   final double progress;
-//   final int delay;
-
-//   const MiniLoadingBar({
-//     super.key,
-//     required this.progress,
-//     required this.delay,
-//   });
-
-//   @override
-//   State<MiniLoadingBar> createState() => _MiniLoadingBarState();
-// }
-
-// class _MiniLoadingBarState extends State<MiniLoadingBar>
-//     with SingleTickerProviderStateMixin {
-//   double animatedProgress = 0.0;
-//   bool isVisible = false;
-
-//   // @override
-//   // void initState() {
-//   //   super.initState();
-//   //   // Delay visibility and progress animation
-//   //   Future.delayed(Duration(milliseconds: widget.delay), () {
-//   //     setState(() {
-//   //       isVisible = true; // Show widget
-//   //       animatedProgress = widget.progress; // Start progress animation
-//   //     });
-//   //   });
-//   // }
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     // Delay visibility and progress animation
-//     Future.delayed(Duration(milliseconds: widget.delay), () {
-//       if (mounted) {
-//         // Check if the widget is still in the widget tree
-//         setState(() {
-//           isVisible = true; // Show widget
-//           animatedProgress = widget.progress; // Start progress animation
-//         });
-//       }
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     int progressPercentage = (animatedProgress * 100).toInt();
-//     int remainingPercentage = 100 - progressPercentage;
-
-//     return AnimatedOpacity(
-//       opacity: isVisible ? 1.0 : 0.0,
-//       duration: const Duration(milliseconds: 300),
-//       child: Column(
-//         mainAxisSize: MainAxisSize.min,
-//         children: [
-//           Stack(
-//             children: [
-//               // Background bar (inactive portion)
-//               Container(
-//                 width: 125, // Width of the loading bar
-//                 height: 20, // Height of the loading bar
-//                 decoration: BoxDecoration(
-//                   color: Colors.grey.shade300, // Grey background color
-//                 ),
-//               ),
-//               // Progress bar (active portion)
-//               AnimatedContainer(
-//                 duration:
-//                     const Duration(milliseconds: 1000), // Animation duration
-//                 curve: Curves.easeInOut, // Smooth easing curve
-//                 width: 125 * animatedProgress,
-//                 height: 20,
-//                 decoration: const BoxDecoration(
-//                   color:
-//                       Color.fromARGB(255, 13, 211, 19), // Green progress color
-//                 ),
-//                 child: Center(
-//                   child: Text(
-//                     '$progressPercentage%',
-//                     style: const TextStyle(
-//                       color: Colors.black,
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 12,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               // Remaining percentage text inside the grey bar
-//               Positioned(
-//                 left: 125 * animatedProgress,
-//                 top: 0,
-//                 child: Container(
-//                   width: 125 * (1 - animatedProgress),
-//                   height: 20,
-//                   alignment: Alignment.center,
-//                   child: Text(
-//                     '$remainingPercentage%',
-//                     style: const TextStyle(
-//                       color: Colors.black,
-//                       fontWeight: FontWeight.bold,
-//                       fontSize: 12,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-// class MiniLoadingBar extends StatefulWidget {
-//   final double progress; // Progress value between 0 and 1
-//   final int delay;
-
-//   const MiniLoadingBar({
-//     super.key,
-//     required this.progress,
-//     required this.delay,
-//   });
-
-//   @override
-//   State<MiniLoadingBar> createState() => _MiniLoadingBarState();
-// }
-
-// class _MiniLoadingBarState extends State<MiniLoadingBar>
-//     with SingleTickerProviderStateMixin {
-//   late AnimationController _animationController;
-//   late Animation<double> _progressAnimation;
-
-//   bool isVisible = false; // Tracks visibility of the loader
-
-//   @override
-//   void initState() {
-//     super.initState();
-
-//     // Initialize AnimationController for smooth progress animation
-//     _animationController = AnimationController(
-//       vsync: this,
-//       duration: const Duration(seconds: 2), // Smooth progress duration
-//     );
-
-//     // Define the progress animation
-//     _progressAnimation =
-//         Tween<double>(begin: 0.0, end: widget.progress).animate(CurvedAnimation(
-//       parent: _animationController,
-//       curve: Curves.easeInOut, // Smooth curve for progress animation
-//     ));
-
-//     // Delay visibility and start animations
-//     Future.delayed(Duration(milliseconds: widget.delay), () {
-//       if (mounted) {
-//         setState(() {
-//           isVisible = true; // Show the loader
-//         });
-//         _animationController.forward(); // Start the progress animation
-//       }
-//     });
-//   }
-
-//   @override
-//   void dispose() {
-//     _animationController.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return AnimatedSwitcher(
-//       duration: const Duration(milliseconds: 300), // Smooth fade transition
-//       child: isVisible
-//           ? Stack(
-//               children: [
-//                 // Background bar (inactive portion)
-//                 Container(
-//                   width: 125,
-//                   height: 20,
-//                   color: Colors.grey.shade300,
-//                 ),
-//                 // Progress bar (active portion)
-//                 AnimatedBuilder(
-//                   animation: _progressAnimation,
-//                   builder: (context, child) {
-//                     double animatedProgress = _progressAnimation.value;
-//                     int progressPercentage = (animatedProgress * 100).toInt();
-
-//                     return Container(
-//                       width: 125 * animatedProgress,
-//                       height: 20,
-//                       color: const Color.fromARGB(255, 13, 211, 19),
-//                       alignment: Alignment.center,
-//                       child: Text(
-//                         '$progressPercentage%',
-//                         style: const TextStyle(
-//                           color: Colors.black,
-//                           fontWeight: FontWeight.bold,
-//                           fontSize: 12,
-//                         ),
-//                       ),
-//                     );
-//                   },
-//                 ),
-//               ],
-//             )
-//           : SizedBox(
-//               width: 125, // Fixed width
-//               height: 20, // Fixed height
-//               child: Container(
-//                 color: Colors.transparent, // Transparent placeholder
-//               ),
-//             ),
-//     );
-//   }
-// }
-
-// void _showCommentDialog(
-//   BuildContext context,
-//   usernameController,
-//   commentController,
-//   question,
-//   currentCategoryId,
-//   currentQuestionId,
-// ) {
-//   showDialog(
-//     context: context,
-//     builder: (BuildContext context) {
-//       return AlertDialog(
-//         shape: RoundedRectangleBorder(
-//           borderRadius:
-//               BorderRadius.circular(15), // Rounded corners for the dialog
-//         ),
-//         title: const Text(
-//           'Leave a Comment',
-//           style: TextStyle(
-//             fontSize: 18,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//         content: SizedBox(
-//           height: 200,
-//           child: Column(
-//             children: [
-//               // Username TextField
-//               TextFormField(
-//                 controller: usernameController,
-//                 decoration: InputDecoration(
-//                   labelText: 'Username',
-//                   border: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(10),
-//                   ),
-//                   filled: true,
-//                   fillColor: Colors.grey[200],
-//                 ),
-//               ),
-//               const SizedBox(height: 15),
-//               // Comment TextField
-//               TextField(
-//                 controller: commentController,
-//                 maxLines: 4,
-//                 decoration: InputDecoration(
-//                   labelText: 'Comment',
-//                   border: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(10),
-//                   ),
-//                   filled: true,
-//                   fillColor: Colors.grey[200],
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//         actions: [
-//           // Cancel Button
-//           TextButton(
-//             onPressed: () {
-//               Navigator.of(context).pop();
-//             },
-//             child: const Text('Cancel'),
-//           ),
-//           // Submit Button
-//           ElevatedButton(
-//             onPressed: () async {
-//               try {
-//                 // CollectionReference comments =
-//                 //     FirebaseFirestore.instance.collection('Comments');
-
-//                 // await comments.add({
-//                 //   'username': usernameController.text,
-//                 //   'comment': commentController.text,
-//                 //   'categoryId': currentCategoryId,
-//                 //   'questionId': currentQuestionId,
-//                 //   'timestamp': FieldValue
-//                 //       .serverTimestamp(), // optional, adds timestamp to the comment
-//                 // });
-//               } catch (e) {
-//                 print("Error adding comment: $e");
-//               }
-
-//               // usernameController.text = "";
-//               // commentController.text = "";
-//               // Navigator.pop(context);
-//             },
-//             style: ElevatedButton.styleFrom(
-//               backgroundColor: Colors.green,
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(10),
-//               ),
-//             ),
-//             child: const Text(
-//               'Submit',
-//               style: TextStyle(color: Colors.white),
-//             ),
-//           ),
-//         ],
-//       );
-//     },
-//   );
-// }
 
 class CustomLoadingBar extends StatefulWidget {
   final double progress;
@@ -3080,4 +2230,201 @@ void _showCommentDialog(
       );
     },
   );
+}
+
+class CommentBox extends StatelessWidget {
+  const CommentBox({
+    super.key,
+    required this.currentQuestionId,
+    required this.currentCategoryId,
+  });
+
+  final String currentQuestionId;
+  final String currentCategoryId;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(30),
+        topRight: Radius.circular(30),
+      ),
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.6,
+        padding: const EdgeInsets.all(16),
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Title and Comment Input
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Comments',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                CommentInput(
+                  currentCategoryId: currentCategoryId,
+                  currentQuestionId: currentQuestionId,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            // Comments List
+            Expanded(
+              child: CommentsList(
+                ComentListCurrentQuestionId: currentQuestionId,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CommentInput extends StatefulWidget {
+  final String currentCategoryId;
+  final String currentQuestionId;
+
+  const CommentInput({
+    required this.currentCategoryId,
+    required this.currentQuestionId,
+    super.key,
+  });
+
+  @override
+  _CommentInputState createState() => _CommentInputState();
+}
+
+class _CommentInputState extends State<CommentInput> {
+  final TextEditingController _commentController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  String? _savedUsername;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUsername();
+  }
+
+  Future<void> _loadUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _savedUsername = prefs.getString('username');
+    });
+    if (_savedUsername != null) {
+      _usernameController.text = _savedUsername!;
+    }
+  }
+
+  Future<void> _submitComment() async {
+    final username = _usernameController.text.trim();
+    final comment = _commentController.text.trim();
+
+    if (username.isEmpty) {
+      showCustomSnackBar(context, "Username is required.");
+      return;
+    }
+    if (comment.isEmpty) {
+      showCustomSnackBar(context, "Comment cannot be empty.");
+      return;
+    }
+
+    try {
+      // Save or update username in SharedPreferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('username', username);
+
+      // Submit comment to Firestore
+      await FirebaseFirestore.instance.collection('Comments').add({
+        'username': username,
+        'comment': comment,
+        'categoryId': widget.currentCategoryId,
+        'questionId': widget.currentQuestionId,
+        'UpOrDown': 0,
+        'timestamp': FieldValue.serverTimestamp(),
+        'votedBy': [],
+      });
+
+      // Clear comment field
+      _commentController.clear();
+      FocusScope.of(context).unfocus();
+    } catch (e) {
+      showCustomSnackBar(context, "Error submitting comment: $e");
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Username Field (only if not saved)
+        if (_savedUsername == null)
+          TextField(
+            controller: _usernameController,
+            decoration: InputDecoration(
+              labelText: 'Username',
+              prefixIcon: const Icon(Icons.person,
+                  color: Color.fromARGB(255, 13, 211, 19)),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              filled: true,
+              fillColor: Colors.grey[100],
+            ),
+          ),
+        if (_savedUsername == null) const SizedBox(height: 16),
+
+        // Comment Field and Submit Button
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey.shade300),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _commentController,
+                  decoration: const InputDecoration(
+                    hintText: 'Write a comment...',
+                    border: InputBorder.none,
+                  ),
+                  maxLines: 4,
+                  minLines: 1,
+                ),
+              ),
+              const SizedBox(width: 8),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 13, 211, 19),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                ),
+                onPressed: _submitComment,
+                child: const Icon(Icons.send, size: 20),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 }

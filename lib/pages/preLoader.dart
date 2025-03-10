@@ -107,33 +107,33 @@ class _PreloaderState extends State<Preloader>
               ],
             ),
           ),
-          Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.02,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Designed & Developed By ",
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.04,
-                    color: Colors.grey[600],
-                    letterSpacing: 1.7,
-                  ),
-                ),
-                Text(
-                  "amddevanddesign",
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.04,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey[800],
-                    letterSpacing: 1.2,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Positioned(
+          //   bottom: MediaQuery.of(context).size.height * 0.02,
+          //   left: 0,
+          //   right: 0,
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       Text(
+          //         "Designed & Developed By ",
+          //         style: TextStyle(
+          //           fontSize: MediaQuery.of(context).size.width * 0.04,
+          //           color: Colors.grey[600],
+          //           letterSpacing: 1.7,
+          //         ),
+          //       ),
+          //       Text(
+          //         "amddevanddesign",
+          //         style: TextStyle(
+          //           fontSize: MediaQuery.of(context).size.width * 0.04,
+          //           fontWeight: FontWeight.bold,
+          //           color: Colors.grey[800],
+          //           letterSpacing: 1.2,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );

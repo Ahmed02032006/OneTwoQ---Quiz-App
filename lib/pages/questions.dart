@@ -302,6 +302,36 @@ class _QuestionsState extends State<Questions>
     return spans;
   }
 
+  int? selectedIndex;
+
+  void _showSnackbar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.white,
+        duration: const Duration(seconds: 1), // Show for 1 second
+        content: Container(
+          padding: const EdgeInsets.all(8.0),
+          decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Color.fromARGB(255, 13, 211, 19), // Border color
+                width: 5, // Border width
+              ),
+            ),
+          ),
+          child: Text(
+            message,
+            textAlign: TextAlign.center, // Center the text
+            style: const TextStyle(
+              color: Color.fromARGB(255, 13, 211, 19), // Text color
+              fontSize: 20,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -362,7 +392,7 @@ class _QuestionsState extends State<Questions>
                       opacity: _opacityAnimation,
                       child: Container(
                         width: 100,
-                        height: showStats == true ? 80 : 160,
+                        height: showStats == true ? 100 : 100,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: const Color.fromARGB(255, 13, 211, 19),
@@ -374,7 +404,8 @@ class _QuestionsState extends State<Questions>
                         child: Center(
                           child: isLoading
                               ? const CircularProgressIndicator(
-                                  color: Colors.white)
+                                  color: Colors.white,
+                                )
                               : showStats
                                   ? const Column(
                                       mainAxisAlignment:
@@ -391,17 +422,16 @@ class _QuestionsState extends State<Questions>
                                         ),
                                       ],
                                     )
-                                  : SingleChildScrollView(
+                                  : const SingleChildScrollView(
                                       scrollDirection: Axis.vertical,
-                                      child: RichText(
-                                        textAlign: TextAlign.center,
-                                        text: TextSpan(
-                                          children: _parseStyledText(question),
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                          ),
+                                      child: Text(
+                                        "Most questions are answered in a simple yes or no format. Please select Yes or No.",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
                                         ),
+                                        textAlign: TextAlign.start,
                                       ),
                                     ),
                         ),
@@ -487,7 +517,14 @@ class _QuestionsState extends State<Questions>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Flexible(
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedIndex = 0;
+                                              });
+                                              _showSnackbar(context,
+                                                  "Your Feedback Submitted!");
+                                            },
                                             child: Container(
                                               padding: EdgeInsets.symmetric(
                                                 horizontal: MediaQuery.of(
@@ -499,11 +536,11 @@ class _QuestionsState extends State<Questions>
                                               ),
                                               decoration: BoxDecoration(
                                                 borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(10),
-                                                ),
+                                                    BorderRadius.circular(10),
                                                 border: Border.all(
-                                                  width: 5,
+                                                  width: selectedIndex == 0
+                                                      ? 6
+                                                      : 4, // Increase border width on selection
                                                   color: const Color.fromARGB(
                                                       255, 13, 211, 19),
                                                 ),
@@ -515,27 +552,34 @@ class _QuestionsState extends State<Questions>
                                               ),
                                             ),
                                           ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Flexible(
+                                          const SizedBox(width: 10),
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedIndex = 1;
+                                              });
+                                              _showSnackbar(
+                                                context,
+                                                "Your Feedback Submitted!",
+                                              );
+                                            },
                                             child: Container(
                                               padding: EdgeInsets.symmetric(
-                                                horizontal: MediaQuery.of(
-                                                            context)
-                                                        .size
-                                                        .width *
-                                                    0.1, // Responsive padding
+                                                horizontal:
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.1,
                                                 vertical: 2,
                                               ),
                                               decoration: BoxDecoration(
                                                 borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(10),
-                                                ),
+                                                    BorderRadius.circular(10),
                                                 border: Border.all(
+                                                  width: selectedIndex == 1
+                                                      ? 6
+                                                      : 4, // Increase border width on selection
                                                   color: Colors.grey,
-                                                  width: 5,
                                                 ),
                                               ),
                                               child: const Icon(
@@ -859,7 +903,7 @@ class _QuestionsState extends State<Questions>
                                     decoration: TextDecoration
                                         .underline, // Underline the text
                                     decorationColor:
-                                        Colors.black, // Color of the underline
+                                        Colors.grey, // Color of the underline
                                     color: Colors.grey, // Color of the text
                                     fontSize: 20, // Font size
                                     fontStyle: FontStyle
@@ -921,6 +965,128 @@ class _QuestionsState extends State<Questions>
   }
 }
 
+// class CountryDropdown extends StatefulWidget {
+//   const CountryDropdown({super.key});
+
+//   @override
+//   _CountryDropdownState createState() => _CountryDropdownState();
+// }
+
+// class _CountryDropdownState extends State<CountryDropdown> {
+//   List<Map<String, String>> selectedCountries = [];
+//   List<Map<String, String>> countries = [];
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchCountries();
+//   }
+
+//   Future<void> fetchCountries() async {
+//     final response = await http
+//         .get(Uri.parse('https://restcountries.com/v3.1/all?fields=name,flags'));
+
+//     if (response.statusCode == 200) {
+//       final List<dynamic> data = json.decode(response.body);
+//       setState(() {
+//         countries = data.map((country) {
+//           return {
+//             'name': country['name']['common'].toString(),
+//             'flag': country['flags']['png'].toString(),
+//           };
+//         }).toList();
+
+//         countries.sort((a, b) => a['name']!.compareTo(b['name']!));
+//       });
+//     } else {
+//       throw Exception('Failed to load countries');
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(horizontal: 8),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Container(
+//             margin: const EdgeInsets.only(left: 19),
+//             width: MediaQuery.of(context).size.width * 0.4,
+//             alignment: Alignment.centerLeft,
+//             child: DropdownButtonFormField<Map<String, String>>(
+//               decoration: const InputDecoration(
+//                 border: InputBorder.none,
+//                 enabledBorder: InputBorder.none,
+//                 filled: true,
+//                 fillColor: Colors.grey,
+//                 contentPadding:
+//                     EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+//               ),
+//               isExpanded: true, // Ensures the dropdown takes full width
+//               value: null,
+//               onChanged: (Map<String, String>? value) {
+//                 if (value != null &&
+//                     !selectedCountries
+//                         .any((country) => country['name'] == value['name'])) {
+//                   setState(() {
+//                     selectedCountries.add(Map<String, String>.from(value));
+//                   });
+//                 }
+//               },
+//               // Modified hint to ensure left alignment
+//               hint: const Text(
+//                 'Select Country',
+//                 style: TextStyle(color: Colors.white, fontSize: 14),
+//                 textAlign: TextAlign.left, // Aligns text to the left
+//               ),
+//               items: countries.map<DropdownMenuItem<Map<String, String>>>(
+//                 (Map<String, String> country) {
+//                   return DropdownMenuItem<Map<String, String>>(
+//                     value: country,
+//                     alignment: Alignment.centerLeft,
+//                     child: Text(
+//                       country['name']!,
+//                       style: const TextStyle(color: Colors.white, fontSize: 14),
+//                       overflow: TextOverflow.ellipsis,
+//                     ),
+//                   );
+//                 },
+//               ).toList(),
+//               dropdownColor: Colors.grey,
+//               style: const TextStyle(color: Colors.white),
+//               icon: const Icon(Icons.arrow_drop_down,
+//                   color: Colors.white, size: 20),
+//               menuMaxHeight: 300,
+//               alignment: Alignment.centerLeft, // Aligns selected item to left
+//             ),
+//           ),
+//           const SizedBox(height: 10),
+//           if (selectedCountries.isNotEmpty)
+//             SizedBox(
+//               height: 200,
+//               child: ListView.builder(
+//                 shrinkWrap: true,
+//                 physics: const AlwaysScrollableScrollPhysics(),
+//                 itemCount: selectedCountries.length,
+//                 itemBuilder: (context, index) {
+//                   final country = selectedCountries[index];
+//                   return Padding(
+//                     padding: const EdgeInsets.only(top: 8, left: 12),
+//                     child: SelectedCountryStats(
+//                       flagUrl: country['flag']!,
+//                       countryName: country['name']!,
+//                     ),
+//                   );
+//                 },
+//               ),
+//             ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
 class CountryDropdown extends StatefulWidget {
   const CountryDropdown({super.key});
 
@@ -929,7 +1095,7 @@ class CountryDropdown extends StatefulWidget {
 }
 
 class _CountryDropdownState extends State<CountryDropdown> {
-  Map<String, String>? selectedCountry;
+  List<Map<String, String>> selectedCountries = []; // Store all selected countries
   List<Map<String, String>> countries = [];
 
   @override
@@ -951,6 +1117,9 @@ class _CountryDropdownState extends State<CountryDropdown> {
             'flag': country['flags']['png'].toString(),
           };
         }).toList();
+
+        // Sort countries alphabetically
+        countries.sort((a, b) => a['name']!.compareTo(b['name']!));
       });
     } else {
       throw Exception('Failed to load countries');
@@ -960,112 +1129,146 @@ class _CountryDropdownState extends State<CountryDropdown> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 20),
-        alignment: Alignment.centerLeft, // Left alignment
-        child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start, // Left-align column children
-          children: [
-            Container(
-              margin: const EdgeInsets.only(
-                left: 19,
-              ),
-              width: MediaQuery.of(context).size.width * 0.4, // Reduced width
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(35),
-              ),
-              child: DropdownButtonFormField<Map<String, String>>(
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  filled: true,
-                  fillColor: Colors.grey,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 13,
-                    vertical: 10, // Reduced vertical padding
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Use Row to force dropdown to start from left
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.4,
+                child: Theme(
+                  // Apply a theme override to force left alignment
+                  data: Theme.of(context).copyWith(
+                    inputDecorationTheme: const InputDecorationTheme(
+                      alignLabelWithHint: false,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                    ),
                   ),
-                ),
-                isExpanded: true,
-                value: selectedCountry,
-                onChanged: (Map<String, String>? value) {
-                  setState(() {
-                    selectedCountry = value;
-                  });
-                },
-                hint: const Text(
-                  'Country Select',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14, // Smaller font size
-                  ),
-                ),
-                items: countries.map<DropdownMenuItem<Map<String, String>>>(
-                  (Map<String, String> country) {
-                    return DropdownMenuItem<Map<String, String>>(
-                      value: country,
-                      child: Text(
-                        country['name']!,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14, // Smaller font size
-                        ),
-                        overflow: TextOverflow.ellipsis,
+                  child: DropdownButtonFormField<Map<String, String>>(
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      filled: true,
+                      fillColor: Colors.grey,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                    ),
+                    isExpanded: true,
+                    value: null,
+                    onChanged: (Map<String, String>? value) {
+                      if (value != null &&
+                          !selectedCountries.any((country) => country['name'] == value['name'])) {
+                        setState(() {
+                          selectedCountries.add(Map<String, String>.from(value));
+                        });
+                      }
+                    },
+                    hint: Container(
+                      alignment: Alignment.centerLeft,
+                      child: const Text(
+                        'Select Country',
+                        style: TextStyle(color: Colors.white, fontSize: 14),
+                        textAlign: TextAlign.left,
                       ),
-                    );
-                  },
-                ).toList(),
-                dropdownColor: Colors.grey,
-                style: const TextStyle(color: Colors.white),
-                icon: const Icon(
-                  Icons.arrow_drop_down,
-                  color: Colors.white,
-                  size: 20, // Smaller icon
+                    ),
+                    items: countries.map<DropdownMenuItem<Map<String, String>>>(
+                      (Map<String, String> country) {
+                        return DropdownMenuItem<Map<String, String>>(
+                          value: country,
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              country['name']!,
+                              style: const TextStyle(color: Colors.white, fontSize: 14),
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                        );
+                      },
+                    ).toList(),
+                    dropdownColor: Colors.grey,
+                    style: const TextStyle(color: Colors.white),
+                    icon: const Icon(Icons.arrow_drop_down, color: Colors.white, size: 20),
+                    menuMaxHeight: 300,
+                    alignment: Alignment.centerLeft,
+                  ),
                 ),
+              ),
+              // Use Spacer to push dropdown to the left
+              const Spacer(),
+            ],
+          ),
+
+          const SizedBox(height: 10),
+
+          if (selectedCountries.isNotEmpty)
+            SizedBox(
+              height: 200,
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: selectedCountries.length,
+                itemBuilder: (context, index) {
+                  final country = selectedCountries[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 8, left: 0),
+                    child: SelectedCountryStats(
+                      flagUrl: country['flag']!,
+                      countryName: country['name']!,
+                    ),
+                  );
+                },
               ),
             ),
-            if (selectedCountry != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 8, left: 12),
-                child: SelectedCountryStats(
-                  flagUrl: selectedCountry!['flag']!,
-                ),
-              ),
-          ],
-        ),
+        ],
       ),
     );
   }
 }
 
-class SelectedCountryStats extends StatelessWidget {
+class SelectedCountryStats extends StatefulWidget {
   final String flagUrl;
+  final String countryName;
 
   const SelectedCountryStats({
     super.key,
     required this.flagUrl,
+    required this.countryName, // Add country name parameter
   });
 
-  double getRandomProgress() {
+  @override
+  State<SelectedCountryStats> createState() => _SelectedCountryStatsState();
+}
+
+class _SelectedCountryStatsState extends State<SelectedCountryStats> {
+  late final double
+      progressing; // Store the random progress value when widget is created
+
+  @override
+  void initState() {
+    super.initState();
+    // Generate random progress once when widget is created
     Random random = Random();
-    return 0.1 +
-        random.nextDouble() * 0.6; // Generates a value between 0.1 and 0.7
+    progressing = 0.1 +
+        random.nextDouble() * 0.4; // Generates a value between 0.1 and 0.7
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
-        left: 8,
-      ),
+      margin: const EdgeInsets.only(left: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
             width: 270,
             child: CustomLoadingBar(
-              progress: getRandomProgress(),
+              progress: progressing,
               delay: const Duration(milliseconds: 50),
             ),
           ),
@@ -1074,7 +1277,7 @@ class SelectedCountryStats extends StatelessWidget {
             width: 35,
             height: 20,
             child: Image.network(
-              flagUrl,
+              widget.flagUrl,
               width: 24,
               height: 16,
               fit: BoxFit.cover,
@@ -1543,9 +1746,6 @@ class _MiniLoadingBarState extends State<MiniLoadingBar>
     );
   }
 }
-
-
-
 
 // const Text(
 //                                     'Stats',

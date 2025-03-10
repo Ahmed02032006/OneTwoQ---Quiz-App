@@ -52,7 +52,7 @@ class Disclaimer extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'My name is Aden, the creator of 12q. First, I must thank you for trying out my app. 12q is a social experiment to see how people from varying ages, nationalities, and genders answer the same questions. Through this, we might just learn a thing or two about who we are as humans and how various factors in our experience might inform the decisions we make and the lives we live.',
+                              'My name is Aidan, I’m the creator of 1 2 Q. First off, I must thank you for trying out my app. 1 2 Q is one-part game, one-part art project and one-part social experiment meant to find out how people from varying ages, nationality and gender answer the same questions. Through this we might just learn a thing or two about who we are as humans and how varying factors in our experiences might inform the decisions we make and the lives we live.',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
@@ -84,7 +84,7 @@ class Disclaimer extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "All information given is anonymous. The answers you provide and any other information will be completely anonymous. Only if you wish to make comments will you be required to set up an account and username. Please note that your username will be linked to your social media account and may be visible when answering questions. If you are in agreement, let\'s get started.'",
+                              "All information given is anonymous. The answers you choose and any other information you give to inform question statistics will be completely anonymous. Only if you wish to make comments will you be required to set up an account and username. Please note that your username will be linked to your social media accounts, and you may lose your anonymity if you decide to post question results to social media. If you’re good with all that then let’s begin.",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,

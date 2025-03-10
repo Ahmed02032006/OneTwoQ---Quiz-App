@@ -336,6 +336,25 @@ class _CountryDropdownState extends State<CountryDropdown> {
     fetchCountries();
   }
 
+  // Future<void> fetchCountries() async {
+  //   final response = await http
+  //       .get(Uri.parse('https://restcountries.com/v3.1/all?fields=name,flags'));
+
+  //   if (response.statusCode == 200) {
+  //     final List<dynamic> data = json.decode(response.body);
+  //     setState(() {
+  //       countries = data.map((country) {
+  //         return {
+  //           'name': country['name']['common'].toString(),
+  //           'flag': country['flags']['png'].toString(),
+  //         };
+  //       }).toList();
+  //     });
+  //   } else {
+  //     throw Exception('Failed to load countries');
+  //   }
+  // }
+  
   Future<void> fetchCountries() async {
     final response = await http
         .get(Uri.parse('https://restcountries.com/v3.1/all?fields=name,flags'));
@@ -349,6 +368,9 @@ class _CountryDropdownState extends State<CountryDropdown> {
             'flag': country['flags']['png'].toString(),
           };
         }).toList();
+
+        // Sort countries alphabetically by name
+        countries.sort((a, b) => a['name']!.compareTo(b['name']!));
       });
     } else {
       throw Exception('Failed to load countries');

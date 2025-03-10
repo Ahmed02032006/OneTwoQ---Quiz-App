@@ -154,15 +154,6 @@ class Categories extends StatelessWidget {
 
                         return GestureDetector(
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => SubCategories(
-                            //       selectedCategoryName: categoryNames,
-                            //       selectedCategoryId: categoryId,
-                            //     ),
-                            //   ),
-                            // );
                             Navigator.push(
                               context,
                               FadePageRoute(
