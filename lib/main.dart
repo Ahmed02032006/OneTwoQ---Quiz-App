@@ -43,7 +43,10 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:quiz_app/admin/dashboard.dart';
+import 'package:quiz_app/admin/screens/category.dart';
 import 'package:quiz_app/firebase_options.dart';
+import 'package:quiz_app/pages/categories.dart';
 import 'package:quiz_app/pages/preLoader.dart';
 
 void main() async {
@@ -104,7 +107,9 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             fontFamily: "Urbanist",
           ),
-          home: Preloader(isAppActive: snapshot.data ?? false),
+          // home: Preloader(isAppActive: snapshot.data ?? false),
+          // home: Category(),
+          home: const Categories(),
         );
       },
     );

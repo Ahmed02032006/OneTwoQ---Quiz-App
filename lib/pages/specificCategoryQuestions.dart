@@ -329,8 +329,8 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
   final TextEditingController commentController = TextEditingController();
 
   List<TextSpan> _parseStyledText(String text) {
-    final regex =
-        RegExp(r'(\*\*(.*?)\*\*)|(?:^| )_(.*?)(?:_|$)|(?:^| )__(.*?)(?:__|$)');
+    // Updated regex to match ** for bold, __ for underline, and // for italic
+    final regex = RegExp(r'(\*\*(.*?)\*\*)|(__(.*?)__)|(\/\/(.*?)\/\/)');
 
     final List<TextSpan> spans = [];
     int currentIndex = 0;
@@ -352,19 +352,23 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
           ),
         );
       } else if (match.group(3) != null) {
-        // Italic text (_text_)
-        spans.add(
-          TextSpan(
-            text: match.group(3),
-            style: const TextStyle(fontStyle: FontStyle.italic),
-          ),
-        );
-      } else if (match.group(4) != null) {
         // Underline text (__text__)
         spans.add(
           TextSpan(
             text: match.group(4),
-            style: const TextStyle(decoration: TextDecoration.underline),
+            style: const TextStyle(
+              decoration: TextDecoration.underline,
+              decorationStyle: TextDecorationStyle.solid,
+              decorationThickness: 2.0, // Adjust thickness for spacing
+            ),
+          ),
+        );
+      } else if (match.group(5) != null) {
+        // Italic text (//text//)
+        spans.add(
+          TextSpan(
+            text: match.group(6),
+            style: const TextStyle(fontStyle: FontStyle.italic),
           ),
         );
       }
@@ -1295,8 +1299,7 @@ class _CountryDropdownState extends State<CountryDropdown> {
                             width: double.infinity, // Ensures full width
                             color: isSelected
                                 ? const Color.fromARGB(255, 13, 211, 19)
-                                : Colors
-                                    .transparent,
+                                : Colors.transparent,
                             child: Text(
                               country['name']!,
                               style: const TextStyle(

@@ -119,6 +119,19 @@ class _QuestionsState extends State<Questions> {
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
+            // Helper function to check if selected text has a style
+            bool _isStyleActive(String style) {
+              final selection = _questionController.selection;
+              if (selection.start == selection.end) return false;
+              final selectedText = _questionController.text
+                  .substring(selection.start, selection.end);
+              return selectedText.startsWith(style) &&
+                  selectedText.endsWith(style);
+            }
+
+            // Listener to update state on text/selection changes
+            _questionController.addListener(() => setState(() {}));
+
             return AlertDialog(
               title: const Text('Add New Question'),
               content: Form(
@@ -136,28 +149,41 @@ class _QuestionsState extends State<Questions> {
                         }
                         return null;
                       },
+                      maxLines: 3,
                     ),
                     const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.format_bold),
-                          onPressed: () {
-                            _applyStyleToSelectedText('**');
-                          },
+                          icon: Icon(Icons.format_bold,
+                              color: _isStyleActive('**') ? Colors.blue : null),
+                          style: IconButton.styleFrom(
+                            backgroundColor: _isStyleActive('**')
+                                ? Colors.blue.withOpacity(0.2)
+                                : null,
+                          ),
+                          onPressed: () => _applyStyleToSelectedText('**'),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.format_italic),
-                          onPressed: () {
-                            _applyStyleToSelectedText('_');
-                          },
+                          icon: Icon(Icons.format_italic,
+                              color: _isStyleActive('//') ? Colors.blue : null),
+                          style: IconButton.styleFrom(
+                            backgroundColor: _isStyleActive('//')
+                                ? Colors.blue.withOpacity(0.2)
+                                : null,
+                          ),
+                          onPressed: () => _applyStyleToSelectedText('//'),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.format_underline),
-                          onPressed: () {
-                            _applyStyleToSelectedText('__');
-                          },
+                          icon: Icon(Icons.format_underline,
+                              color: _isStyleActive('__') ? Colors.blue : null),
+                          style: IconButton.styleFrom(
+                            backgroundColor: _isStyleActive('__')
+                                ? Colors.blue.withOpacity(0.2)
+                                : null,
+                          ),
+                          onPressed: () => _applyStyleToSelectedText('__'),
                         ),
                       ],
                     ),
@@ -270,19 +296,39 @@ class _QuestionsState extends State<Questions> {
   void _applyStyleToSelectedText(String style) {
     final text = _questionController.text;
     final selection = _questionController.selection;
-    if (selection.start == selection.end) return; // No text selected
+    if (selection.start == selection.end) return;
 
-    final selectedText = text.substring(selection.start, selection.end);
-    final newText = text.replaceRange(
-      selection.start,
-      selection.end,
-      '$style$selectedText$style',
-    );
+    final start = selection.start;
+    final end = selection.end;
+    final selectedText = text.substring(start, end);
 
-    _questionController.text = newText;
-    _questionController.selection = TextSelection.fromPosition(
-      TextPosition(offset: selection.start + style.length),
-    );
+    // Check if the exact style is already applied
+    if (selectedText.startsWith(style) && selectedText.endsWith(style)) {
+      // Remove the style
+      final newText = text.replaceRange(
+        start,
+        end,
+        selectedText.substring(
+            style.length, selectedText.length - style.length),
+      );
+      _questionController.text = newText;
+      _questionController.selection = TextSelection(
+        baseOffset: start,
+        extentOffset: start + (selectedText.length - 2 * style.length),
+      );
+    } else {
+      // Apply the style
+      final newText = text.replaceRange(
+        start,
+        end,
+        '$style$selectedText$style',
+      );
+      _questionController.text = newText;
+      _questionController.selection = TextSelection(
+        baseOffset: start,
+        extentOffset: start + selectedText.length + 2 * style.length,
+      );
+    }
   }
 
   Future<void> _addQuestion(
