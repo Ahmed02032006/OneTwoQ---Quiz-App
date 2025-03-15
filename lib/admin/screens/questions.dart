@@ -157,30 +157,39 @@ class _QuestionsState extends State<Questions> {
                       children: [
                         IconButton(
                           icon: Icon(Icons.format_bold,
-                              color: _isStyleActive('**') ? Colors.blue : null),
+                              color: _isStyleActive('**')
+                                  ? const Color.fromARGB(255, 13, 211, 19)
+                                  : null),
                           style: IconButton.styleFrom(
                             backgroundColor: _isStyleActive('**')
-                                ? Colors.blue.withOpacity(0.2)
+                                ? const Color.fromARGB(255, 13, 211, 19)
+                                    .withOpacity(0.2)
                                 : null,
                           ),
                           onPressed: () => _applyStyleToSelectedText('**'),
                         ),
                         IconButton(
                           icon: Icon(Icons.format_italic,
-                              color: _isStyleActive('//') ? Colors.blue : null),
+                              color: _isStyleActive('//')
+                                  ? const Color.fromARGB(255, 13, 211, 19)
+                                  : null),
                           style: IconButton.styleFrom(
                             backgroundColor: _isStyleActive('//')
-                                ? Colors.blue.withOpacity(0.2)
+                                ? const Color.fromARGB(255, 13, 211, 19)
+                                    .withOpacity(0.2)
                                 : null,
                           ),
                           onPressed: () => _applyStyleToSelectedText('//'),
                         ),
                         IconButton(
                           icon: Icon(Icons.format_underline,
-                              color: _isStyleActive('__') ? Colors.blue : null),
+                              color: _isStyleActive('__')
+                                  ? const Color.fromARGB(255, 13, 211, 19)
+                                  : null),
                           style: IconButton.styleFrom(
                             backgroundColor: _isStyleActive('__')
-                                ? Colors.blue.withOpacity(0.2)
+                                ? const Color.fromARGB(255, 13, 211, 19)
+                                    .withOpacity(0.2)
                                 : null,
                           ),
                           onPressed: () => _applyStyleToSelectedText('__'),

@@ -43,10 +43,8 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:quiz_app/admin/dashboard.dart';
-import 'package:quiz_app/admin/screens/category.dart';
 import 'package:quiz_app/firebase_options.dart';
-import 'package:quiz_app/pages/categories.dart';
+import 'package:quiz_app/pages/controls.dart';
 import 'package:quiz_app/pages/preLoader.dart';
 
 void main() async {
@@ -74,7 +72,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Future<bool> fetchSettings() async {
+  Future<Map<String, dynamic>> fetchSettings() async {
     try {
       DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
           .instance
@@ -83,19 +81,28 @@ class _MyAppState extends State<MyApp> {
           .get();
 
       if (doc.exists) {
-        var isActive = doc.data()?['isAppOnline'];
+        var isActive = doc.data()?['isAppOnline'] ?? false;
+        var creditText = doc.data()?['creditText'] ?? '';
         debugPrint("Fetched isAppActive: $isActive");
-        return isActive ?? false;
+        debugPrint("Fetched Credit Text: $creditText");
+
+        return {
+          'isAppActive': isActive,
+          'creditText': creditText,
+        };
       }
     } catch (e) {
       debugPrint("Error fetching settings: $e");
     }
-    return false;
+    return {
+      'isAppActive': false,
+      'creditText': '',
+    };
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
+    return FutureBuilder<Map<String, dynamic>>(
       future: fetchSettings(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -107,9 +114,10 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             fontFamily: "Urbanist",
           ),
-          // home: Preloader(isAppActive: snapshot.data ?? false),
-          // home: Category(),
-          home: const Categories(),
+          home: Preloader(
+            isAppActive: snapshot.data?['isAppActive'] ?? false,
+            creditText: snapshot.data?['creditText'] ?? '',
+          ),
         );
       },
     );

@@ -329,48 +329,64 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
   final TextEditingController commentController = TextEditingController();
 
   List<TextSpan> _parseStyledText(String text) {
-    // Updated regex to match ** for bold, __ for underline, and // for italic
-    final regex = RegExp(r'(\*\*(.*?)\*\*)|(__(.*?)__)|(\/\/(.*?)\/\/)');
+    // Regex to match ** for bold, __ for underline, and // for italic
+    final regex = RegExp(r'(\*\*)|(__)|(\/\/)');
 
     final List<TextSpan> spans = [];
     int currentIndex = 0;
 
+    // Track active styles
+    bool isBold = false;
+    bool isUnderline = false;
+    bool isItalic = false;
+
+    // Helper function to add styled text
+    void addStyledText(String text, TextStyle style) {
+      if (spans.isNotEmpty && spans.last is TextSpan) {
+        final lastSpan = spans.last as TextSpan;
+        if (lastSpan.style == style) {
+          // Merge with the previous span if the style is the same
+          spans[spans.length - 1] = TextSpan(
+            text: '${lastSpan.text}$text',
+            style: style,
+          );
+          return;
+        }
+      }
+      spans.add(TextSpan(text: text, style: style));
+    }
+
+    // Iterate through all matches of the regex
     for (final match in regex.allMatches(text)) {
       // Add normal text before any matched styled text
       if (match.start > currentIndex) {
-        spans.add(
-          TextSpan(text: text.substring(currentIndex, match.start)),
-        );
+        final normalText = text.substring(currentIndex, match.start);
+        TextStyle? currentStyle;
+        if (isBold) {
+          currentStyle = (currentStyle ?? const TextStyle())
+              .copyWith(fontWeight: FontWeight.bold);
+        }
+        if (isUnderline) {
+          currentStyle = (currentStyle ?? const TextStyle())
+              .copyWith(decoration: TextDecoration.underline);
+        }
+        if (isItalic) {
+          currentStyle = (currentStyle ?? const TextStyle())
+              .copyWith(fontStyle: FontStyle.italic);
+        }
+        addStyledText(normalText, currentStyle ?? const TextStyle());
       }
 
+      // Toggle styles based on the matched marker
       if (match.group(1) != null) {
-        // Bold text (**text**)
-        spans.add(
-          TextSpan(
-            text: match.group(2),
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-        );
+        // Toggle bold
+        isBold = !isBold;
+      } else if (match.group(2) != null) {
+        // Toggle underline
+        isUnderline = !isUnderline;
       } else if (match.group(3) != null) {
-        // Underline text (__text__)
-        spans.add(
-          TextSpan(
-            text: match.group(4),
-            style: const TextStyle(
-              decoration: TextDecoration.underline,
-              decorationStyle: TextDecorationStyle.solid,
-              decorationThickness: 2.0, // Adjust thickness for spacing
-            ),
-          ),
-        );
-      } else if (match.group(5) != null) {
-        // Italic text (//text//)
-        spans.add(
-          TextSpan(
-            text: match.group(6),
-            style: const TextStyle(fontStyle: FontStyle.italic),
-          ),
-        );
+        // Toggle italic
+        isItalic = !isItalic;
       }
 
       currentIndex = match.end;
@@ -378,9 +394,21 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
 
     // Add remaining normal text
     if (currentIndex < text.length) {
-      spans.add(
-        TextSpan(text: text.substring(currentIndex)),
-      );
+      final remainingText = text.substring(currentIndex);
+      TextStyle? currentStyle;
+      if (isBold) {
+        currentStyle = (currentStyle ?? const TextStyle())
+            .copyWith(fontWeight: FontWeight.bold);
+      }
+      if (isUnderline) {
+        currentStyle = (currentStyle ?? const TextStyle())
+            .copyWith(decoration: TextDecoration.underline);
+      }
+      if (isItalic) {
+        currentStyle = (currentStyle ?? const TextStyle())
+            .copyWith(fontStyle: FontStyle.italic);
+      }
+      addStyledText(remainingText, currentStyle ?? const TextStyle());
     }
 
     return spans;
@@ -1640,14 +1668,14 @@ void showCustomSnackBar(BuildContext context, String message) {
       child: Material(
         color: Colors.transparent,
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.black,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
             message,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       ),
@@ -1658,7 +1686,7 @@ void showCustomSnackBar(BuildContext context, String message) {
   overlay.insert(snackBar);
 
   // Remove the snackBar after a delay
-  Future.delayed(Duration(seconds: 2), () {
+  Future.delayed(const Duration(seconds: 2), () {
     snackBar.remove();
   });
 }
