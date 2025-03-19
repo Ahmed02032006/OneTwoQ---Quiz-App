@@ -25,6 +25,9 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
   String currentCategoryId = '';
   String currentQuestionId = '';
 
+  int yesCount = 0;
+  int noCount = 0;
+
   bool isStatsDisplayed = false;
 
   // Animation
@@ -66,6 +69,191 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
     super.dispose();
   }
 
+  void updateProgressValues() {
+    // Ensure yesCount and noCount are not null
+    if (yesCount == null || noCount == null) {
+      return;
+    }
+
+    // If yesCount is 1 and noCount is 0, set mProgress to 10.0, others to 0.0
+    if (yesCount == 1 && noCount == 0) {
+      m1Progress = 1;
+      m2Progress = 1;
+      mProgress = 1;
+      fProgress = 0.0;
+      nProgress = 0.0;
+      a1Progress = 0.0;
+      a2Progress = 0.0;
+      a3Progress = 0.0;
+      a4Progress = 1;
+      a5Progress = 0.0;
+      a6Progress = 0.0;
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // If noCount is 1 and yesCount is 0, set all values to 0.0
+    if (noCount == 1 && yesCount == 0) {
+      m1Progress = 0.0;
+      m2Progress = 0.0;
+      mProgress = 0.0;
+      fProgress = 0.0;
+      nProgress = 0.0;
+      a1Progress = 0.0;
+      a2Progress = 0.0;
+      a3Progress = 0.0;
+      a4Progress = 0.0;
+      a5Progress = 0.0;
+      a6Progress = 0.0;
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // If noCount is 1 and yesCount is 1, set all values to 0.0
+    if (noCount == 1 && yesCount == 1) {
+      m1Progress = 0.5;
+      m2Progress = 0.5;
+      mProgress = 0.5;
+      fProgress = 0.0;
+      nProgress = 0.0;
+      a1Progress = 0.0;
+      a2Progress = 0.0;
+      a3Progress = 0.0;
+      a4Progress = 0.5;
+      a5Progress = 0.0;
+      a6Progress = 0.0;
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // If noCount is 1 and yesCount is 1, set all values to 0.0
+    if (noCount == 1 && yesCount == 2) {
+      m1Progress = 0.7;
+      m2Progress = 0.7;
+      mProgress = 0.7;
+      fProgress = 0.0;
+      nProgress = 0.0;
+      a1Progress = 0.0;
+      a2Progress = 0.0;
+      a3Progress = 0.0;
+      a4Progress = 0.7;
+      a5Progress = 0.0;
+      a6Progress = 0.0;
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // If noCount is 1 and yesCount is 1, set all values to 0.0
+    if (noCount == 2 && yesCount == 2) {
+      m1Progress = 0.5;
+      m2Progress = 0.5;
+      mProgress = 0.5;
+      fProgress = 0.0;
+      nProgress = 0.0;
+      a1Progress = 0.0;
+      a2Progress = 0.0;
+      a3Progress = 0.0;
+      a4Progress = 0.5;
+      a5Progress = 0.0;
+      a6Progress = 0.0;
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // If noCount is 1 and yesCount is 1, set all values to 0.0
+    if (noCount == 3 && yesCount == 2) {
+      m1Progress = 0.3;
+      m2Progress = 0.3;
+      mProgress = 0.3;
+      fProgress = 0.0;
+      nProgress = 0.0;
+      a1Progress = 0.0;
+      a2Progress = 0.0;
+      a3Progress = 0.0;
+      a4Progress = 0.3;
+      a5Progress = 0.0;
+      a6Progress = 0.0;
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // Otherwise, use random values as before
+    final random = Random();
+    double generateRandomProgress() {
+      return 0.3 + (random.nextDouble() * (0.8 - 0.3));
+    }
+
+    m1Progress = generateRandomProgress();
+    m2Progress = generateRandomProgress();
+    mProgress = generateRandomProgress();
+    fProgress = generateRandomProgress();
+    nProgress = generateRandomProgress();
+    a1Progress = generateRandomProgress();
+    a2Progress = generateRandomProgress();
+    a3Progress = generateRandomProgress();
+    a4Progress = generateRandomProgress();
+    a5Progress = generateRandomProgress();
+    a6Progress = generateRandomProgress();
+    c1Progress = generateRandomProgress();
+    c2Progress = generateRandomProgress();
+    c3Progress = generateRandomProgress();
+    c4Progress = generateRandomProgress();
+    c5Progress = generateRandomProgress();
+    c6Progress = generateRandomProgress();
+  }
+
+// Variables
+  double m1Progress = 0.0;
+  double m2Progress = 0.0;
+
+  double mProgress = 0.0;
+  double fProgress = 0.0;
+  double nProgress = 0.0;
+
+  double a1Progress = 0.0;
+  double a2Progress = 0.0;
+  double a3Progress = 0.0;
+  double a4Progress = 0.0;
+  double a5Progress = 0.0;
+  double a6Progress = 0.0;
+
+  double c1Progress = 0.0;
+  double c2Progress = 0.0;
+  double c3Progress = 0.0;
+  double c4Progress = 0.0;
+  double c5Progress = 0.0;
+  double c6Progress = 0.0;
+
   Future<void> fetchSettings() async {
     try {
       DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
@@ -83,60 +271,6 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
       print("Error fetching settings: $e");
     }
   }
-
-  void updateProgressValues() {
-    // Random number generator
-    final random = Random();
-
-    // Generate a random value between 0.3 and 0.8
-    double generateRandomProgress() {
-      return 0.3 + (random.nextDouble() * (0.8 - 0.3));
-    }
-
-    // Update each variable with a random value
-    m1Progress = generateRandomProgress();
-    m2Progress = generateRandomProgress();
-
-    mProgress = generateRandomProgress();
-    fProgress = generateRandomProgress();
-    nProgress = generateRandomProgress();
-
-    a1Progress = generateRandomProgress();
-    a2Progress = generateRandomProgress();
-    a3Progress = generateRandomProgress();
-    a4Progress = generateRandomProgress();
-    a5Progress = generateRandomProgress();
-    a6Progress = generateRandomProgress();
-
-    c1Progress = generateRandomProgress();
-    c2Progress = generateRandomProgress();
-    c3Progress = generateRandomProgress();
-    c4Progress = generateRandomProgress();
-    c5Progress = generateRandomProgress();
-    c6Progress = generateRandomProgress();
-  }
-
-// Variables
-  double m1Progress = 0.5;
-  double m2Progress = 0.5;
-
-  double mProgress = 0.5;
-  double fProgress = 0.6;
-  double nProgress = 0.7;
-
-  double a1Progress = 0.2;
-  double a2Progress = 0.3;
-  double a3Progress = 0.4;
-  double a4Progress = 0.5;
-  double a5Progress = 0.6;
-  double a6Progress = 0.7;
-
-  double c1Progress = 0.3;
-  double c2Progress = 0.4;
-  double c3Progress = 0.5;
-  double c4Progress = 0.6;
-  double c5Progress = 0.7;
-  double c6Progress = 0.8;
 
   Future<void> fetchQuestion() async {
     setState(() {
@@ -206,6 +340,9 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
     });
 
     try {
+      print(
+          "Fetching stats for category: $currentCategoryId, question: $currentQuestionId");
+
       DocumentSnapshot statsDoc = await FirebaseFirestore.instance
           .collection('stats')
           .doc(currentCategoryId)
@@ -214,25 +351,50 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
           .get();
 
       if (statsDoc.exists) {
+        stats = statsDoc.data() as Map<String, dynamic>;
+
+        // Extract yesCount and noCount safely
+        int yesCount =
+            stats.containsKey('yesCount') ? stats['yesCount'] as int : 0;
+        int noCount =
+            stats.containsKey('noCount') ? stats['noCount'] as int : 0;
+
+        print("Fetched Stats:");
+        print("yesCount: $yesCount");
+        print("noCount: $noCount");
+
         setState(() {
-          stats = statsDoc.data() as Map<String, dynamic>;
+          this.yesCount = yesCount;
+          this.noCount = noCount;
           showStats = true;
           isLoading = false;
         });
+        updateProgressValues();
       } else {
+        print("Stats not found, setting default values.");
+
         setState(() {
           stats = {'yesCount': 0, 'noCount': 0};
+          yesCount = 0;
+          noCount = 0;
           showStats = true;
           isLoading = false;
         });
+
+        print("Default Stats:");
+        print("yesCount: $yesCount");
+        print("noCount: $noCount");
       }
     } catch (e) {
       print('Error fetching stats: $e');
+
       setState(() {
         stats = {'error': 'Error fetching stats'};
         showStats = true;
         isLoading = false;
       });
+
+      print("Error Stats: ${stats['error']}");
     }
   }
 
@@ -244,7 +406,11 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
           .doc(currentCategoryId)
           .collection('questions')
           .doc(currentQuestionId)
-          .set({field: FieldValue.increment(1)}, SetOptions(merge: true));
+          .set(
+        {field: FieldValue.increment(1)},
+        SetOptions(merge: true),
+      );
+      updateProgressValues();
     } catch (e) {
       print('Error updating stats: $e');
     }
@@ -281,7 +447,6 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
   void skipQuestion() {
     showStats = false;
     isLoading = true;
-    updateProgressValues();
     setState(() {
       isAnimationLoading = !isAnimationLoading; // Toggle the loading state
     });
@@ -478,7 +643,7 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
                     opacity: _opacityAnimation,
                     child: Container(
                       width: 100,
-                      height: showStats == true ? 70 : 160,
+                      height: showStats == true ? 160 : 160,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: const Color.fromARGB(255, 13, 211, 19),
@@ -488,35 +653,21 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
                       child: Center(
                         child: isLoading
                             ? const CircularProgressIndicator(
-                                color: Colors.white)
-                            : showStats
-                                ? const Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Most questions are answered in a simple yes or no format. Please select Yes or No.",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
-                                  )
-                                : SingleChildScrollView(
-                                    scrollDirection: Axis.vertical,
-                                    child: RichText(
-                                      textAlign: TextAlign.center,
-                                      text: TextSpan(
-                                        children: _parseStyledText(question),
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                        ),
-                                      ),
+                                color: Colors.white,
+                              )
+                            : SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    children: _parseStyledText(question),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
                                     ),
                                   ),
+                                ),
+                              ),
                       ),
                     ),
                   ),
@@ -857,7 +1008,10 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
                                       cp5: c5Progress,
                                       cp6: c6Progress,
                                     ),
-                                    const CountryDropdown(),
+                                    CountryDropdown(
+                                      yesStatsCount: yesCount,
+                                      noStatsCount: noCount,
+                                    ),
                                     const SizedBox(height: 5),
                                   ],
                                 ),
@@ -1092,175 +1246,15 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
   }
 }
 
-// class CountryDropdown extends StatefulWidget {
-//   const CountryDropdown({super.key});
-
-//   @override
-//   _CountryDropdownState createState() => _CountryDropdownState();
-// }
-
-// class _CountryDropdownState extends State<CountryDropdown> {
-//   Map<String, String>? selectedCountry;
-//   List<Map<String, String>> countries = [];
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     fetchCountries();
-//   }
-
-//   Future<void> fetchCountries() async {
-//     final response = await http
-//         .get(Uri.parse('https://restcountries.com/v3.1/all?fields=name,flags'));
-
-//     if (response.statusCode == 200) {
-//       final List<dynamic> data = json.decode(response.body);
-//       setState(() {
-//         countries = data.map((country) {
-//           return {
-//             'name': country['name']['common'].toString(),
-//             'flag': country['flags']['png'].toString(),
-//           };
-//         }).toList();
-//       });
-//     } else {
-//       throw Exception('Failed to load countries');
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 8),
-//       child: Container(
-//         margin: const EdgeInsets.only(bottom: 20),
-//         alignment: Alignment.centerLeft, // Left alignment
-//         child: Column(
-//           crossAxisAlignment:
-//               CrossAxisAlignment.start, // Left-align column children
-//           children: [
-//             Container(
-//               margin: const EdgeInsets.only(
-//                 left: 19,
-//               ),
-//               width: MediaQuery.of(context).size.width * 0.4, // Reduced width
-//               decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.circular(35),
-//               ),
-//               child: DropdownButtonFormField<Map<String, String>>(
-//                 decoration: const InputDecoration(
-//                   border: InputBorder.none,
-//                   enabledBorder: InputBorder.none,
-//                   filled: true,
-//                   fillColor: Colors.grey,
-//                   contentPadding: EdgeInsets.symmetric(
-//                     horizontal: 13,
-//                     vertical: 10, // Reduced vertical padding
-//                   ),
-//                 ),
-//                 isExpanded: true,
-//                 value: selectedCountry,
-//                 onChanged: (Map<String, String>? value) {
-//                   setState(() {
-//                     selectedCountry = value;
-//                   });
-//                 },
-//                 hint: const Text(
-//                   'Country Select',
-//                   style: TextStyle(
-//                     color: Colors.white,
-//                     fontSize: 14, // Smaller font size
-//                   ),
-//                 ),
-//                 items: countries.map<DropdownMenuItem<Map<String, String>>>(
-//                   (Map<String, String> country) {
-//                     return DropdownMenuItem<Map<String, String>>(
-//                       value: country,
-//                       child: Text(
-//                         country['name']!,
-//                         style: const TextStyle(
-//                           color: Colors.white,
-//                           fontSize: 14, // Smaller font size
-//                         ),
-//                         overflow: TextOverflow.ellipsis,
-//                       ),
-//                     );
-//                   },
-//                 ).toList(),
-//                 dropdownColor: Colors.grey,
-//                 style: const TextStyle(color: Colors.white),
-//                 icon: const Icon(
-//                   Icons.arrow_drop_down,
-//                   color: Colors.white,
-//                   size: 20, // Smaller icon
-//                 ),
-//               ),
-//             ),
-//             if (selectedCountry != null)
-//               Padding(
-//                 padding: const EdgeInsets.only(top: 8, left: 12),
-//                 child: SelectedCountryStats(
-//                   flagUrl: selectedCountry!['flag']!,
-//                 ),
-//               ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class SelectedCountryStats extends StatelessWidget {
-//   final String flagUrl;
-
-//   const SelectedCountryStats({
-//     super.key,
-//     required this.flagUrl,
-//   });
-
-//   double getRandomProgress() {
-//     Random random = Random();
-//     return 0.1 +
-//         random.nextDouble() * 0.6; // Generates a value between 0.1 and 0.7
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       margin: const EdgeInsets.only(
-//         left: 8,
-//       ),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.start,
-//         children: [
-//           SizedBox(
-//             width: 270,
-//             child: CustomLoadingBar(
-//               progress: getRandomProgress(),
-//               delay: const Duration(milliseconds: 50),
-//             ),
-//           ),
-//           const SizedBox(width: 10),
-//           SizedBox(
-//               width: 35,
-//               height: 20,
-//               child: Image.network(
-//                 flagUrl,
-//                 width: 24,
-//                 height: 16,
-//                 fit: BoxFit.cover,
-//                 errorBuilder: (context, error, stackTrace) {
-//                   return const Icon(Icons.flag, size: 24, color: Colors.white);
-//                 },
-//               )),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 class CountryDropdown extends StatefulWidget {
-  const CountryDropdown({super.key});
+  const CountryDropdown({
+    super.key,
+    required this.yesStatsCount,
+    required this.noStatsCount,
+  });
+
+  final int yesStatsCount;
+  final int noStatsCount;
 
   @override
   _CountryDropdownState createState() => _CountryDropdownState();
@@ -1367,8 +1361,7 @@ class _CountryDropdownState extends State<CountryDropdown> {
                             width: double.infinity, // Ensures full width
                             color: isSelected
                                 ? const Color.fromARGB(255, 13, 211, 19)
-                                : Colors
-                                    .transparent,
+                                : Colors.transparent,
                             child: Text(
                               country['name']!,
                               style: const TextStyle(
@@ -1431,6 +1424,8 @@ class _CountryDropdownState extends State<CountryDropdown> {
                     child: SelectedCountryStats(
                       flagUrl: country['flag']!,
                       countryName: country['name']!,
+                      yesCount: widget.yesStatsCount,
+                      noCount: widget.noStatsCount,
                     ),
                   );
                 },
@@ -1445,11 +1440,15 @@ class _CountryDropdownState extends State<CountryDropdown> {
 class SelectedCountryStats extends StatefulWidget {
   final String flagUrl;
   final String countryName;
+  final int yesCount;
+  final int noCount;
 
   const SelectedCountryStats({
     super.key,
     required this.flagUrl,
-    required this.countryName, // Add country name parameter
+    required this.countryName,
+    required this.yesCount,
+    required this.noCount,
   });
 
   @override
@@ -1457,16 +1456,18 @@ class SelectedCountryStats extends StatefulWidget {
 }
 
 class _SelectedCountryStatsState extends State<SelectedCountryStats> {
-  late final double
-      progressing; // Store the random progress value when widget is created
+  late final double progressing;
 
   @override
   void initState() {
     super.initState();
-    // Generate random progress once when widget is created
     Random random = Random();
-    progressing = 0.1 +
-        random.nextDouble() * 0.4; // Generates a value between 0.1 and 0.7
+
+    if (widget.yesCount < 5) {
+      progressing = 0.0;
+    } else {
+      progressing = 0.05 + random.nextDouble() * 0.15;
+    }
   }
 
   @override

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, non_constant_identifier_names, library_private_types_in_public_api
+
 import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -40,6 +42,9 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
   bool isBackButton = false;
   bool isNoQuestion = true;
   String totalLength = "";
+
+  int yesCount = 0;
+  int noCount = 0;
 
   bool isStatsDisplayed = false;
 
@@ -101,29 +106,160 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
   }
 
   void updateProgressValues() {
-    // Random number generator
-    final random = Random();
+    // Ensure yesCount and noCount are not null
+    if (yesCount == null || noCount == null) {
+      return;
+    }
 
-    // Generate a random value between 0.3 and 0.8
+    // If yesCount is 1 and noCount is 0, set mProgress to 10.0, others to 0.0
+    if (yesCount == 1 && noCount == 0) {
+      m1Progress = 1;
+      m2Progress = 1;
+      mProgress = 1;
+      fProgress = 0.0;
+      nProgress = 0.0;
+      a1Progress = 0.0;
+      a2Progress = 0.0;
+      a3Progress = 0.0;
+      a4Progress = 1;
+      a5Progress = 0.0;
+      a6Progress = 0.0;
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // If noCount is 1 and yesCount is 0, set all values to 0.0
+    if (noCount == 1 && yesCount == 0) {
+      m1Progress = 0.0;
+      m2Progress = 0.0;
+      mProgress = 0.0;
+      fProgress = 0.0;
+      nProgress = 0.0;
+      a1Progress = 0.0;
+      a2Progress = 0.0;
+      a3Progress = 0.0;
+      a4Progress = 0.0;
+      a5Progress = 0.0;
+      a6Progress = 0.0;
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // If noCount is 1 and yesCount is 1, set all values to 0.0
+    if (noCount == 1 && yesCount == 1) {
+      m1Progress = 0.5;
+      m2Progress = 0.5;
+      mProgress = 0.5;
+      fProgress = 0.0;
+      nProgress = 0.0;
+      a1Progress = 0.0;
+      a2Progress = 0.0;
+      a3Progress = 0.0;
+      a4Progress = 0.5;
+      a5Progress = 0.0;
+      a6Progress = 0.0;
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // If noCount is 1 and yesCount is 1, set all values to 0.0
+    if (noCount == 1 && yesCount == 2) {
+      m1Progress = 0.7;
+      m2Progress = 0.7;
+      mProgress = 0.7;
+      fProgress = 0.0;
+      nProgress = 0.0;
+      a1Progress = 0.0;
+      a2Progress = 0.0;
+      a3Progress = 0.0;
+      a4Progress = 0.7;
+      a5Progress = 0.0;
+      a6Progress = 0.0;
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // If noCount is 1 and yesCount is 1, set all values to 0.0
+    if (noCount == 2 && yesCount == 2) {
+      m1Progress = 0.5;
+      m2Progress = 0.5;
+      mProgress = 0.5;
+      fProgress = 0.0;
+      nProgress = 0.0;
+      a1Progress = 0.0;
+      a2Progress = 0.0;
+      a3Progress = 0.0;
+      a4Progress = 0.5;
+      a5Progress = 0.0;
+      a6Progress = 0.0;
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // If noCount is 1 and yesCount is 1, set all values to 0.0
+    if (noCount == 3 && yesCount == 2) {
+      m1Progress = 0.3;
+      m2Progress = 0.3;
+      mProgress = 0.3;
+      fProgress = 0.0;
+      nProgress = 0.0;
+      a1Progress = 0.0;
+      a2Progress = 0.0;
+      a3Progress = 0.0;
+      a4Progress = 0.3;
+      a5Progress = 0.0;
+      a6Progress = 0.0;
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // Otherwise, use random values as before
+    final random = Random();
     double generateRandomProgress() {
       return 0.3 + (random.nextDouble() * (0.8 - 0.3));
     }
 
-    // Update each variable with a random value
     m1Progress = generateRandomProgress();
     m2Progress = generateRandomProgress();
-
     mProgress = generateRandomProgress();
     fProgress = generateRandomProgress();
     nProgress = generateRandomProgress();
-
     a1Progress = generateRandomProgress();
     a2Progress = generateRandomProgress();
     a3Progress = generateRandomProgress();
     a4Progress = generateRandomProgress();
     a5Progress = generateRandomProgress();
     a6Progress = generateRandomProgress();
-
     c1Progress = generateRandomProgress();
     c2Progress = generateRandomProgress();
     c3Progress = generateRandomProgress();
@@ -133,26 +269,108 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
   }
 
 // Variables
-  double m1Progress = 0.5;
-  double m2Progress = 0.5;
+  double m1Progress = 0.0;
+  double m2Progress = 0.0;
 
-  double mProgress = 0.5;
-  double fProgress = 0.6;
-  double nProgress = 0.7;
+  double mProgress = 0.0;
+  double fProgress = 0.0;
+  double nProgress = 0.0;
 
-  double a1Progress = 0.2;
-  double a2Progress = 0.3;
-  double a3Progress = 0.4;
-  double a4Progress = 0.5;
-  double a5Progress = 0.6;
-  double a6Progress = 0.7;
+  double a1Progress = 0.0;
+  double a2Progress = 0.0;
+  double a3Progress = 0.0;
+  double a4Progress = 0.0;
+  double a5Progress = 0.0;
+  double a6Progress = 0.0;
 
-  double c1Progress = 0.3;
-  double c2Progress = 0.4;
-  double c3Progress = 0.5;
-  double c4Progress = 0.6;
-  double c5Progress = 0.7;
-  double c6Progress = 0.8;
+  double c1Progress = 0.0;
+  double c2Progress = 0.0;
+  double c3Progress = 0.0;
+  double c4Progress = 0.0;
+  double c5Progress = 0.0;
+  double c6Progress = 0.0;
+
+  Future<void> fetchAndShowStats() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      print(
+          "Fetching stats for category: $currentCategoryId, question: $currentQuestionId");
+
+      DocumentSnapshot statsDoc = await FirebaseFirestore.instance
+          .collection('stats')
+          .doc(currentCategoryId)
+          .collection('questions')
+          .doc(currentQuestionId)
+          .get();
+
+      if (statsDoc.exists) {
+        stats = statsDoc.data() as Map<String, dynamic>;
+
+        // Extract yesCount and noCount safely
+        int yesCount =
+            stats.containsKey('yesCount') ? stats['yesCount'] as int : 0;
+        int noCount =
+            stats.containsKey('noCount') ? stats['noCount'] as int : 0;
+
+        print("Fetched Stats:");
+        print("yesCount: $yesCount");
+        print("noCount: $noCount");
+
+        setState(() {
+          this.yesCount = yesCount;
+          this.noCount = noCount;
+          showStats = true;
+          isLoading = false;
+        });
+        updateProgressValues();
+      } else {
+        print("Stats not found, setting default values.");
+
+        setState(() {
+          stats = {'yesCount': 0, 'noCount': 0};
+          yesCount = 0;
+          noCount = 0;
+          showStats = true;
+          isLoading = false;
+        });
+
+        print("Default Stats:");
+        print("yesCount: $yesCount");
+        print("noCount: $noCount");
+      }
+    } catch (e) {
+      print('Error fetching stats: $e');
+
+      setState(() {
+        stats = {'error': 'Error fetching stats'};
+        showStats = true;
+        isLoading = false;
+      });
+
+      print("Error Stats: ${stats['error']}");
+    }
+  }
+
+  Future<void> updateStats(bool answer) async {
+    String field = answer ? 'yesCount' : 'noCount';
+    try {
+      await FirebaseFirestore.instance
+          .collection('stats')
+          .doc(currentCategoryId)
+          .collection('questions')
+          .doc(currentQuestionId)
+          .set(
+        {field: FieldValue.increment(1)},
+        SetOptions(merge: true),
+      );
+      updateProgressValues();
+    } catch (e) {
+      print('Error updating stats: $e');
+    }
+  }
 
   void updateCurrentQuestion() {
     if (currentQuestionIndex < allQuestions.length) {
@@ -283,7 +501,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
     _controller.reset();
     _controller.forward();
 
-    // Add a 2-second delay using Future.delayed
+    // Add a 1-second delay using Future.delayed
     Future.delayed(
       const Duration(seconds: 1),
       () {
@@ -292,14 +510,19 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
         });
       },
     );
-    setState(() {});
+
     if (currentQuestionIndex < allQuestions.length - 1) {
       setState(() {
         currentQuestionIndex++; // Increment the question index
         question = allQuestions[currentQuestionIndex].get('question');
+        currentCategoryId = allQuestions[currentQuestionIndex]
+            .get('categoryId'); // Update category ID
+        currentQuestionId =
+            allQuestions[currentQuestionIndex].id; // Update question ID
         print("Next Question Index: $currentQuestionIndex");
-        print(
-            "Next Question: ${allQuestions[currentQuestionIndex].get('question')}");
+        print("Next Question: $question");
+        print("Next Category ID: $currentCategoryId");
+        print("Next Question ID: $currentQuestionId");
       });
     } else {
       setState(() {
@@ -308,7 +531,6 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
       });
       print("Reached the end of questions");
     }
-    ;
   }
 
   void goBack() {
@@ -444,6 +666,27 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
     );
   }
 
+  void skipQuestion() {
+    if (currentQuestionIndex < allQuestions.length - 2) {
+      setState(() {
+        currentQuestionIndex += 1;
+        question = allQuestions[currentQuestionIndex].get('question');
+        currentQuestionId = allQuestions[currentQuestionIndex].id;
+      });
+    } else if (currentQuestionIndex == allQuestions.length - 2) {
+      setState(() {
+        currentQuestionIndex = allQuestions.length - 1;
+        question = allQuestions[currentQuestionIndex].get('question');
+        currentQuestionId = allQuestions[currentQuestionIndex].id;
+      });
+    } else {
+      setState(() {
+        question = 'You have reached the end of the questions!';
+        isBackButton = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -466,12 +709,6 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                           children: [
                             GestureDetector(
                               onTap: () async {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => const Options(),
-                                //   ),
-                                // );
                                 Navigator.push(
                                   context,
                                   FadePageRoute(page: const Options()),
@@ -573,7 +810,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                     opacity: _opacityAnimation,
                     child: Container(
                       width: 100,
-                      height: showStats == true ? 70 : 160,
+                      height: showStats == true ? 160 : 160,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: const Color.fromARGB(255, 13, 211, 19),
@@ -584,37 +821,21 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                         child: isLoading
                             ? const CircularProgressIndicator(
                                 color: Colors.white)
-                            : showStats
-                                ? const Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Most questions are answered in a simple yes or no format. Please select Yes or No.",
-                                        style: TextStyle(
+                            : isLoading
+                                ? const CircularProgressIndicator.adaptive()
+                                : SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(
+                                        children: _parseStyledText(question),
+                                        style: const TextStyle(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
-                                  )
-                                : isLoading
-                                    ? const CircularProgressIndicator.adaptive()
-                                    : SingleChildScrollView(
-                                        scrollDirection: Axis.vertical,
-                                        child: RichText(
-                                          textAlign: TextAlign.center,
-                                          text: TextSpan(
-                                            children:
-                                                _parseStyledText(question),
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                            ),
-                                          ),
+                                          fontSize: 20,
                                         ),
                                       ),
+                                    ),
+                                  ),
                       ),
                     ),
                   ),
@@ -625,8 +846,7 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                 if (isStatsDisplayed)
                   if (showStats)
                     SizedBox(
-                      height: MediaQuery.of(context).size.height *
-                          0.5, // Adjust height relative to screen size
+                      height: MediaQuery.of(context).size.height * 0.4,
                       child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
                         child: Column(
@@ -955,7 +1175,10 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                       cp5: c5Progress,
                                       cp6: c6Progress,
                                     ),
-                                    const CountryDropdown(),
+                                    CountryDropdown(
+                                      yesStatsCount: yesCount,
+                                      noStatsCount: noCount,
+                                    ),
                                     const SizedBox(height: 5),
                                   ],
                                 ),
@@ -1025,8 +1248,8 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                         horizontal: 5),
                                     child: ElevatedButton(
                                       onPressed: () async {
-                                        // await updateStats(true);
-                                        // fetchAndShowStats();
+                                        await updateStats(true);
+                                        fetchAndShowStats();
                                         setState(() {
                                           showStats = true;
                                         });
@@ -1080,8 +1303,8 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                         horizontal: 5),
                                     child: ElevatedButton(
                                       onPressed: () async {
-                                        // await updateStats(false);
-                                        // fetchAndShowStats();
+                                        await updateStats(false);
+                                        fetchAndShowStats();
                                         setState(() {
                                           showStats = true;
                                         });
@@ -1136,7 +1359,54 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
                                   ),
                                 ),
                               ],
-                            )
+                            ),
+
+                // ========================================================================
+                // ========================================================================
+                // ========================================================================
+                showStats
+                    ? const Text("")
+                    : Column(
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          isBackButton != true
+                              ? Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Container(
+                                    height: 50,
+                                    color: Colors.grey,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .spaceEvenly, // Distribute buttons evenly
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            skipQuestion();
+                                          },
+                                          child: const Text(
+                                            'Skip',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox(
+                                  height: 0,
+                                  width: 0,
+                                ),
+                        ],
+                      ),
+                // ========================================================================
+                // ========================================================================
+                // ========================================================================
               ],
             ),
             // ==================================
@@ -1220,7 +1490,14 @@ class _SpecificCategoryQuestionsState extends State<SpecificCategoryQuestions>
 }
 
 class CountryDropdown extends StatefulWidget {
-  const CountryDropdown({super.key});
+  const CountryDropdown({
+    super.key,
+    required this.yesStatsCount,
+    required this.noStatsCount,
+  });
+
+  final int yesStatsCount;
+  final int noStatsCount;
 
   @override
   _CountryDropdownState createState() => _CountryDropdownState();
@@ -1390,6 +1667,8 @@ class _CountryDropdownState extends State<CountryDropdown> {
                     child: SelectedCountryStats(
                       flagUrl: country['flag']!,
                       countryName: country['name']!,
+                      yesCount: widget.yesStatsCount,
+                      noCount: widget.noStatsCount,
                     ),
                   );
                 },
@@ -1404,11 +1683,15 @@ class _CountryDropdownState extends State<CountryDropdown> {
 class SelectedCountryStats extends StatefulWidget {
   final String flagUrl;
   final String countryName;
+  final int yesCount;
+  final int noCount;
 
   const SelectedCountryStats({
     super.key,
     required this.flagUrl,
-    required this.countryName, // Add country name parameter
+    required this.countryName,
+    required this.yesCount,
+    required this.noCount,
   });
 
   @override
@@ -1416,16 +1699,18 @@ class SelectedCountryStats extends StatefulWidget {
 }
 
 class _SelectedCountryStatsState extends State<SelectedCountryStats> {
-  late final double
-      progressing; // Store the random progress value when widget is created
+  late final double progressing;
 
   @override
   void initState() {
     super.initState();
-    // Generate random progress once when widget is created
     Random random = Random();
-    progressing = 0.1 +
-        random.nextDouble() * 0.4; // Generates a value between 0.1 and 0.7
+
+    if (widget.yesCount < 5) {
+      progressing = 0.0;
+    } else {
+      progressing = 0.05 + random.nextDouble() * 0.15;
+    }
   }
 
   @override
@@ -2048,28 +2333,35 @@ class _MiniLoadingBarState extends State<MiniLoadingBar>
   void initState() {
     super.initState();
 
+    // Configure the progress animation with smoother curve and much longer duration
     _progressController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(
+          milliseconds: 8500), // Increased duration for slower animation
     );
 
     _progressAnimation =
-        Tween<double>(begin: 0.0, end: widget.progress).animate(CurvedAnimation(
-      parent: _progressController,
-      curve: Curves.easeInOut,
-    ));
+        Tween<double>(begin: 0.0, end: widget.progress).animate(
+      CurvedAnimation(
+        parent: _progressController,
+        // Use a gentler curve for smoother animation
+        curve: Curves.easeInOutQuart, // More pronounced ease-in and ease-out
+      ),
+    );
 
+    // Keep the fade animation but make it slower too
     _fadeController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 800), // Slower fade-in for text
     );
 
     _fadeAnimation =
         Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
       parent: _fadeController,
-      curve: Curves.easeInOut,
+      curve: Curves.easeIn, // Gentle fade-in
     ));
 
+    // Start animations with delay
     Future.delayed(Duration(milliseconds: widget.delay), () {
       if (mounted) {
         setState(() {
@@ -2088,6 +2380,35 @@ class _MiniLoadingBarState extends State<MiniLoadingBar>
   }
 
   @override
+  void didUpdateWidget(covariant MiniLoadingBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.progress != widget.progress) {
+      // For smoother updates, animate from current value instead of resetting
+      final double currentProgress = _progressAnimation.value;
+      _progressController.stop();
+
+      // Create new animation starting from current position
+      _progressAnimation = Tween<double>(
+        begin: currentProgress,
+        end: widget.progress,
+      ).animate(CurvedAnimation(
+        parent: _progressController,
+        curve: Curves.easeInOutQuart,
+      ));
+
+      // Reset controller duration for appropriate speed based on distance to animate
+      // Make it even slower for updates
+      final double progressDifference =
+          (widget.progress - currentProgress).abs();
+      _progressController.duration = Duration(
+          milliseconds: (2500 * progressDifference).toInt().clamp(800, 2500));
+
+      _progressController.forward(from: 0.0);
+    }
+  }
+
+  @override
   void dispose() {
     _progressController.dispose();
     _fadeController.dispose();
@@ -2097,13 +2418,13 @@ class _MiniLoadingBarState extends State<MiniLoadingBar>
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 1000),
       child: isVisible
           ? AnimatedBuilder(
               animation: _progressAnimation,
               builder: (context, child) {
                 double animatedProgress = _progressAnimation.value;
-                int filledPercentage = (widget.progress * 100).toInt();
+                int filledPercentage = (animatedProgress * 100).toInt();
                 int remainingPercentage = 100 - filledPercentage;
 
                 return Stack(
@@ -2116,13 +2437,21 @@ class _MiniLoadingBarState extends State<MiniLoadingBar>
                         color: Colors.grey.shade300,
                       ),
                     ),
-                    // Progress bar (active portion)
-                    Container(
-                      width: widget.myWidth.toDouble() * animatedProgress,
-                      height: 20,
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 13, 211, 19),
-                      ),
+                    // Progress bar (active portion) - this is the part that fills
+                    TweenAnimationBuilder<double>(
+                      tween: Tween<double>(begin: 0.0, end: animatedProgress),
+                      duration: const Duration(
+                          milliseconds: 800), // Slower inner animation
+                      curve: Curves.easeOutQuint, // Very smooth curve
+                      builder: (context, value, child) {
+                        return Container(
+                          width: widget.myWidth.toDouble() * value,
+                          height: 20,
+                          decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 13, 211, 19),
+                          ),
+                        );
+                      },
                     ),
                     // Text inside progress bar (filled)
                     Positioned(
