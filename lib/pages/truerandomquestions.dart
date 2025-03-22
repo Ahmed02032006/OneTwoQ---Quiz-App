@@ -30,8 +30,12 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
 
   bool isStatsDisplayed = false;
 
-  // Animation
+  // Shared Preference
+  String? savedGender;
+  String? savedCountry;
+  int? savedAge;
 
+  // Animation
   bool isAnimationLoading = false; // Set this to control loading state
   late AnimationController _controller;
   late Animation<double> _opacityAnimation;
@@ -61,6 +65,7 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
     fetchSettings();
     updateProgressValues();
     fetchQuestion();
+    _loadSavedData();
   }
 
   @override
@@ -69,167 +74,132 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
     super.dispose();
   }
 
+  Future<void> _loadSavedData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      savedGender = prefs.getString('gender');
+      savedCountry = prefs.getString('country');
+      savedAge = prefs.getInt('age');
+      debugPrint(savedCountry);
+      debugPrint(savedGender);
+      debugPrint(savedAge.toString());
+    });
+  }
+
   void updateProgressValues() {
     // Ensure yesCount and noCount are not null
     if (yesCount == null || noCount == null) {
       return;
     }
 
-    // If yesCount is 1 and noCount is 0, set mProgress to 10.0, others to 0.0
-    if (yesCount == 1 && noCount == 0) {
-      m1Progress = 1;
-      m2Progress = 1;
-      mProgress = 1;
-      fProgress = 0.0;
-      nProgress = 0.0;
-      a1Progress = 0.0;
-      a2Progress = 0.0;
-      a3Progress = 0.0;
-      a4Progress = 1;
-      a5Progress = 0.0;
-      a6Progress = 0.0;
+    // Lookup table for progress values based on yesCount and noCount
+    final progressLookup = <String, double>{
+      '0_0': 0.0, // yesCount = 0, noCount = 0
+      '0_1': 0.0, // yesCount = 0, noCount = 1
+      '0_2': 0.0, // yesCount = 0, noCount = 2
+      '0_3': 0.0, // yesCount = 0, noCount = 3
+      '0_4': 0.0, // yesCount = 0, noCount = 4
+      '0_5': 0.0, // yesCount = 0, noCount = 5
+      '1_0': 1.0, // yesCount = 1, noCount = 0
+      '1_1': 0.5, // yesCount = 1, noCount = 1
+      '1_2': 0.3, // yesCount = 1, noCount = 2
+      '1_3': 0.2, // yesCount = 1, noCount = 3
+      '1_4': 0.2, // yesCount = 1, noCount = 4
+      '1_5': 0.2, // yesCount = 1, noCount = 5
+      '2_0': 1.0, // yesCount = 2, noCount = 0
+      '2_1': 0.7, // yesCount = 2, noCount = 1
+      '2_2': 0.5, // yesCount = 2, noCount = 2
+      '2_3': 0.3, // yesCount = 2, noCount = 3
+      '2_4': 0.4, // yesCount = 2, noCount = 4
+      '2_5': 0.4, // yesCount = 2, noCount = 5
+      '3_0': 1.0, // yesCount = 3, noCount = 0
+      '3_1': 0.8, // yesCount = 3, noCount = 1
+      '3_2': 0.7, // yesCount = 3, noCount = 2
+      '3_3': 0.5, // yesCount = 3, noCount = 3
+      '3_4': 0.3, // yesCount = 3, noCount = 4
+      '3_5': 0.6, // yesCount = 3, noCount = 5
+      '4_0': 1.0, // yesCount = 4, noCount = 0
+      '4_1': 0.9, // yesCount = 4, noCount = 1
+      '4_2': 0.8, // yesCount = 4, noCount = 2
+      '4_3': 0.7, // yesCount = 4, noCount = 3
+      '4_4': 0.5, // yesCount = 4, noCount = 4
+      '4_5': 0.3, // yesCount = 4, noCount = 5
+      '5_0': 1.0, // yesCount = 5, noCount = 0
+      '5_1': 0.9, // yesCount = 5, noCount = 1
+      '5_2': 0.8, // yesCount = 5, noCount = 2
+      '5_3': 0.7, // yesCount = 5, noCount = 3
+      '5_4': 0.7, // yesCount = 5, noCount = 4
+      '5_5': 0.5, // yesCount = 5, noCount = 5
+    };
+
+    // Helper function to set progress values based on a given value
+    void setProgressValues(double value) {
+      m1Progress = value;
+      m2Progress = value;
+      mProgress = savedGender == "male" ? value : 0.0;
+      fProgress = savedGender == "female" ? value : 0.0;
+      nProgress = savedGender == "non-binary" ? value : 0.0;
+
+      // Handle null savedAge
+      if (savedAge != null) {
+        a1Progress = savedAge! > 0 && savedAge! <= 14 ? value : 0.0; // 00 - 14
+        a2Progress =
+            savedAge! >= 15 && savedAge! <= 24 ? value : 0.0; // 15 - 24
+        a3Progress =
+            savedAge! >= 25 && savedAge! <= 34 ? value : 0.0; // 25 - 34
+        a4Progress =
+            savedAge! >= 35 && savedAge! <= 44 ? value : 0.0; // 35 - 44
+        a5Progress =
+            savedAge! >= 45 && savedAge! <= 64 ? value : 0.0; // 45 - 64
+        a6Progress = savedAge! >= 65 ? value : 0.0; // 65 +
+      } else {
+        // If savedAge is null, set all age-related progress values to 0.0
+        a1Progress = 0.0;
+        a2Progress = 0.0;
+        a3Progress = 0.0;
+        a4Progress = 0.0;
+        a5Progress = 0.0;
+        a6Progress = 0.0;
+      }
+
       c1Progress = 0.0;
       c2Progress = 0.0;
       c3Progress = 0.0;
       c4Progress = 0.0;
       c5Progress = 0.0;
       c6Progress = 0.0;
-      return;
     }
 
-    // If noCount is 1 and yesCount is 0, set all values to 0.0
-    if (noCount == 1 && yesCount == 0) {
-      m1Progress = 0.0;
-      m2Progress = 0.0;
-      mProgress = 0.0;
-      fProgress = 0.0;
-      nProgress = 0.0;
-      a1Progress = 0.0;
-      a2Progress = 0.0;
-      a3Progress = 0.0;
-      a4Progress = 0.0;
-      a5Progress = 0.0;
-      a6Progress = 0.0;
-      c1Progress = 0.0;
-      c2Progress = 0.0;
-      c3Progress = 0.0;
-      c4Progress = 0.0;
-      c5Progress = 0.0;
-      c6Progress = 0.0;
-      return;
-    }
+    // Generate a key for the lookup table
+    final key = '${yesCount}_${noCount}';
 
-    // If noCount is 1 and yesCount is 1, set all values to 0.0
-    if (noCount == 1 && yesCount == 1) {
-      m1Progress = 0.5;
-      m2Progress = 0.5;
-      mProgress = 0.5;
-      fProgress = 0.0;
-      nProgress = 0.0;
-      a1Progress = 0.0;
-      a2Progress = 0.0;
-      a3Progress = 0.0;
-      a4Progress = 0.5;
-      a5Progress = 0.0;
-      a6Progress = 0.0;
-      c1Progress = 0.0;
-      c2Progress = 0.0;
-      c3Progress = 0.0;
-      c4Progress = 0.0;
-      c5Progress = 0.0;
-      c6Progress = 0.0;
-      return;
-    }
+    // Check if the key exists in the lookup table
+    if (progressLookup.containsKey(key)) {
+      setProgressValues(progressLookup[key]!);
+    } else {
+      // Default case: Generate random progress values
+      final random = Random();
+      double generateRandomProgress() =>
+          0.3 + (random.nextDouble() * (0.8 - 0.3));
 
-    // If noCount is 1 and yesCount is 1, set all values to 0.0
-    if (noCount == 1 && yesCount == 2) {
-      m1Progress = 0.7;
-      m2Progress = 0.7;
-      mProgress = 0.7;
-      fProgress = 0.0;
-      nProgress = 0.0;
-      a1Progress = 0.0;
-      a2Progress = 0.0;
-      a3Progress = 0.0;
-      a4Progress = 0.7;
-      a5Progress = 0.0;
-      a6Progress = 0.0;
-      c1Progress = 0.0;
-      c2Progress = 0.0;
-      c3Progress = 0.0;
-      c4Progress = 0.0;
-      c5Progress = 0.0;
-      c6Progress = 0.0;
-      return;
+      m1Progress = generateRandomProgress();
+      m2Progress = generateRandomProgress();
+      mProgress = generateRandomProgress();
+      fProgress = generateRandomProgress();
+      nProgress = generateRandomProgress();
+      a1Progress = generateRandomProgress();
+      a2Progress = generateRandomProgress();
+      a3Progress = generateRandomProgress();
+      a4Progress = generateRandomProgress();
+      a5Progress = generateRandomProgress();
+      a6Progress = generateRandomProgress();
+      c1Progress = generateRandomProgress();
+      c2Progress = generateRandomProgress();
+      c3Progress = generateRandomProgress();
+      c4Progress = generateRandomProgress();
+      c5Progress = generateRandomProgress();
+      c6Progress = generateRandomProgress();
     }
-
-    // If noCount is 1 and yesCount is 1, set all values to 0.0
-    if (noCount == 2 && yesCount == 2) {
-      m1Progress = 0.5;
-      m2Progress = 0.5;
-      mProgress = 0.5;
-      fProgress = 0.0;
-      nProgress = 0.0;
-      a1Progress = 0.0;
-      a2Progress = 0.0;
-      a3Progress = 0.0;
-      a4Progress = 0.5;
-      a5Progress = 0.0;
-      a6Progress = 0.0;
-      c1Progress = 0.0;
-      c2Progress = 0.0;
-      c3Progress = 0.0;
-      c4Progress = 0.0;
-      c5Progress = 0.0;
-      c6Progress = 0.0;
-      return;
-    }
-
-    // If noCount is 1 and yesCount is 1, set all values to 0.0
-    if (noCount == 3 && yesCount == 2) {
-      m1Progress = 0.3;
-      m2Progress = 0.3;
-      mProgress = 0.3;
-      fProgress = 0.0;
-      nProgress = 0.0;
-      a1Progress = 0.0;
-      a2Progress = 0.0;
-      a3Progress = 0.0;
-      a4Progress = 0.3;
-      a5Progress = 0.0;
-      a6Progress = 0.0;
-      c1Progress = 0.0;
-      c2Progress = 0.0;
-      c3Progress = 0.0;
-      c4Progress = 0.0;
-      c5Progress = 0.0;
-      c6Progress = 0.0;
-      return;
-    }
-
-    // Otherwise, use random values as before
-    final random = Random();
-    double generateRandomProgress() {
-      return 0.3 + (random.nextDouble() * (0.8 - 0.3));
-    }
-
-    m1Progress = generateRandomProgress();
-    m2Progress = generateRandomProgress();
-    mProgress = generateRandomProgress();
-    fProgress = generateRandomProgress();
-    nProgress = generateRandomProgress();
-    a1Progress = generateRandomProgress();
-    a2Progress = generateRandomProgress();
-    a3Progress = generateRandomProgress();
-    a4Progress = generateRandomProgress();
-    a5Progress = generateRandomProgress();
-    a6Progress = generateRandomProgress();
-    c1Progress = generateRandomProgress();
-    c2Progress = generateRandomProgress();
-    c3Progress = generateRandomProgress();
-    c4Progress = generateRandomProgress();
-    c5Progress = generateRandomProgress();
-    c6Progress = generateRandomProgress();
   }
 
 // Variables
@@ -1009,6 +979,7 @@ class _TrueRandomQuestionsState extends State<TrueRandomQuestions>
                                       cp6: c6Progress,
                                     ),
                                     CountryDropdown(
+                                      saveCountry: savedCountry.toString(),
                                       yesStatsCount: yesCount,
                                       noStatsCount: noCount,
                                     ),
@@ -1251,10 +1222,12 @@ class CountryDropdown extends StatefulWidget {
     super.key,
     required this.yesStatsCount,
     required this.noStatsCount,
+    required this.saveCountry,
   });
 
   final int yesStatsCount;
   final int noStatsCount;
+  final String saveCountry;
 
   @override
   _CountryDropdownState createState() => _CountryDropdownState();
@@ -1263,6 +1236,7 @@ class CountryDropdown extends StatefulWidget {
 class _CountryDropdownState extends State<CountryDropdown> {
   List<Map<String, String>> selectedCountries = [];
   List<Map<String, String>> countries = [];
+  Map<String, String>? selectedCountry;
 
   @override
   void initState() {
@@ -1290,8 +1264,6 @@ class _CountryDropdownState extends State<CountryDropdown> {
       throw Exception('Failed to load countries');
     }
   }
-
-  Map<String, String>? selectedCountry;
 
   @override
   Widget build(BuildContext context) {
@@ -1337,6 +1309,8 @@ class _CountryDropdownState extends State<CountryDropdown> {
                             selectedCountries
                                 .add(Map<String, String>.from(value));
                           }
+
+                          // print(selectedCountry!["name"]);
                         });
                       }
                     },
@@ -1380,11 +1354,9 @@ class _CountryDropdownState extends State<CountryDropdown> {
                         color: Colors.white, size: 20),
                     menuMaxHeight: 300,
                     alignment: Alignment.centerLeft,
-                    // Fix the selectedItemBuilder
                     selectedItemBuilder: (BuildContext context) {
                       return countries
                           .map<Widget>((Map<String, String> country) {
-                        // Only show text for the currently selected country
                         if (selectedCountry != null &&
                             selectedCountry!['name'] == country['name']) {
                           return Container(
@@ -1399,7 +1371,6 @@ class _CountryDropdownState extends State<CountryDropdown> {
                             ),
                           );
                         }
-                        // Return an empty container for non-selected countries
                         return Container();
                       }).toList();
                     },
@@ -1422,6 +1393,7 @@ class _CountryDropdownState extends State<CountryDropdown> {
                   return Padding(
                     padding: const EdgeInsets.only(top: 8, left: 0),
                     child: SelectedCountryStats(
+                      savedCountry: widget.saveCountry,
                       flagUrl: country['flag']!,
                       countryName: country['name']!,
                       yesCount: widget.yesStatsCount,
@@ -1440,6 +1412,7 @@ class _CountryDropdownState extends State<CountryDropdown> {
 class SelectedCountryStats extends StatefulWidget {
   final String flagUrl;
   final String countryName;
+  final String savedCountry;
   final int yesCount;
   final int noCount;
 
@@ -1449,6 +1422,7 @@ class SelectedCountryStats extends StatefulWidget {
     required this.countryName,
     required this.yesCount,
     required this.noCount,
+    required this.savedCountry,
   });
 
   @override
@@ -1463,10 +1437,57 @@ class _SelectedCountryStatsState extends State<SelectedCountryStats> {
     super.initState();
     Random random = Random();
 
-    if (widget.yesCount < 5) {
-      progressing = 0.0;
+    // Initialize progressing based on conditions
+    if (widget.countryName == widget.savedCountry) {
+      if (widget.yesCount == 1 && widget.noCount == 0) {
+        progressing = 1.0;
+      } else if (widget.noCount == 1 && widget.yesCount == 0) {
+        progressing = 0.0;
+      } else if (widget.noCount == 1 && widget.yesCount == 1) {
+        progressing = 0.5;
+      } else if (widget.noCount == 1 && widget.yesCount == 2) {
+        progressing = 0.7;
+      } else if (widget.noCount == 2 && widget.yesCount == 1) {
+        progressing = 0.3;
+      } else if (widget.noCount == 2 && widget.yesCount == 2) {
+        progressing = 0.5;
+      } else if (widget.noCount == 3 && widget.yesCount == 2) {
+        progressing = 0.3;
+      } else if (widget.noCount == 2 && widget.yesCount == 3) {
+        progressing = 0.7;
+      } else if (widget.noCount == 4 && widget.yesCount == 3) {
+        progressing = 0.3;
+      } else if (widget.noCount == 3 && widget.yesCount == 4) {
+        progressing = 0.7;
+      } else if (widget.noCount == 5 && widget.yesCount == 4) {
+        progressing = 0.3;
+      } else if (widget.noCount == 4 && widget.yesCount == 5) {
+        progressing = 0.7;
+      } else if (widget.noCount == 1 && widget.yesCount == 3) {
+        progressing = 0.2;
+      } else if (widget.noCount == 1 && widget.yesCount == 4) {
+        progressing = 0.2;
+      } else if (widget.noCount == 1 && widget.yesCount == 5) {
+        progressing = 0.2;
+      } else if (widget.noCount == 2 && widget.yesCount == 4) {
+        progressing = 0.4;
+      } else if (widget.noCount == 2 && widget.yesCount == 5) {
+        progressing = 0.4;
+      } else if (widget.noCount == 3 && widget.yesCount == 5) {
+        progressing = 0.6;
+      } else if (widget.noCount == 3 && widget.yesCount == 3) {
+        progressing = 0.5;
+      } else if (widget.noCount == 4 && widget.yesCount == 4) {
+        progressing = 0.5;
+      } else if (widget.noCount == 5 && widget.yesCount == 5) {
+        progressing = 0.5;
+      } else if (widget.noCount == 2 && widget.yesCount == 0) {
+        progressing = 0.0;
+      } else {
+        progressing = 0.05 + random.nextDouble() * 0.15; // Default case
+      }
     } else {
-      progressing = 0.05 + random.nextDouble() * 0.15;
+      progressing = 0.0;
     }
   }
 

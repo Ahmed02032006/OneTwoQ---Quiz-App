@@ -1,0 +1,166 @@
+void updateProgressValues() {
+    // Ensure yesCount and noCount are not null
+    if (yesCount == null || noCount == null) {
+      return;
+    }
+
+    // If yesCount is 1 and noCount is 0, set mProgress to 10.0, others to 0.0
+    if (yesCount == 1 && noCount == 0) {
+      m1Progress = 1;
+      m2Progress = 1;
+      mProgress = savedGender == "male" ? 1 : 0.0;
+      fProgress = savedGender == "female" ? 1 : 0.0;
+      nProgress = savedGender == "non-binary" ? 1 : 0.0;
+      a1Progress =
+          savedAge! > 0 && savedAge! <= 14 ? 1.0 : 0.0; // 00 - 14  savedAge
+      a2Progress = savedAge! >= 15 && savedAge! <= 24 ? 1.0 : 0.0; // 15 - 34
+      a3Progress = savedAge! >= 25 && savedAge! <= 34 ? 1.0 : 0.0; // 25 - 44
+      a4Progress = savedAge! >= 35 && savedAge! <= 44 ? 1.0 : 0.0; // 35 - 54
+      a5Progress = savedAge! >= 45 && savedAge! <= 64 ? 1.0 : 0.0; // 45 - 64
+      a6Progress = savedAge! >= 65 ? 1.0 : 0.0; // 65 +
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // If noCount is 1 and yesCount is 0, set all values to 0.0
+    if (noCount == 1 && yesCount == 0) {
+      m1Progress = 0.0;
+      m2Progress = 0.0;
+      mProgress = 0.0;
+      fProgress = 0.0;
+      nProgress = 0.0;
+      a1Progress = 0.0;
+      a2Progress = 0.0;
+      a3Progress = 0.0;
+      a4Progress = 0.0;
+      a5Progress = 0.0;
+      a6Progress = 0.0;
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // If noCount is 1 and yesCount is 1, set all values to 0.0
+    if (noCount == 1 && yesCount == 1) {
+      m1Progress = 0.5;
+      m2Progress = 0.5;
+      mProgress = savedGender == "male" ? 0.5 : 0.0;
+      fProgress = savedGender == "female" ? 0.5 : 0.0;
+      nProgress = savedGender == "non-binary" ? 0.5 : 0.0;
+      a1Progress =
+          savedAge! > 0 && savedAge! <= 14 ? 0.5 : 0.0; // 00 - 14  savedAge
+      a2Progress = savedAge! >= 15 && savedAge! <= 24 ? 0.5 : 0.0; // 15 - 34
+      a3Progress = savedAge! >= 25 && savedAge! <= 34 ? 0.5 : 0.0; // 25 - 44
+      a4Progress = savedAge! >= 35 && savedAge! <= 44 ? 0.5 : 0.0; // 35 - 54
+      a5Progress = savedAge! >= 45 && savedAge! <= 64 ? 0.5 : 0.0; // 45 - 64
+      a6Progress = savedAge! >= 65 ? 0.5 : 0.0; // 65 +
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // If noCount is 1 and yesCount is 1, set all values to 0.0
+    if (noCount == 1 && yesCount == 2) {
+      m1Progress = 0.7;
+      m2Progress = 0.7;
+      mProgress = savedGender == "male" ? 0.7 : 0.0;
+      fProgress = savedGender == "female" ? 0.7 : 0.0;
+      nProgress = savedGender == "non-binary" ? 0.7 : 0.0;
+      a1Progress =
+          savedAge! > 0 && savedAge! <= 14 ? 0.7 : 0.0; // 00 - 14  savedAge
+      a2Progress = savedAge! >= 15 && savedAge! <= 24 ? 0.7 : 0.0; // 15 - 34
+      a3Progress = savedAge! >= 25 && savedAge! <= 34 ? 0.7 : 0.0; // 25 - 44
+      a4Progress = savedAge! >= 35 && savedAge! <= 44 ? 0.7 : 0.0; // 35 - 54
+      a5Progress = savedAge! >= 45 && savedAge! <= 64 ? 0.7 : 0.0; // 45 - 64
+      a6Progress = savedAge! >= 65 ? 0.7 : 0.0; // 65 +
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // If noCount is 1 and yesCount is 1, set all values to 0.0
+    if (noCount == 2 && yesCount == 2) {
+      m1Progress = 0.5;
+      m2Progress = 0.5;
+      mProgress = savedGender == "male" ? 0.5 : 0.0;
+      fProgress = savedGender == "female" ? 0.5 : 0.0;
+      nProgress = savedGender == "non-binary" ? 0.5 : 0.0;
+      a1Progress =
+          savedAge! > 0 && savedAge! <= 14 ? 0.5 : 0.0; // 00 - 14  savedAge
+      a2Progress = savedAge! >= 15 && savedAge! <= 24 ? 0.5 : 0.0; // 15 - 34
+      a3Progress = savedAge! >= 25 && savedAge! <= 34 ? 0.5 : 0.0; // 25 - 44
+      a4Progress = savedAge! >= 35 && savedAge! <= 44 ? 0.5 : 0.0; // 35 - 54
+      a5Progress = savedAge! >= 45 && savedAge! <= 64 ? 0.5 : 0.0; // 45 - 64
+      a6Progress = savedAge! >= 65 ? 0.5 : 0.0; // 65 +
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    // If noCount is 1 and yesCount is 1, set all values to 0.0
+    if (noCount == 3 && yesCount == 2) {
+      m1Progress = 0.3;
+      m2Progress = 0.3;
+      mProgress = savedGender == "male" ? 0.3 : 0.0;
+      fProgress = savedGender == "female" ? 0.3 : 0.0;
+      nProgress = savedGender == "non-binary" ? 0.3 : 0.0;
+      a1Progress =
+          savedAge! > 0 && savedAge! <= 14 ? 0.3 : 0.0; // 00 - 14  savedAge
+      a2Progress = savedAge! >= 15 && savedAge! <= 24 ? 0.3 : 0.0; // 15 - 34
+      a3Progress = savedAge! >= 25 && savedAge! <= 34 ? 0.3 : 0.0; // 25 - 44
+      a4Progress = savedAge! >= 35 && savedAge! <= 44 ? 0.3 : 0.0; // 35 - 54
+      a5Progress = savedAge! >= 45 && savedAge! <= 64 ? 0.3 : 0.0; // 45 - 64
+      a6Progress = savedAge! >= 65 ? 0.3 : 0.0; // 65 +
+      c1Progress = 0.0;
+      c2Progress = 0.0;
+      c3Progress = 0.0;
+      c4Progress = 0.0;
+      c5Progress = 0.0;
+      c6Progress = 0.0;
+      return;
+    }
+
+    final random = Random();
+    double generateRandomProgress() {
+      return 0.3 + (random.nextDouble() * (0.8 - 0.3));
+    }
+
+    m1Progress = generateRandomProgress();
+    m2Progress = generateRandomProgress();
+    mProgress = generateRandomProgress();
+    fProgress = generateRandomProgress();
+    nProgress = generateRandomProgress();
+    a1Progress = generateRandomProgress();
+    a2Progress = generateRandomProgress();
+    a3Progress = generateRandomProgress();
+    a4Progress = generateRandomProgress();
+    a5Progress = generateRandomProgress();
+    a6Progress = generateRandomProgress();
+    c1Progress = generateRandomProgress();
+    c2Progress = generateRandomProgress();
+    c3Progress = generateRandomProgress();
+    c4Progress = generateRandomProgress();
+    c5Progress = generateRandomProgress();
+    c6Progress = generateRandomProgress();
+  }
